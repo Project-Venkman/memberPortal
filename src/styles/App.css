@@ -1,0 +1,10 @@
+@import "./Toast/Toast.css";
+
+@import "tailwindcss/base.css";
+@import "./Tailwind/custom-base.css";
+
+@import "tailwindcss/components.css";
+@import "./Tailwind/custom-components.css";
+
+@import "tailwindcss/utilities.css";
+@import "./Tailwind/custom-utilities.css";
