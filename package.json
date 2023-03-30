@@ -1,5 +1,5 @@
 {
-	"name": "mario",
+	"name": "member-portal",
 	"version": "0.1.0",
 	"private": true,
 	"homepage": "/",
@@ -39,10 +39,7 @@
 		"start:dev": "set \"REACT_APP_DEV=development\"&& set \"GENERATE_SOURCEMAP=false\" && npm run watch:tailwind & craco start",
 		"start:devios": "REACT_APP_DEV=development GENERATE_SOURCEMAP=false craco start",
 		"start:prod": "set \"REACT_APP_DEV=production\"&& set \"GENERATE_SOURCEMAP=false\" && npm run watch:tailwind & craco start",
-		"build": "set \"REACT_APP_DEV=production\" && set \"GENERATE_SOURCEMAP=false\" && npm run build:tailwind & craco build",
-		"start-dontuse": "react-scripts start",
-		"build-dontuse": "react-scripts build",
-		"test-dontuse": "react-scripts test"
+		"build": "set \"REACT_APP_DEV=production\" && set \"GENERATE_SOURCEMAP=false\" && npm run build:tailwind & craco build"
 	},
 	"browserslist": {
 		"production": [
