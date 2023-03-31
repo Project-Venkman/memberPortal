@@ -27,7 +27,7 @@ export const MediaPlayerComponent: React.FC<MediaPlayerProps> = (props) => {
     }
 
     const handleMediaClick = (e: Media) => {
-        if(e) {
+        if (e) {
             setCurrentMedia(e.url!);
             setCurrentName(e.name!);
         }
@@ -35,11 +35,11 @@ export const MediaPlayerComponent: React.FC<MediaPlayerProps> = (props) => {
 
     useEffect(() => {
         let mediaAssets: Array<Media> = media.filter((m: Media) => {
-            if(mediaType === "video") return m.mediaTypeID === id.video;
-            if(mediaType === "image") return m.mediaTypeID === id.image;
-            if(mediaType === "audio") return m.mediaTypeID === id.audio;
+            if (mediaType === "video") return m.mediaTypeID === id.video;
+            if (mediaType === "image") return m.mediaTypeID === id.image;
+            if (mediaType === "audio") return m.mediaTypeID === id.audio;
         });
-        if(mediaAssets.length) {
+        if (mediaAssets.length) {
             setCurrentMedia(mediaAssets[0]!.url!);
             setCurrentName(mediaAssets[0]!.name!)
         }
@@ -47,7 +47,7 @@ export const MediaPlayerComponent: React.FC<MediaPlayerProps> = (props) => {
     }, [mediaType])
 
     useEffect(() => {
-        if(activeAssets.length && activeAssets[0].url && !currentMedia.length){
+        if (activeAssets.length && activeAssets[0].url && !currentMedia.length) {
             setCurrentMedia(activeAssets[0].url)
             setCurrentName(activeAssets[0]!.name!)
         }
@@ -57,13 +57,13 @@ export const MediaPlayerComponent: React.FC<MediaPlayerProps> = (props) => {
         <MediaPlayerContainer id={"media-player-container"}>
             {activeAssets.length && mediaType === "image" && (
                 [
-                    /*<ImageSlider images={activeAssets}/>*/<img key={1} style={{maxHeight: "100%", width: "fit-content"}} src={currentMedia}/>,
+                    /*<ImageSlider images={activeAssets}/>*/<img key={1} style={{ maxHeight: "100%", width: "fit-content" }} src={currentMedia} />,
                     <MediaPlayerItemsContainer key={2} id={"media-items-container"}>
                         <MediaPlayerItems id={"media-items"}>
                             {activeAssets.map((m: Media, i: number) => {
                                 return (
                                     <MediaPlayerItemButton key={i} onClick={() => handleMediaClick(m)}>
-                                        <MediaPlayerItemThumbnail src={m.url} alt={m.name}/>
+                                        <MediaPlayerItemThumbnail src={m.url} alt={m.name} />
                                     </MediaPlayerItemButton>
                                 )
                             })}
@@ -79,8 +79,12 @@ export const MediaPlayerComponent: React.FC<MediaPlayerProps> = (props) => {
                             controls={true}
                             src={currentMedia}
                         />}
-                     {/* TODO Add <audio> when available */}
-                    {(currentMedia) && mediaType === "audio" && <p className={"h-full"}>{currentMedia}</p>}
+                    {/* TODO Add <audio> when available */}
+                    {(currentMedia) && mediaType === "audio" && <VideoPlayer
+                        autoPlay={true}
+                        controls={true}
+                        src={currentMedia}
+                    />}
                     <div key={1} className={"text-center text-gold font-bold"}><span>{currentName}</span></div>
                 </MediaPlayer>,
                 <MediaPlayerItemsContainer key={2} id={"media-items-container"}>
@@ -88,13 +92,13 @@ export const MediaPlayerComponent: React.FC<MediaPlayerProps> = (props) => {
                         {activeAssets.map((m: Media, i: number) => {
                             return (
                                 <MediaPlayerItemButton key={i} onClick={() => handleMediaClick(m)}>
-                                    <MediaPlayerItemThumbnail src={(mediaType === "video" || mediaType === "audio") ? "https://theshack.thechive.com/wp-content/uploads/2022/06/COUCH-FOR-SPLASH-PAGE-CROPPED-1.jpg" : m.url} alt={m.name}/>
+                                    <MediaPlayerItemThumbnail src={(mediaType === "video" || mediaType === "audio") ? "https://theshack.thechive.com/wp-content/uploads/2022/06/COUCH-FOR-SPLASH-PAGE-CROPPED-1.jpg" : m.url} alt={m.name} />
                                 </MediaPlayerItemButton>
                             )
                         })}
                     </MediaPlayerItems>
                 </MediaPlayerItemsContainer>]
             )}
-        </MediaPlayerContainer>    )
+        </MediaPlayerContainer>)
 }
 export default MediaPlayerComponent;
