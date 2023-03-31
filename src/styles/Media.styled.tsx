@@ -1,6 +1,6 @@
 import tw from "twin.macro";
 import styled from 'styled-components';
-import {SwiperSlide} from "swiper/react";
+import { SwiperSlide } from "swiper/react";
 
 export const MediaContainer = styled.div`
 	${tw`
@@ -55,7 +55,7 @@ export const MediaPlayer = styled.div`
 `
 export const MediaPlayerItemsContainer = styled.div`
 	${tw`
-		w-full h-1/4 portrait:h-auto
+		w-full portrait:h-auto
 		relative flex flex-row justify-center
 		portrait:overflow-x-hidden 
 		portrait:overflow-y-auto	
@@ -75,9 +75,9 @@ export const MediaPlayerItemButton = styled.button`
 		h-full
 		flex flex-col portrait:flex-row justify-center items-center
 	`}
-	flex: 0 0 13.8%;
+	flex: 0 0 40%;
 	@media (orientation: portrait) {
-		flex: 0 0 25%;
+		flex: 0 0 40%;
 	}
 	
 `
