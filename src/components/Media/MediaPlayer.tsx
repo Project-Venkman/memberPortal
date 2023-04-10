@@ -92,7 +92,7 @@ export const MediaPlayerComponent: React.FC<MediaPlayerProps> = (props) => {
                         {activeAssets.map((m: Media, i: number) => {
                             return (
                                 <MediaPlayerItemButton key={i} onClick={() => handleMediaClick(m)}>
-                                    <MediaPlayerItemThumbnail src={(mediaType === "video" || mediaType === "audio") ? "https://theshack.thechive.com/wp-content/uploads/2022/06/COUCH-FOR-SPLASH-PAGE-CROPPED-1.jpg" : m.url} alt={m.name} />
+                                    <MediaPlayerItemThumbnail title={m.name} src={(mediaType === "video" || mediaType === "audio") ? "https://storage.googleapis.com/bm1000media/Misc/audioPlaceholder.png" : m.url} alt={m.name} />
                                 </MediaPlayerItemButton>
                             )
                         })}
