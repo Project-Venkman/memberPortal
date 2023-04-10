@@ -82,7 +82,7 @@ export const MediaPlayerItemButton = styled.button`
 	
 `
 export const MediaPlayerItemThumbnail = styled.img`
-	${tw`border-2 border-black border-solid hover:border-green-500 w-full`}
+	${tw`border-2 border-black border-solid hover:border-green-500 w-1/4`}
 `
 export const VideoPlayer = styled.video`
 	${tw`max-h-9/10`}
