@@ -48,7 +48,7 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
 				)
 			}
 			)}
-			<button className={"font-barlow uppercase tracking-[1.5px] text-[18px] leading-[28.8px] font-black antialiased hover:animate-pulse hover:text-gold"} onClick={handleBurnClick} >Burn</button>
+			{/* <button className={"font-barlow uppercase tracking-[1.5px] text-[18px] leading-[28.8px] font-black antialiased hover:animate-pulse hover:text-gold"} onClick={handleBurnClick} >Burn</button> */}
 			<button className={"absolute right-0 portrait:bottom-0 uppercase px-8 text-gray-700 hover:text-gray-500"} onClick={handleClick} >Logout</button>
 		</ResultPageNav>
 

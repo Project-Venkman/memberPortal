@@ -26,6 +26,7 @@ import {
 import { truncateAddress } from "@scripts/utils";
 import { LoadIndicator } from "devextreme-react";
 import { useNavigate } from "react-router-dom";
+import telescope from "@assets/images/telescope.png"
 
 const Result: React.FC<ResultProps> = (props) => {
 	const { } = props;
@@ -102,9 +103,9 @@ const Result: React.FC<ResultProps> = (props) => {
 			{loading && !walletAssets.length &&
 				<ResultCard id={"result-card"}>
 					<ResultCardContent id={"result-card-content"}>
-						<FrameImg id={"frame"} src={frame} />
+						<FrameImg id={"frame"} src={telescope} />
 						<ImageContainer id={"image-container"}>
-							<div className={"bg-black text-white p-2 absolute top-1/2 left-1/2 w-[67%] h-[71%] z-100"} style={{ transform: "translate(-50%, -50%)" }}>
+							<div className={"bg-black text-white p-2 absolute top-1/2 left-1/2 w-[67%] h-[62%] z-100"} style={{ transform: "translate(-50%, -50%)" }}>
 								<p>{`Retrieving NFTs for ${truncateAddress(walletAddress)}`}</p>
 								<LoadIndicator visible={loading}></LoadIndicator>
 							</div>
@@ -114,8 +115,8 @@ const Result: React.FC<ResultProps> = (props) => {
 			{walletAssets.length > 0 &&
 				<ResultCard id={"result-card"}>
 					<ResultCardContent id={"result-card-content"}>
-						<FrameImg id={"frame"} src={frame} />
-						<ImageContainer id={"image-container"}>
+						<FrameImg className="z-30" id={"frame"} src={telescope} />
+						<ImageContainer className="z-50" id={"image-container"}>
 							{!loading && <ItemAssetImage key={1} />}
 						</ImageContainer>
 					</ResultCardContent>
@@ -124,7 +125,7 @@ const Result: React.FC<ResultProps> = (props) => {
 			{!walletAssets.length && !loading &&
 				<ResultCard id={"result-card"}>
 					<ResultCardContent id={"result-card-content"}>
-						<FrameImg id={"frame"} src={frame} />
+						<FrameImg id={"frame"} src={telescope} />
 						<ImageContainer id={"image-container"}>
 							<Invalid walletData={wallet} />
 						</ImageContainer>
