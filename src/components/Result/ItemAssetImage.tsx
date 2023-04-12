@@ -1,10 +1,10 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Asset, ItemProps } from "@customtypes/index";
 import { NFTImg } from "@styles/index";
 import { useSelector } from "react-redux";
 import { RootState } from "@state/index";
 import loadingGif from "@assets/images/loading2.gif";
-import {Metadata} from "@customtypes/HyperMint";
+import { Metadata } from "@customtypes/HyperMint";
 
 export const ItemAssetImage: React.FC<ItemProps> = (props) => {
 	const { } = props;
@@ -22,7 +22,7 @@ export const ItemAssetImage: React.FC<ItemProps> = (props) => {
 
 	return (
 		<React.Fragment>
-			<NFTImg className={loaded ? "loaded" : ""} src={asset.url || oAsset.image} onLoad={onLoad}/>
+			<NFTImg className={loaded ? "loaded" : ""} src={asset.url || oAsset.image} onLoad={onLoad} />
 			{/*{!loaded && <NFTImg src={loadingGif}/>}*/}
 		</React.Fragment>
 	)

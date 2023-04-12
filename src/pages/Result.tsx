@@ -27,6 +27,8 @@ import { truncateAddress } from "@scripts/utils";
 import { LoadIndicator } from "devextreme-react";
 import { useNavigate } from "react-router-dom";
 import telescope from "@assets/images/telescope.png"
+import { NFTImg } from "@styles/index";
+
 
 const Result: React.FC<ResultProps> = (props) => {
 	const { } = props;
@@ -116,9 +118,18 @@ const Result: React.FC<ResultProps> = (props) => {
 				<ResultCard id={"result-card"}>
 					<ResultCardContent id={"result-card-content"}>
 						<FrameImg className="z-30" id={"frame"} src={telescope} />
-						<ImageContainer className="z-50" id={"image-container"}>
+						{/* <ImageContainer className="z-50" id={"image-container"}>
 							{!loading && <ItemAssetImage key={1} />}
-						</ImageContainer>
+						</ImageContainer> */}
+						{walletAddress === "0x42017df7ce71AD2Fe80cCa4C3D9bFc0512fff5Cf" && (
+							<NFTImg className={loaded ? "loaded" : ""} src={asset.url || oAsset.image} onLoad={onLoad} />
+
+						)}
+						{/* <ImageContainer className="z-50" id={"image-container"}>
+							
+							{!loading && <ItemAssetImage key={1} />}
+						</ImageContainer> */}
+
 					</ResultCardContent>
 				</ResultCard>
 			}
