@@ -5,7 +5,7 @@ import {
 	ResultProps,
 	Burn as BurnType
 } from "@customtypes/index";
-import { Invalid, ItemAssetImage, ItemModal, ItemSelect, NavbarDesktop, NavbarMobile } from "@components/index";
+import { Invalid, ItemAssetImageELF, ItemAssetImage, ItemModal, ItemSelect, NavbarDesktop, NavbarMobile } from "@components/index";
 import {
 	FrameImg,
 	ImageContainer,
@@ -121,15 +121,11 @@ const Result: React.FC<ResultProps> = (props) => {
 						{/* <ImageContainer className="z-50" id={"image-container"}>
 							{!loading && <ItemAssetImage key={1} />}
 						</ImageContainer> */}
-						{walletAddress === "0x42017df7ce71AD2Fe80cCa4C3D9bFc0512fff5Cf" && (
-							<NFTImg className={loaded ? "loaded" : ""} src={asset.url || oAsset.image} onLoad={onLoad} />
-
+						{walletAddress == "0x42017df7ce71AD2Fe80cCa4C3D9bFc0512fff5Cf" && (
+							<ImageContainer className="z-50" id={"image-container"}>
+								{!loading && <ItemAssetImageELF key={1} />}
+							</ImageContainer>
 						)}
-						{/* <ImageContainer className="z-50" id={"image-container"}>
-							
-							{!loading && <ItemAssetImage key={1} />}
-						</ImageContainer> */}
-
 					</ResultCardContent>
 				</ResultCard>
 			}
