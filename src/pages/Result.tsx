@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Asset,
 	WalletData,
@@ -28,7 +28,7 @@ import { LoadIndicator } from "devextreme-react";
 import { useNavigate } from "react-router-dom";
 
 const Result: React.FC<ResultProps> = (props) => {
-	const {} = props;
+	const { } = props;
 	const navigate = useNavigate();
 	const wallet: WalletData = useSelector((state: RootState) => state.wallet);
 	const walletAddress: string = useSelector((state: RootState) => state.walletAddress);
@@ -40,7 +40,7 @@ const Result: React.FC<ResultProps> = (props) => {
 	const [loading, setLoading] = useState<boolean>(false);
 
 	useEffect(() => {
-		if(!walletAddress.length) return;
+		if (!walletAddress.length) return;
 		(async () => {
 			console.log("...Verifying Ownership");
 			setLoading(true);
@@ -52,13 +52,15 @@ const Result: React.FC<ResultProps> = (props) => {
 					let ba: Array<BurnType> = [];
 					await res.forEach((r: WalletData) => {
 						const burnContractIds = ["00000004-0000-0000-0000-000000000004", "00000004-0000-0000-0000-000000000005"];
-						if(!burnContractIds.includes(r.ownedAssets![0].typeID))
+						// HERE IS WHERE WE NEED TO FILTER OUT THE BURNABLES
+						if (!burnContractIds.includes(r.ownedAssets![0].typeID))
 							oa.push(...r.ownedAssets!);
 						console.log(ba.findIndex((r2) => r.ownedAssets![0].burnBMAssets![0].assetNumber === r2.assetNumber))
-						if(r.ownedAssets![0].burnBMAssets!.length) {
+						// 
+						if (r.ownedAssets![0].burnBMAssets!.length) {
 							let tmp = [...r.ownedAssets![0].burnBMAssets!];
 							tmp.forEach(t => {
-								if(!ba.find(b => b.assetNumber === t.assetNumber)){
+								if (!ba.find(b => b.assetNumber === t.assetNumber)) {
 									ba.push(...r.ownedAssets![0].burnBMAssets!)
 								}
 							})
@@ -73,7 +75,7 @@ const Result: React.FC<ResultProps> = (props) => {
 							console.log("getBurnables", res);
 						});
 					//getBurns();
-					if(!oa.length && burns.length) navigate('/Burn');
+					if (!oa.length && burns.length) navigate('/Burn');
 					//setVerified(true);
 					setLoading(false);
 				})
