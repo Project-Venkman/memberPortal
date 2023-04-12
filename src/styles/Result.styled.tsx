@@ -1,24 +1,22 @@
 import tw from "twin.macro";
 import styled from 'styled-components';
 
-
-import stars from "@assets/images/Stars.jpeg"
+import space from "@assets/images/Space.jpg";
 export const Maintenance = styled.div`
 	${tw`w-full h-8 bg-yellow-300 font-bold text-xl italic flex text-center justify-center items-center absolute top-0`}
 `
 export const ResultPage = styled.div`
-	// background-image: url(${stars});
 	${tw`flex flex-col items-center justify-center h-full relative bg-cover bg-center bg-no-repeat`}
 `
 export const ResultPageNav = styled.div`
-	${tw`portrait:hidden z-80 h-[105px] w-full py-2 bg-transparent text-white flex flex-row gap-8 justify-center items-center absolute top-0`};
+	${tw`hidden md:flex z-80 h-[105px] w-full py-2 bg-transparent text-white flex flex-row gap-8 justify-center items-center absolute top-0`};
 `
 export const ResultPageNavMobile = styled.div`
-	${tw`hidden portrait:flex justify-end z-80 h-16 w-full bg-transparent text-white absolute top-0 right-0`};
+	${tw`flex md:hidden justify-end z-80 h-16 w-full bg-transparent text-white absolute top-0 right-0`};
 `
 export const ResultPageNavButton = styled.button`
 	span {
-		${tw`font-barlow uppercase tracking-[1.5px] text-[18px] leading-[28.8px] font-black antialiased hover:animate-pulse hover:text-gold`};
+		${tw`flex font-barlow uppercase tracking-[1.5px] text-[18px] leading-[28.8px] font-black antialiased hover:animate-pulse hover:text-gold`};
 	}
 `
 export const ResultPageNavListItem = styled.li`
@@ -31,9 +29,12 @@ export const ResultPageNavListItem = styled.li`
 	}
 `
 export const ResultCard = styled.div`
+	background-image: url(${space});
+
 	${tw`
 		relative
-		w-3/5 md:portrait:w-1/2 md:w-3/5 xl:w-1/3
+		rounded-full
+		w-4/5 md:portrait:w-4/5 md:w-4/5 xl:w-2/3
 		top-14 md:-top-16 xl:-top-4 sm:-top-20 xxxs:-top-6 lg:-top-10
 		xs:tall:portrait:-top-8 short:portrait:-top-2 md:tall:portrait:-top-6 md:portrait:-top-20 
 	`};

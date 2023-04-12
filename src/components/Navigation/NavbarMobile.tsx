@@ -26,12 +26,12 @@ export const NavbarMobile: React.FC<NavBarProps> = (props) => {
 	}
 
 	return (
-		<ResultPageNavMobile>
+		<ResultPageNavMobile id="resultpagenavmobile">
 			<button className={"text-white px-4"} hidden={showMenu}><IoMenuSharp className={"text-2xl"} onClick={() => setShowMenu(!showMenu)} /></button>
 			{showMenu && <div className={"h-screen w-full absolute top-0 left-0"} onClick={() => {
 				setShowMenu(!showMenu);
 			}} />}
-			<ul hidden={!showMenu} className={"bg-black w-full relative h-full"}>
+			<ul hidden={!showMenu} className={"bg-black w-full relative mt-[100px] sm:mt-[15%] h-full"}>
 				{navMobileButtons.map((btn: string) => {
 					return (
 						<ResultPageNavListItem key={btn} hidden={btn === "events"} value={btn} onClick={() => {
