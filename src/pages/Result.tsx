@@ -107,7 +107,7 @@ const Result: React.FC<ResultProps> = (props) => {
 					<ResultCardContent id={"result-card-content"}>
 						<FrameImg id={"frame"} src={telescope} />
 						<ImageContainer id={"image-container"}>
-							<div className={"bg-black text-white p-2 absolute top-1/2 left-1/2 w-[67%] h-[62%] z-100"} style={{ transform: "translate(-50%, -50%)" }}>
+							<div className={" text-white p-2 absolute top-1/2 left-1/2 w-[67%] h-[62%] z-100"} style={{ transform: "translate(-50%, -50%)" }}>
 								<p>{`Retrieving NFTs for ${truncateAddress(walletAddress)}`}</p>
 								<LoadIndicator visible={loading}></LoadIndicator>
 							</div>
