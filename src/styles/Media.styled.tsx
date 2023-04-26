@@ -75,7 +75,7 @@ export const MediaPlayerItemButton = styled.button`
 		h-full
 		flex flex-col portrait:flex-row justify-center items-center
 	`}
-	flex: 0 0 40%;
+	flex: 0 0 25%;
 	@media (orientation: portrait) {
 		flex: 0 0 40%;
 	}
