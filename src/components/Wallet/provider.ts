@@ -52,10 +52,14 @@ const providerOptions = {
 		connector: async () => {
 			const accounts: string[] = await magic.wallet.connectWithUI();
 			console.log("Logged in user:", accounts[0]);
-			const userInfo: UserInfo = await magic.wallet.requestUserInfoWithUI({
-				scope: { email: "required" },
-			});
-			console.log("userinfo", userInfo);
+			try {
+				const userInfo: UserInfo = await magic.wallet.requestUserInfoWithUI({
+					scope: { email: "required" },
+				});
+				console.log("userinfo", userInfo);
+			} catch (err) {
+				console.log(err);
+			}
 
 			return magic.wallet.getProvider();
 		},
