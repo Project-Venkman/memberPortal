@@ -23,13 +23,12 @@ export const Web3ModalComponent: React.FC<Web3ModalProps> = (props) => {
 			console.log(Web3ModalProvider)
 			const provider = await Web3ModalProvider.connect();
 			//let ethProvider = new ethers.providers.Web3Provider(provider);
-
 			let ethProvider = new ethers.providers.Web3Provider(provider)
 			//dispatch(setProvider(provider));
 			const accounts = await ethProvider.listAccounts();
 			console.log(accounts)
 			dispatch(setWalletAddress(accounts[0]))
-			navigate("/result");
+			navigate("/ChooseContract");
 		} catch (error) {
 			console.log(error);
 		}
