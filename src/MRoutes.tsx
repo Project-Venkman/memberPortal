@@ -6,7 +6,7 @@ import ResultTest from "@pages/ResultTest";
 import { CoinInventory } from "@pages/CoinInventory";
 import { Mint } from "@pages/Mint";
 import Burn from "@pages/Burn";
-import ChooseContract from "@pages/ChooseContract";
+import BarNavigation from "@pages/ChooseContract";
 
 const MRoutes = () => {
 	return (
@@ -18,7 +18,7 @@ const MRoutes = () => {
 			<Route path={"/Burn"} element={<Burn />} />
 			<Route path={"/CoinInventory"} element={<CoinInventory />} />
 			<Route path={"/Mint"} element={<Mint />} />
-			<Route path={"/ChooseContract"} element={<ChooseContract />} />
+			<Route path={"/ChooseContract"} element={<BarNavigation />} />
 		</Routes>
 	)
 }
