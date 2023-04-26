@@ -47,6 +47,8 @@ const providerOptions = {
 				// Implement the MagicLink login logic here
 			},
 		},
+		// move over to the drop page.
+
 		connector: async () => {
 			const accounts: string[] = await magic.wallet.connectWithUI();
 			console.log("Logged in user:", accounts[0]);
@@ -54,17 +56,7 @@ const providerOptions = {
 				scope: { email: "required" },
 			});
 			console.log("userinfo", userInfo);
-			await axios
-				.post("https://api-snzjakgcva-uc.a.run.app/Owner/Add", {
-					Email: userInfo.email,
-					WalletAddress: accounts[0],
-				})
-				.then((res) => {
-					console.log("res", res);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
+
 			return magic.wallet.getProvider();
 		},
 	},
