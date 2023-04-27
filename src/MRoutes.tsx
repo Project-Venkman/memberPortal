@@ -6,8 +6,21 @@ import ResultTest from "@pages/ResultTest";
 import { CoinInventory } from "@pages/CoinInventory";
 import { Mint } from "@pages/Mint";
 import Burn from "@pages/Burn";
-import BarNavigation from "@pages/ChooseContract";
-
+import Accordion from "@pages/ChooseContract";
+const accordionData = [
+	{
+		title: 'First Accordion Item',
+		description: 'This is the description for the first accordion item.'
+	},
+	{
+		title: 'Second Accordion Item',
+		description: 'This is the description for the second accordion item.'
+	},
+	{
+		title: 'Third Accordion Item',
+		description: 'This is the description for the third accordion item.'
+	},
+]
 const MRoutes = () => {
 	return (
 		<Routes>
@@ -18,7 +31,7 @@ const MRoutes = () => {
 			<Route path={"/Burn"} element={<Burn />} />
 			<Route path={"/CoinInventory"} element={<CoinInventory />} />
 			<Route path={"/Mint"} element={<Mint />} />
-			<Route path={"/ChooseContract"} element={<BarNavigation />} />
+			<Route path={"/ChooseContract"} element={<Accordion data={accordionData} />} />
 		</Routes>
 	)
 }
