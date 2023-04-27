@@ -17,7 +17,7 @@ const accordionData = [
 		image: Bill,
 		header: "The Bill Murray Collection",
 		button: {
-			element: <span>Button for Accordion Item 1</span>,
+			element: <span>Enter the Luminary Ballroom</span>,
 			onClick: () => {
 				console.log("Button for Accordion Item 1 clicked");
 			}
@@ -27,7 +27,13 @@ const accordionData = [
 		title: 'EarthLight Foundation',
 		description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
 		image: ELF,
-		header: "The DreamShip Collection"
+		header: "The DreamShip Collection",
+		button: {
+			element: <span>Enter the Planetarium</span>,
+			onClick: () => {
+				console.log("Button for Accordion Item 1 clicked");
+			}
+		}
 	},
 ]
 const MRoutes = () => {

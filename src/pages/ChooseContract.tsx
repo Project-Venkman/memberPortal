@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 interface AccordionData {
     title: string;
     description: string;
@@ -9,7 +10,6 @@ interface AccordionData {
         onClick: () => void;
     };
 }
-
 
 interface AccordionProps {
     data: AccordionData[];
@@ -45,9 +45,18 @@ const Accordion: React.FC<AccordionProps> = ({ data }) => {
                     </div>
                 </div>,
                 activeIndex === index && (
-                    <div id="expand" key={`desc-${index}`} className="px-4 mt-[25%] py-3 bg-black flex-grow">
+                    <div
+                        id="expand"
+                        key={`desc-${index}`}
+                        className="px-4 mt-[25%] py-3 bg-black flex-grow flex flex-col"
+                    >
                         <h3 className="mb-7 text-lg text-center font-medium text-white">{item.header}</h3>
                         <p className="text-sm text-white px-7">{item.description}</p>
+                        {item.button && (
+                            <div className="mt-auto flex justify-center bg-white w-40 mx-auto mb-40 min-h-[48px] ">
+                                <button className="px-1" onClick={item.button.onClick}>{item.button.element}</button>
+                            </div>
+                        )}
                     </div>
                 ),
             ])}
