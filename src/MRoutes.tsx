@@ -7,18 +7,19 @@ import { CoinInventory } from "@pages/CoinInventory";
 import { Mint } from "@pages/Mint";
 import Burn from "@pages/Burn";
 import Accordion from "@pages/ChooseContract";
+import Bill from "@assets/bill/Bill-Murray-Applied-at-P.F.-Changs-scaled.jpg";
+// import Earth from "@assets/earth/earth.jpg";
+import ELF from "@assets/images/rkt164.jpg"
 const accordionData = [
 	{
-		title: 'First Accordion Item',
-		description: 'This is the description for the first accordion item.'
+		title: 'Bill Murray',
+		description: 'This is the description for the first accordion item.',
+		image: Bill
 	},
 	{
-		title: 'Second Accordion Item',
-		description: 'This is the description for the second accordion item.'
-	},
-	{
-		title: 'Third Accordion Item',
-		description: 'This is the description for the third accordion item.'
+		title: 'EarthLight Foundation',
+		description: 'This is the description for the second accordion item.',
+		image: ELF,
 	},
 ]
 const MRoutes = () => {
