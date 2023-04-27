@@ -13,13 +13,21 @@ import ELF from "@assets/images/rkt164.jpg"
 const accordionData = [
 	{
 		title: 'Bill Murray',
-		description: 'This is the description for the first accordion item.',
-		image: Bill
+		description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
+		image: Bill,
+		header: "The Bill Murray Collection",
+		button: {
+			element: <span>Button for Accordion Item 1</span>,
+			onClick: () => {
+				console.log("Button for Accordion Item 1 clicked");
+			}
+		}
 	},
 	{
 		title: 'EarthLight Foundation',
-		description: 'This is the description for the second accordion item.',
+		description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
 		image: ELF,
+		header: "The DreamShip Collection"
 	},
 ]
 const MRoutes = () => {

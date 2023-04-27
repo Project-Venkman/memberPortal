@@ -3,7 +3,13 @@ interface AccordionData {
     title: string;
     description: string;
     image: string;
+    header: string;
+    button?: {
+        element: JSX.Element;
+        onClick: () => void;
+    };
 }
+
 
 interface AccordionProps {
     data: AccordionData[];
@@ -39,8 +45,9 @@ const Accordion: React.FC<AccordionProps> = ({ data }) => {
                     </div>
                 </div>,
                 activeIndex === index && (
-                    <div key={`desc-${index}`} className="px-4 py-3 bg-black flex-grow">
-                        <p className="text-sm text-gray-700">{item.description}</p>
+                    <div id="expand" key={`desc-${index}`} className="px-4 mt-[25%] py-3 bg-black flex-grow">
+                        <h3 className="mb-7 text-lg text-center font-medium text-white">{item.header}</h3>
+                        <p className="text-sm text-white px-7">{item.description}</p>
                     </div>
                 ),
             ])}
