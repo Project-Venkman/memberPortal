@@ -41,7 +41,7 @@ const Accordion: React.FC<AccordionProps> = ({ data }) => {
                     onClick={() => toggleAccordion(index)}
                 >
                     <div className="flex mx-auto items-center justify-between px-4 py-3 cursor-pointer">
-                        <h3 className="text-lg font-medium text-white">{item.title}</h3>
+                        <h3 className="text-lg text-center font-medium text-white">{item.title}</h3>
                     </div>
                 </div>,
                 activeIndex === index && (
