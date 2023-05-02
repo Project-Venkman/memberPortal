@@ -1,6 +1,6 @@
 import * as React from "react";
-import {Guid} from "guid-typescript";
-import {Burn, Claim, Media} from "@customtypes/index";
+import { Guid } from "guid-typescript";
+import { Burn, Claim, Media } from "@customtypes/index";
 
 export interface Asset {
 	name: string;
@@ -38,7 +38,7 @@ export type DetailProps<
 	p = {
 		data: DetailAsset;
 	}
-> = p
+> = p;
 
 export interface DetailAsset {
 	Name: string;
@@ -55,4 +55,3 @@ export interface DetailAsset {
 	IpfsItems?: Array<IpfsItem>;
 	AssetOwner?: Owner;
 }
-

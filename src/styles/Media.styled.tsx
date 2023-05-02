@@ -84,7 +84,7 @@ export const MediaPlayerItemButton = styled.button`
 	
 `
 export const MediaPlayerItemThumbnail = styled.img`
-	${tw`hover:border-green-500 w-[40%]`}
+	${tw`border-2 border-black border-solid hover:border-green-500 w-[40%]`}
 `
 export const VideoPlayer = styled.video`
 	${tw`max-h-9/10`}

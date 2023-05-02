@@ -1,13 +1,20 @@
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import CoinbaseWalletSDK from "@coinbase/wallet-sdk";
 import Web3Modal from "web3modal";
+import { Magic, UserInfo } from "magic-sdk";
+import axios from "axios";
+const magicKey: string | undefined = process.env.REACT_APP_MAGIC_KEY as string;
+console.log(magicKey);
+const magic = new Magic(magicKey, {
+	network: "mainnet",
+});
 
 const providerOptions = {
 	injected: {
 		package: null,
 		options: {
-			darkMode: true
-		}
+			darkMode: true,
+		},
 	},
 	walletconnect: {
 		package: WalletConnectProvider, // required
@@ -26,7 +33,38 @@ const providerOptions = {
 			chainId: 1, // Optional. It defaults to 1 if not provided
 			darkMode: true, // Optional. Use dark theme, defaults to false
 		},
-	}
+	},
+	"custom-wallet": {
+		package: magic,
+		options: {
+			darkMode: true,
+			chainId: 1,
+		},
+		display: {
+			name: "MagicLink",
+			description: "Log in with MagicLink",
+			onClick: () => {
+				console.log("onClick");
+				// Implement the MagicLink login logic here
+			},
+		},
+		// move over to the drop page.
+
+		connector: async () => {
+			const accounts: string[] = await magic.wallet.connectWithUI();
+			console.log("Logged in user:", accounts[0]);
+			try {
+				const userInfo: UserInfo = await magic.wallet.requestUserInfoWithUI({
+					scope: { email: "required" },
+				});
+				console.log("userinfo", userInfo);
+			} catch (err) {
+				console.log(err);
+			}
+
+			return magic.wallet.getProvider();
+		},
+	},
 };
 
 export const Web3ModalProvider = new Web3Modal({
@@ -36,5 +74,5 @@ export const Web3ModalProvider = new Web3Modal({
 	//displayNoInjectedProvider: false,
 	disableInjectedProvider: false,
 	providerOptions, // required
-	theme: "dark"
+	theme: "dark",
 });

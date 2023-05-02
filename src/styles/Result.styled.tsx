@@ -1,24 +1,24 @@
 import tw from "twin.macro";
 import styled from 'styled-components';
-
 import heroBG from "@assets/bill/COUCH-FOR-SPLASH-PAGE.png";
-
+import space from "@assets/images/Space.jpg";
 export const Maintenance = styled.div`
 	${tw`w-full h-8 bg-yellow-300 font-bold text-xl italic flex text-center justify-center items-center absolute top-0`}
 `
+
 export const ResultPage = styled.div`
 	background-image: url(${heroBG});
 	${tw`flex flex-col items-center justify-center h-full relative bg-cover bg-center bg-no-repeat`}
 `
 export const ResultPageNav = styled.div`
-	${tw`portrait:hidden z-80 h-[105px] w-full py-2 bg-transparent text-white flex flex-row gap-8 justify-center items-center absolute top-0`};
+	${tw`hidden md:flex z-80 h-[105px] w-full py-2 bg-transparent text-white flex flex-row gap-8 justify-center items-center absolute top-0`};
 `
 export const ResultPageNavMobile = styled.div`
-	${tw`hidden portrait:flex justify-end z-80 h-16 w-full bg-transparent text-white absolute top-0 right-0`};
+	${tw`flex md:hidden justify-end z-80 h-16 w-full bg-transparent text-white absolute top-0 right-0`};
 `
 export const ResultPageNavButton = styled.button`
 	span {
-		${tw`font-barlow uppercase tracking-[1.5px] text-[18px] leading-[28.8px] font-black antialiased hover:animate-pulse hover:text-gold`};
+		${tw`flex font-barlow uppercase tracking-[1.5px] text-[18px] leading-[28.8px] font-black antialiased hover:animate-pulse hover:text-gold`};
 	}
 `
 export const ResultPageNavListItem = styled.li`
@@ -30,6 +30,7 @@ export const ResultPageNavListItem = styled.li`
 		${tw`font-barlow uppercase tracking-[1.5px] text-[18px] leading-[28.8px] font-black antialiased hover:animate-pulse hover:text-gold`};
 	}
 `
+
 export const ResultCard = styled.div`
 	${tw`
 		relative
@@ -38,10 +39,12 @@ export const ResultCard = styled.div`
 		xs:tall:portrait:-top-8 short:portrait:-top-2 md:tall:portrait:-top-6 md:portrait:-top-20 
 	`};
 `
+
 export const ResultCardContent = styled.div` 
 	${tw`relative w-full h-full flex flex-col justify-center items-center`};
 	transform: rotate(-4deg);
 `
+
 export const ImageContainer = styled.div`
 	${tw`absolute w-8/12 xxxs:w-full xxs:w-full xs:w-full md:w-9/12 lg:w-8/12 xl:w-7/12 h-full flex flex-col items-center justify-center`};
 `
@@ -116,4 +119,32 @@ export const SelectionOptionsListItem = styled.li`
 	${tw`
 		hover:text-green-700 p-1 hover:bg-white/25
 	`}
+`
+
+
+export const TelescopeImg = styled.img`
+	${tw`z-30 w-8/12 xxxs:w-full xxs:w-full xs:w-full md:w-full lg:w-full xl:w-full`}; 
+`
+
+export const ResultCardELF = styled.div`
+	background-image: url(${space});
+
+	${tw`
+		relative
+		rounded-full
+		w-4/5 md:portrait:w-4/5 md:w-4/5 xl:w-2/3
+		top-14 md:-top-16 xl:-top-4 sm:-top-20 xxxs:-top-6 lg:-top-10
+		xs:tall:portrait:-top-8 short:portrait:-top-2 md:tall:portrait:-top-6 md:portrait:-top-20 
+	`};
+`
+
+export const ResultCardContentELF = styled.div` 
+	${tw`relative w-full h-full flex flex-col justify-center items-center`};
+	// transform: rotate(-4deg);
+`
+export const ImageContainerELF = styled.div`
+	${tw`absolute w-8/12 xxxs:w-7/12 xxs:w-7/12 xs:w-7/12 md:w-7/12 lg:w-7/12 xl:w-7/12 h-full flex flex-col items-center justify-center`};
+`
+export const ResultPageELF = styled.div`
+	${tw`flex flex-col items-center justify-center h-full relative bg-cover bg-center bg-no-repeat`}
 `
