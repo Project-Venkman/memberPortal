@@ -55,19 +55,21 @@ export const MediaPlayer = styled.div`
 `
 export const MediaPlayerItemsContainer = styled.div`
 	${tw`
+		
 		w-full portrait:h-auto
-		relative flex flex-row justify-center
-		portrait:overflow-x-hidden 
-		portrait:overflow-y-auto	
+		relative flex flex-row justify-center 
+			portrait:overflow-x-scroll 
+		portrait:overflow-y-auto
 	`}
 `
 export const MediaPlayerItems = styled.div`
 	${tw`
 		w-full h-full p-4 portrait:h-[min-content] portrait:p-0 portrait:py-4
 		bg-gray-500/25 
-		flex gap-4 portrait:flex-wrap portrait:justify-center
-		overflow-x-auto
+		flex  portrait:flex-wrap portrait:justify-center
+		overflow-x-scroll
 		overflow-y-hidden
+		
 	`}
 `
 export const MediaPlayerItemButton = styled.button`
