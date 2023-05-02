@@ -7,46 +7,26 @@ import { CoinInventory } from "@pages/CoinInventory";
 import { Mint } from "@pages/Mint";
 import Burn from "@pages/Burn";
 import Accordion from "@pages/ChooseContract";
-import Bill from "@assets/bill/Bill-Murray-Applied-at-P.F.-Changs-scaled.jpg";
-// import Earth from "@assets/earth/earth.jpg";
-import ELF from "@assets/images/rkt164.jpg"
-const accordionData = [
-	{
-		title: 'Bill Murray',
-		description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
-		image: Bill,
-		header: "The Bill Murray Collection",
-		button: {
-			element: <span>Enter the Luminary Ballroom</span>,
-			onClick: () => {
-				console.log("Button for Accordion Item 1 clicked");
-			}
-		}
-	},
-	{
-		title: 'EarthLight Foundation',
-		description: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
-		image: ELF,
-		header: "The DreamShip Collection",
-		button: {
-			element: <span>Enter the Planetarium</span>,
-			onClick: () => {
-				console.log("Button for Accordion Item 1 clicked");
-			}
-		}
-	},
-]
+import PVLogin from "@components/Result/PV/PVLogin";
+import PVResults from "@components/Result/PV/PVResults";
+import { accordionData } from "@pages/ChooseContract"
+import ProfilePage from "@pages/Profile";
 const MRoutes = () => {
 	return (
 		<Routes>
 			<Route path={"/"} element={<Login />} />
 			<Route path={"/Login"} element={<Login />} />
+			<Route path={"/PVLogin"} element={<PVLogin />} />
 			<Route path={"/Result"} element={<Result />} />
 			<Route path={"/ResultTest"} element={<ResultTest />} />
 			<Route path={"/Burn"} element={<Burn />} />
 			<Route path={"/CoinInventory"} element={<CoinInventory />} />
 			<Route path={"/Mint"} element={<Mint />} />
+			<Route path={"/PVResult"} element={<Result />} />
+			<Route path={"/ELFResult"} element={<Result />} />
+			<Route path={"/ELFLogin"} element={<Login />} />
 			<Route path={"/ChooseContract"} element={<Accordion data={accordionData} />} />
+			<Route path={"/ProfilePage"} element={<ProfilePage />} />
 		</Routes>
 	)
 }

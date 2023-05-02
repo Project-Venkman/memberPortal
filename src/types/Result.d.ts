@@ -3,32 +3,29 @@ import { WalletData } from "@customtypes/Login";
 import { Dispatch, SetStateAction } from "react";
 
 export type ResultProps<
-	D extends React.ElementType = div['defaultComponent'],
-	P = { result? },
-	> = div<P,D>
+	D extends React.ElementType = div["defaultComponent"],
+	P = { result? }
+> = div<P, D>;
+
+export type ProfileProps<P = {}> = P;
+
 export type NavBarProps<
 	P = {
 		modalOpen: boolean;
 		setModalOpen: Dispatch<SetStateAction<boolean>>;
 		setModalType: Dispatch<SetStateAction<string>>;
-	},
-	> = P
-export type PeachProps<
-	P = { walletData: WalletData },
-	> = P
-export type ItemProps<
-	P = { },
-	> = P
-export type ItemSelectProps<
-	P = { },
-	> = P
+	}
+> = P;
+export type PeachProps<P = { walletData: WalletData }> = P;
+export type ItemProps<P = {}> = P;
+export type ItemSelectProps<P = {}> = P;
 export type ResultModalProps<
 	P = {
 		modalOpen: boolean;
 		setModalOpen: Dispatch<SetStateAction<boolean>>;
 		modalType: string;
-	},
-	> = P
+	}
+> = P;
 export interface Result {
 	code?: string;
 	url?: url;
@@ -36,11 +33,9 @@ export interface Result {
 export interface CouponType {
 	code: string;
 }
-export interface URLType extends React.ElementType<HTMLAnchorElement>{
+export interface URLType extends React.ElementType<HTMLAnchorElement> {
 	url: string;
 	text: string;
 }
 
-export type Web3ModalProps<
-	P = {}
-> = P
+export type Web3ModalProps<P = {}> = P;

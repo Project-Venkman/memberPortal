@@ -6,7 +6,7 @@ import axios from "axios";
 const magicKey: string | undefined = process.env.REACT_APP_MAGIC_KEY as string;
 console.log(magicKey);
 const magic = new Magic(magicKey, {
-	network: "goerli",
+	network: "mainnet",
 });
 
 const providerOptions = {
@@ -38,6 +38,7 @@ const providerOptions = {
 		package: magic,
 		options: {
 			darkMode: true,
+			chainId: 1,
 		},
 		display: {
 			name: "MagicLink",

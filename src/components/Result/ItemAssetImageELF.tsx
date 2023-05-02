@@ -22,8 +22,7 @@ export const ItemAssetImageELF: React.FC<ItemProps> = (props) => {
 
     return (
         <React.Fragment>
-
-            <NFTImg className={loaded ? "loaded" : ""} src={rocket164} onLoad={onLoad} />
+            <NFTImg className={loaded ? "loaded" : ""} src={asset.url || oAsset.image} onLoad={onLoad} />
             {/*{!loaded && <NFTImg src={loadingGif}/>}*/}
         </React.Fragment>
     )

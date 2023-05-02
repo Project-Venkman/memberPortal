@@ -20,7 +20,14 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
 	const handleClick = () => {
 		window.localStorage.clear();
 		dispatch({ type: "RESET" });
-		navigate("/Login");
+		const url = new URL(window.location.href);
+		if (url.pathname.includes("pv")) {
+			navigate("/PVLogin");
+		} else if (url.pathname.includes("ELF")) {
+			navigate("/ELFLogin");
+		} else {
+			navigate("/Login");
+		}
 	}
 
 	const handleBurnClick = () => {
