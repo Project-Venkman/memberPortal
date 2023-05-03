@@ -37,18 +37,14 @@ import ELFResult from "@components/Result/ELF/ELFResults"
 const ProfilePage: React.FC<ProfileProps> = (props) => {
     const { } = props;
     const navigate = useNavigate();
-    const wallet: WalletData = useSelector((state: RootState) => state.wallet);
+    // const wallet: WalletData = useSelector((state: RootState) => state.wallet);
+    // const walletAssets: Array<Asset> = useSelector((state: RootState) => state.walletAssets);
+    // const burns: Array<BurnType> = useSelector((state: RootState) => state.burnAssets as Array<BurnType>);
+    // const dispatch = useDispatch();
+    // console.log(wallet)
     const walletAddress: string = useSelector((state: RootState) => state.walletAddress);
-    const walletAssets: Array<Asset> = useSelector((state: RootState) => state.walletAssets);
-    const burns: Array<BurnType> = useSelector((state: RootState) => state.burnAssets as Array<BurnType>);
-    const dispatch = useDispatch();
-    const [loading, setLoading] = useState<boolean>(false);
-    const currentUrl = new URL(window.location.href);
-    console.log(currentUrl)
-    console.log(wallet)
     console.log(walletAddress)
-    console.log(walletAssets)
-
+    // use wallet address to get id
     useEffect(() => {
     }, [])
     return (

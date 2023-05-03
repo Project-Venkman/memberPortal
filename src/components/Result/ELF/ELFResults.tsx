@@ -56,7 +56,9 @@ const ELFResult: React.FC<ResultProps> = (props) => {
         (async () => {
             console.log("...Verifying Ownership");
             setLoading(true);
-            await Api.ownership.verify(walletAddress)
+            await Api.asset.getByWalletAddress(walletAddress)
+
+                // await Api.ownership.verify(walletAddress)
                 .then(async (res) => {
                     console.log("...Setting Data", res);
                     await dispatch(setWallet(res));

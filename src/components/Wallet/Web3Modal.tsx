@@ -14,8 +14,8 @@ import { Web3ModalProvider } from "@components/Wallet";
 import axios from "axios";
 import { SiweMessage } from "siwe";
 import { Api } from "@scripts/API";
-
 export const Web3ModalComponent: React.FC<Web3ModalProps> = (props) => {
+	axios.defaults.withCredentials = true;
 	let { } = props;
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
@@ -35,7 +35,10 @@ export const Web3ModalComponent: React.FC<Web3ModalProps> = (props) => {
 			const signer = ethProvider.getSigner();
 			let message = ""
 			if (accounts) {
-				let nonce = await Api.auth.generateChallenge()
+				// let nonce = await Api.auth.generateChallenge()
+				let nonce = (await axios.get("http://10.200.8.85:3000/Auth/GenerateChallenge")).data
+				// let nonce = (await axios.get("https://apiv2.projectvenkman.com/Auth/GenerateChallenge")).data
+
 				let siweMessage = new SiweMessage({
 					domain: domain,
 					address: accounts[0],
@@ -51,7 +54,14 @@ export const Web3ModalComponent: React.FC<Web3ModalProps> = (props) => {
 				// 	message: message,
 				// 	signature: signedMessage
 				// })
-				await Api.auth.issueTokens(message, signedMessage)
+				// await Api.auth.issueTokens(message, signedMessage)
+				await axios.post("http://10.200.8.85:3000/Auth/IssueTokens", {
+					message: message,
+					signature: signedMessage
+				}, {
+					withCredentials: true
+				});
+
 			}
 			console.log(accounts)
 			dispatch(setWalletAddress(accounts[0]));

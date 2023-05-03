@@ -14,7 +14,7 @@ mario.url = mario.host!
 export const Api = {
 	auth: {
 		generateChallenge: async () => {
-			return await ApiFx.POSTKahlilAuthenticated("Auth/GenerateChallenge", mario, "").then(async res => {
+			return await ApiFx.GETKahlilAuthenticated("Auth/GenerateChallenge", mario, "").then(async res => {
 				return res.data
 			})
 		},
@@ -52,6 +52,13 @@ export const Api = {
 		}
 	},
 	asset: {
+		getByWalletAddress: async (WalletAddress: string) => {
+			const data = { "walletAddress": WalletAddress };
+			return await ApiFx.POSTKahlilAuthenticated("Asset/GetByWalletAddress", mario, data)
+				.then(async res => {
+					return await res.data;
+				})
+		},
 		getAllByContractId: async (contractTypeId: string) => {
 			return await ApiFx.POSTKahlilAuthenticated("Asset/GetAllByContractType", mario, contractTypeId)
 				.then(async res => {

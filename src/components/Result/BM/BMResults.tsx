@@ -45,7 +45,8 @@ const BMResult: React.FC<ResultProps> = (props) => {
         (async () => {
             console.log("...Verifying Ownership");
             setLoading(true);
-            await Api.ownership.verify(walletAddress)
+            await Api.asset.getByWalletAddress(walletAddress)
+                // await Api.ownership.verify(walletAddress)
                 .then(async (res) => {
                     console.log("...Setting Data", res);
                     await dispatch(setWallet(res));
@@ -58,23 +59,23 @@ const BMResult: React.FC<ResultProps> = (props) => {
                             oa.push(...r.ownedAssets!);
                         console.log(ba.findIndex((r2) => r.ownedAssets![0].burnBMAssets![0].assetNumber === r2.assetNumber))
                         // 
-                        if (r.ownedAssets![0].burnBMAssets!.length) {
-                            let tmp = [...r.ownedAssets![0].burnBMAssets!];
-                            tmp.forEach(t => {
-                                if (!ba.find(b => b.assetNumber === t.assetNumber)) {
-                                    ba.push(...r.ownedAssets![0].burnBMAssets!)
-                                }
-                            })
-                        }
+                        // if (r.ownedAssets![0].burnBMAssets!.length) {
+                        //     let tmp = [...r.ownedAssets![0].burnBMAssets!];
+                        //     tmp.forEach(t => {
+                        //         if (!ba.find(b => b.assetNumber === t.assetNumber)) {
+                        //             ba.push(...r.ownedAssets![0].burnBMAssets!)
+                        //         }
+                        //     })
+                        // }
                     })
                     console.log("oa", oa);
                     console.log("ba", ba);
                     await dispatch(setWalletAssets(oa));
-                    await dispatch(setBurnAssets(ba));
-                    await Api.asset.getBurnables(walletAddress)
-                        .then((res) => {
-                            console.log("getBurnables", res);
-                        });
+                    // await dispatch(setBurnAssets(ba));
+                    // await Api.asset.getBurnables(walletAddress)
+                    //     .then((res) => {
+                    //         console.log("getBurnables", res);
+                    //     });
                     //getBurns();
                     if (!oa.length && burns.length) navigate('/Burn');
                     //setVerified(true);

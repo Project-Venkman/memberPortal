@@ -52,7 +52,8 @@ const Result: React.FC<ResultProps> = (props) => {
 		(async () => {
 			console.log("...Verifying Ownership");
 			setLoading(true);
-			await Api.ownership.verify(walletAddress)
+			// await Api.ownership.verify(walletAddress)
+			await Api.asset.getByWalletAddress(walletAddress)
 				.then(async (res) => {
 					console.log("...Setting Data", res);
 					await dispatch(setWallet(res));
@@ -92,9 +93,9 @@ const Result: React.FC<ResultProps> = (props) => {
 					setLoading(false);
 					console.error(await error);
 				});
-
 		})();
 	}, [walletAddress])
+
 
 	return (
 		<>
