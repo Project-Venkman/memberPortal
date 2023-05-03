@@ -10,7 +10,7 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
 	const { modalOpen, setModalOpen, setModalType } = props;
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const navButtons: Array<string> = ["media", "claim", "events"];
+	const navButtons: Array<string> = ["media", "claim", "events", "Profile"];
 
 	const handleDataModalClick = (e: string) => {
 		setModalType(e)
@@ -33,6 +33,9 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
 	const handleBurnClick = () => {
 		navigate("/Burn");
 	}
+	const handleProfileClick = () => {
+		navigate("/ProfilePage");
+	}
 
 	return (
 		<ResultPageNav id="resultpagenav">
@@ -48,9 +51,9 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
 						{btn === "media" && (
 							<span>{btn}</span>
 						)}
-						{/*{btn === "burn" && (
-							<span>{btn}</span>
-						)}*/}
+						{btn === "Profile" && (
+							<span onClick={handleProfileClick} >{btn}</span>
+						)}
 					</ResultPageNavButton>
 				)
 			}

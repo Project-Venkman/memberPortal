@@ -3,27 +3,29 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environments = {
-    local: {
-        production: false,
-        ProtonPack: 'http://localhost:7071/',
-        Zuul: 'http://localhost:7073/',
-        Hypermint: 'http://localhost:3000/',
-        Prefix: 'http://'
-    },
-    development: {
-        production: false,
-        ProtonPack: 'https://protonpackapi-dev.azurewebsites.net/',
-        Zuul: 'https://zuulapi-dev.azurewebsites.net/',
-        Hypermint: 'http://localhost:3000/',
-        Prefix: 'https://'
-    },
-    production: {
-        production: false,
-        ProtonPack: 'https://protonpackapi.azurewebsites.net/',
-        Zuul: 'https://zuulapi.azurewebsites.net/',
-        Hypermint: 'https://protonpackapiserver-dooxr4hhta-uc.a.run.app/',
-        Prefix: 'https://'
-    }
+	local: {
+		production: false,
+		ProtonPack: "http://localhost:7071/",
+		Zuul: "http://localhost:7073/",
+		Hypermint: "http://localhost:3000/",
+		Prefix: "http://",
+	},
+	development: {
+		production: false,
+		// ProtonPack: 'https://protonpackapi-dev.azurewebsites.net/',
+		ProtonPack: "https://apiv2.projectvenkman.com/",
+		Zuul: "https://zuulapi-dev.azurewebsites.net/",
+		Hypermint: "http://localhost:3000/",
+		Prefix: "https://",
+	},
+	production: {
+		production: false,
+		// ProtonPack: "https://protonpackapi.azurewebsites.net/",
+		ProtonPack: "https://apiv2.projectvenkman.com/",
+		Zuul: "https://zuulapi.azurewebsites.net/",
+		Hypermint: "https://protonpackapiserver-dooxr4hhta-uc.a.run.app/",
+		Prefix: "https://",
+	},
 };
 
 /*
@@ -34,4 +36,3 @@ export const environments = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
-
