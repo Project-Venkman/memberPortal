@@ -10,12 +10,23 @@ const mario: KahlilApi = {
 	url: ""
 };
 
-mario.url = mario.host /*+ mario.version*/ + "api/";
-
+mario.url = mario.host!
 export const Api = {
+	auth: {
+		generateChallenge: async () => {
+			return await ApiFx.POSTKahlilAuthenticated("Auth/GenerateChallenge", mario, "").then(async res => {
+				return res.data
+			})
+		},
+		issueTokens: async (message: string, signature: string) => {
+			return await ApiFx.POSTKahlilAuthenticated("Auth/IssueTokens", mario, { message, signature }).then(async res => {
+				return res.data
+			})
+		},
+	},
 	login: {
 		verify: async (WalletAddress: string) => {
-			const data = {"WalletAddress": WalletAddress};
+			const data = { "WalletAddress": WalletAddress };
 			return await ApiFx.POSTKahlilAuthenticated("Blockchain/Verify", mario, data)
 				.then(async res => {
 					return res.data;
@@ -25,7 +36,7 @@ export const Api = {
 	ownership: {
 		verify: async (WalletAddress: string) => {
 			const contracts = ["40000001-0001-0001-0002-000000000001", "40000001-0001-0001-0002-000000000002", "00000004-0000-0000-0000-000000000004", "00000004-0000-0000-0000-000000000005"]
-			const data = {"WalletAddress": WalletAddress, "Contracts": contracts};
+			const data = { "WalletAddress": WalletAddress, "Contracts": contracts };
 			return await ApiFx.POSTKahlilAuthenticated("Blockchain/VerifyOwnership", mario, data)
 				.then(async res => {
 					return await res.data;
@@ -42,7 +53,7 @@ export const Api = {
 	},
 	asset: {
 		getAllByContractId: async (contractTypeId: string) => {
-			return await ApiFx.POSTKahlilAuthenticated( "Asset/GetAllByContractType", mario, contractTypeId)
+			return await ApiFx.POSTKahlilAuthenticated("Asset/GetAllByContractType", mario, contractTypeId)
 				.then(async res => {
 					return await res.data;
 				})
@@ -62,7 +73,7 @@ export const Api = {
 				url: "https://protonpackapiserver-dooxr4hhta-uc.a.run.app/"
 				// url: "http://localhost:3000/"
 			}
-			let data = { "data": {"AssetID": assetId, "Status": status} }
+			let data = { "data": { "AssetID": assetId, "Status": status } }
 
 			return await ApiFx.POSTKahlilAuthenticated("Assets/UpdateSale", googleURL, data);
 		},
@@ -71,7 +82,7 @@ export const Api = {
 				//url: "https://protonpackapiserver-dooxr4hhta-uc.a.run.app/"
 				url: "http://localhost:3000/"
 			}
-			let data = { "data": {"AssetTypeID": assetTypeId, "AssetNumber": assetNumber, "AssetOwnerID": ownerId} }
+			let data = { "data": { "AssetTypeID": assetTypeId, "AssetNumber": assetNumber, "AssetOwnerID": ownerId } }
 
 			return await ApiFx.POSTKahlilAuthenticated("Assets/UpdateBurnOwner", googleURL, data);
 		}
@@ -79,7 +90,7 @@ export const Api = {
 	},
 	claim: {
 		getByTypeId: async (claimTypeId: string) => {
-			let data = {"ClaimTypeId": claimTypeId}
+			let data = { "ClaimTypeId": claimTypeId }
 			return await ApiFx.POSTKahlilAuthenticated("Claim/GetAllByTypeId", mario, data)
 				.then(async res => {
 					return await res.data;
