@@ -26,9 +26,9 @@ import {
 	UpdateErc721DraftContractRequest,
 	UpdateNameAndSymbolRequest
 } from "@customtypes/HyperMint";
-import {KahlilApi} from "@customtypes/Base";
-import * as ApiFx from "@scripts/API/ApiFunctions";
-import {environments} from "@scripts/API/environment";
+import { KahlilApi } from "@customtypes/Base";
+import * as ApiFx from "@pages/scripts/API/ApiFunctions";
+import { environments } from "@pages/scripts/API/environment";
 
 const url = environments[process.env.REACT_APP_DEV as keyof typeof environments].Hypermint;
 
@@ -45,20 +45,20 @@ export const HMApi = {
 	all: {
 		getAllByContract: async (contractTypeId: string) => {
 			const googleURL: KahlilApi = { url: url }
-			let data = {"contractId": contractTypeId}
+			let data = { "contractId": contractTypeId }
 
 			let contractData = await ApiFx.POSTKahlilAuthenticated("HyperMint/GetTokens", googleURL, data)
 				.then(async res => { return await res.data; });
 			let contractType = await contractData.network.contractType;
-			if(contractType === "ERC721"){
+			if (contractType === "ERC721") {
 
-			} else if(contractType === "ERC1155"){
+			} else if (contractType === "ERC1155") {
 
 			}
 		},
 		getContractInfo: async (contractId: string) => {
 			const googleURL: KahlilApi = { url: url }
-			let data = {"contractId": contractId}
+			let data = { "contractId": contractId }
 
 			return await ApiFx.POSTKahlilAuthenticated("HyperMint/GetContractInfo", googleURL, data)
 				.then(async res => {
@@ -77,7 +77,7 @@ export const HMApi = {
 		},
 		deployContract: async (contractId: string) => {
 			const googleURL: KahlilApi = { url: url }
-			let data = {"contractId": contractId}
+			let data = { "contractId": contractId }
 
 			return await ApiFx.POSTKahlilAuthenticated("HyperMint/DeployContract", googleURL, data)
 				.then(async res => {
@@ -87,7 +87,7 @@ export const HMApi = {
 		},
 		getTokens: async (contractId: string) => {
 			const googleURL: KahlilApi = { url: url }
-			let data = {"contractId": contractId}
+			let data = { "contractId": contractId }
 
 			return await ApiFx.POSTKahlilAuthenticated("HyperMint/GetTokens", googleURL, data)
 				.then(async res => {
@@ -97,7 +97,7 @@ export const HMApi = {
 		},
 		getTokenInformation: async (contractId: string, tokenId: string) => {
 			const googleURL: KahlilApi = { url: url }
-			let data = {"contractId": contractId, "tokenId": tokenId}
+			let data = { "contractId": contractId, "tokenId": tokenId }
 
 			return await ApiFx.POSTKahlilAuthenticated("HyperMint/GetTokenInformation", googleURL, data)
 				.then(async res => {
@@ -107,7 +107,7 @@ export const HMApi = {
 		},
 		mint: async (contractId: string, walletAddress: string, tokens: Array<string>) => {
 			const googleURL: KahlilApi = { url: url }
-			let data = {"contractId": contractId, "data": {"address": walletAddress, "tokens": tokens}}
+			let data = { "contractId": contractId, "data": { "address": walletAddress, "tokens": tokens } }
 
 			return await ApiFx.POSTKahlilAuthenticated("HyperMint/Mint", googleURL, data)
 				.then(async res => {
@@ -117,7 +117,7 @@ export const HMApi = {
 		},
 		getMintStatus: async (contractId: string, mintId: string) => {
 			const googleURL: KahlilApi = { url: url }
-			let data = {"contractId": contractId, "mintId": mintId}
+			let data = { "contractId": contractId, "mintId": mintId }
 
 			return await ApiFx.POSTKahlilAuthenticated("HyperMint/MintStatus", googleURL, data)
 				.then(async res => {
@@ -127,7 +127,7 @@ export const HMApi = {
 		},
 		getOwnedTokens: async (contractId: string, walletAddress: string) => {
 			const googleURL: KahlilApi = { url: url }
-			let data = {"contractId": contractId, "walletAddress": walletAddress}
+			let data = { "contractId": contractId, "walletAddress": walletAddress }
 
 			return await ApiFx.POSTKahlilAuthenticated("HyperMint/GetOwnedTokens", googleURL, data)
 				.then(async res => {
@@ -137,7 +137,7 @@ export const HMApi = {
 		},
 		transferToken: async (contractId: string, transferRequest: TransferRequest) => {
 			const googleURL: KahlilApi = { url: url }
-			let data = {"contractId": contractId, "transferRequest": transferRequest}
+			let data = { "contractId": contractId, "transferRequest": transferRequest }
 
 			return await ApiFx.POSTKahlilAuthenticated("HyperMint/TransferToken", googleURL, data)
 				.then(async res => {
@@ -147,7 +147,7 @@ export const HMApi = {
 		},
 		getTransferStatus: async (contractId: string, transferId: string) => {
 			const googleURL: KahlilApi = { url: url }
-			let data = {"contractId": contractId, "transferId": transferId}
+			let data = { "contractId": contractId, "transferId": transferId }
 
 			return await ApiFx.POSTKahlilAuthenticated("HyperMint/GetTransferStatus", googleURL, data)
 				.then(async res => {
@@ -157,7 +157,7 @@ export const HMApi = {
 		},
 		updateContractNameAndSymbol: async (contractId: string, updateNameAndSymbolRequest: UpdateNameAndSymbolRequest) => {
 			const googleURL: KahlilApi = { url: url }
-			let data = {"contractId": contractId, "updateNameAndSymbolRequest": updateNameAndSymbolRequest}
+			let data = { "contractId": contractId, "updateNameAndSymbolRequest": updateNameAndSymbolRequest }
 
 			return await ApiFx.POSTKahlilAuthenticated("HyperMint/UpdateContractNameAndSymbol", googleURL, data)
 				.then(async res => {
@@ -167,7 +167,7 @@ export const HMApi = {
 		},
 		getContractHostedMetadata: async (contractId: string) => {
 			const googleURL: KahlilApi = { url: url }
-			let data = {"contractId": contractId}
+			let data = { "contractId": contractId }
 
 			return await ApiFx.POSTKahlilAuthenticated("HyperMint/GetContractHostedMetadata", googleURL, data)
 				.then(async res => {
@@ -177,7 +177,7 @@ export const HMApi = {
 		},
 		getTokenHostedMetadata: async (contractId: string, tokenId: string) => {
 			const googleURL: KahlilApi = { url: url }
-			let data = {"contractId": contractId, "tokenId": tokenId}
+			let data = { "contractId": contractId, "tokenId": tokenId }
 
 			return await ApiFx.POSTKahlilAuthenticated("HyperMint/GetTokenHostedMetadata", googleURL, data)
 				.then(async res => {
@@ -187,7 +187,7 @@ export const HMApi = {
 		},
 		setTokenHostedMetadata: async (contractId: string, tokenId: string, metadata: Metadata) => {
 			const googleURL: KahlilApi = { url: url }
-			let data = {"contractId": contractId, "tokenId": tokenId, "metadata": metadata}
+			let data = { "contractId": contractId, "tokenId": tokenId, "metadata": metadata }
 
 			return await ApiFx.POSTKahlilAuthenticated("HyperMint/SetTokenHostedMetadata", googleURL, data)
 				.then(async res => {
@@ -197,7 +197,7 @@ export const HMApi = {
 		},
 		uploadContractMetadataMedia: async (contractId: string, media: string) => {
 			const googleURL: KahlilApi = { url: url }
-			let data = {"contractId": contractId, "media": media}
+			let data = { "contractId": contractId, "media": media }
 
 			return await ApiFx.POSTKahlilAuthenticated("HyperMint/UploadContractMetadataMedia", googleURL, data)
 				.then(async res => {
@@ -207,7 +207,7 @@ export const HMApi = {
 		},
 		uploadTokenMetadataImage: async (contractId: string, tokenId: string, media: string) => {
 			const googleURL: KahlilApi = { url: url }
-			let data = {"contractId": contractId, "tokenId": tokenId, "media": media}
+			let data = { "contractId": contractId, "tokenId": tokenId, "media": media }
 
 			return await ApiFx.POSTKahlilAuthenticated("HyperMint/UploadTokenMetadataImage", googleURL, data)
 				.then(async res => {
@@ -217,7 +217,7 @@ export const HMApi = {
 		},
 		uploadTokenMetadataAnimation: async (contractId: string, tokenId: string, media: string) => {
 			const googleURL: KahlilApi = { url: url }
-			let data = {"contractId": contractId, "tokenId": tokenId, "media": media}
+			let data = { "contractId": contractId, "tokenId": tokenId, "media": media }
 
 			return await ApiFx.POSTKahlilAuthenticated("HyperMint/UploadTokenMetadataAnimation", googleURL, data)
 				.then(async res => {
@@ -227,7 +227,7 @@ export const HMApi = {
 		},
 		verifyTokenBurn: async (contractId: string, txHash: string) => {
 			const googleURL: KahlilApi = { url: url }
-			let data = {"contractId": contractId, "txHash": txHash}
+			let data = { "contractId": contractId, "txHash": txHash }
 
 			return await ApiFx.POSTKahlilAuthenticated("HyperMint/VerifyTokenBurn", googleURL, data)
 				.then(async res => {
@@ -236,8 +236,8 @@ export const HMApi = {
 				});
 		},
 		authoriseBuy: async (contractId: string, tokenId: string, walletAddress: string, amount: string) => {
-			const googleURL: KahlilApi = { url: url}
-			let data = {"contractId": contractId, "tokenId": tokenId, "walletAddress": walletAddress, "amount": amount};
+			const googleURL: KahlilApi = { url: url }
+			let data = { "contractId": contractId, "tokenId": tokenId, "walletAddress": walletAddress, "amount": amount };
 
 			return await ApiFx.POSTKahlilAuthenticated("Hypermint/AuthoriseBuy", googleURL, data)
 				.then(async res => {

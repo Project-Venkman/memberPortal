@@ -23,6 +23,11 @@ export const Api = {
 				return res.data
 			})
 		},
+		renewTokens: async () => {
+			return await ApiFx.POSTKahlilAuthenticated("Auth/RenewTokens", mario).then(async res => {
+				return res.data
+			})
+		}
 	},
 	login: {
 		verify: async (WalletAddress: string) => {
@@ -58,6 +63,11 @@ export const Api = {
 				.then(async res => {
 					return await res.data;
 				})
+		},
+		GetAllBurnableContracts: async () => {
+			return await ApiFx.POSTKahlilAuthenticated("Asset/GetAllBurnableContracts", mario, "").then(async res => {
+				return await res.data
+			})
 		},
 		getAllByContractId: async (contractTypeId: string) => {
 			return await ApiFx.POSTKahlilAuthenticated("Asset/GetAllByContractType", mario, contractTypeId)

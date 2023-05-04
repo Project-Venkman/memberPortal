@@ -17,14 +17,14 @@ import {
 import frame from "@assets/bill/FRAME-NO-BILL2.png";
 import { RootState } from "@state/store";
 import { useDispatch, useSelector } from "react-redux";
-import { Api } from "@scripts/API";
+import { Api } from "@pages/scripts/API";
 import {
     setWallet,
     setEmptyWallet,
     setWalletAssets,
     setBurnAssets
 } from "@state/features";
-import { truncateAddress } from "@scripts/utils";
+import { truncateAddress } from "@pages/scripts/utils";
 import { LoadIndicator } from "devextreme-react";
 import { useNavigate } from "react-router-dom";
 
@@ -45,7 +45,8 @@ const BMResult: React.FC<ResultProps> = (props) => {
         (async () => {
             console.log("...Verifying Ownership");
             setLoading(true);
-            await Api.asset.getByWalletAddress(walletAddress)
+            // await Api.asset.getByWalletAddress(walletAddress)
+            await Api.asset.getByWalletAddress("0x7F90F772d4DAfb54601dfA4D6022F2542a409C98")
                 // await Api.ownership.verify(walletAddress)
                 .then(async (res) => {
                     console.log("...Setting Data", res);

@@ -16,14 +16,14 @@ import {
 import frame from "@assets/bill/FRAME-NO-BILL2.png";
 import { RootState } from "@state/store";
 import { useDispatch, useSelector } from "react-redux";
-import { Api } from "@scripts/API";
+import { Api } from "@pages/scripts/API";
 import {
     setWallet,
     setEmptyWallet,
     setWalletAssets,
     setBurnAssets
 } from "@state/features";
-import { truncateAddress } from "@scripts/utils";
+import { truncateAddress } from "@pages/scripts/utils";
 import { LoadIndicator } from "devextreme-react";
 import { useNavigate } from "react-router-dom";
 import telescope from "@assets/images/telescope.png"

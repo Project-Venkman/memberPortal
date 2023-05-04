@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { Web3ModalProvider } from "@components/Wallet";
 import axios from "axios";
 import { SiweMessage } from "siwe";
-import { Api } from "@scripts/API";
+import { Api } from "@pages/scripts/API";
 export const Web3ModalComponent: React.FC<Web3ModalProps> = (props) => {
 	axios.defaults.withCredentials = true;
 	let { } = props;
@@ -35,32 +35,41 @@ export const Web3ModalComponent: React.FC<Web3ModalProps> = (props) => {
 			const signer = ethProvider.getSigner();
 			let message = ""
 			if (accounts) {
-				// let nonce = await Api.auth.generateChallenge()
-				let nonce = (await axios.get("http://10.200.8.85:3000/Auth/GenerateChallenge")).data
-				// let nonce = (await axios.get("https://apiv2.projectvenkman.com/Auth/GenerateChallenge")).data
+				// if local storage has a varible called IssuedToken and the value is true then dont run 
+				if (localStorage.getItem("IssuedToken") === "true") {
+					console.log("User Already Issued Token")
+					await Api.auth.renewTokens();
+				} else {
+					let nonce = await Api.auth.generateChallenge()
+					// let nonce = (await axios.get("http://10.200.8.85:3000/Auth/GenerateChallenge")).data
+					// let nonce = (await axios.get("https://apiv2.projectvenkman.com/Auth/GenerateChallenge")).data
 
-				let siweMessage = new SiweMessage({
-					domain: domain,
-					address: accounts[0],
-					statement: statement,
-					uri: origin,
-					version: '1',
-					chainId: 1,
-					nonce: nonce
-				});
-				message = siweMessage.prepareMessage();
-				let signedMessage = await signer.signMessage(message);
-				// await axios.post("http://10.200.8.85:3000/Auth/IssueTokens", {
-				// 	message: message,
-				// 	signature: signedMessage
-				// })
-				// await Api.auth.issueTokens(message, signedMessage)
-				await axios.post("http://10.200.8.85:3000/Auth/IssueTokens", {
-					message: message,
-					signature: signedMessage
-				}, {
-					withCredentials: true
-				});
+					let siweMessage = new SiweMessage({
+						domain: domain,
+						address: accounts[0],
+						statement: statement,
+						uri: origin,
+						version: '1',
+						chainId: 1,
+						nonce: nonce
+					});
+					message = siweMessage.prepareMessage();
+					let signedMessage = await signer.signMessage(message);
+					// await axios.post("http://10.200.8.85:3000/Auth/IssueTokens", {
+					// 	message: message,
+					// 	signature: signedMessage
+					// })
+
+					await Api.auth.issueTokens(message, signedMessage)
+					// set local storage with key IssuedToken and value true
+					localStorage.setItem("IssuedToken", "true")
+					// await axios.post("http://10.200.8.85:3000/Auth/IssueTokens", {
+					// 	message: message,
+					// 	signature: signedMessage
+					// }, {
+					// 	withCredentials: true
+					// });
+				}
 
 			}
 			console.log(accounts)

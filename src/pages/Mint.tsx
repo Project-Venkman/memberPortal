@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from "react";
-import {ContractSelect} from "@components/Mint/ContractSelect";
-import {Api, Zuul} from "@scripts/API";
-import {useDispatch, useSelector} from "react-redux";
-import {setContracts} from "@state/features";
-import {RootState} from "@state/store";
-import {DataGrid} from "devextreme-react";
+import React, { useEffect, useState } from "react";
+import { ContractSelect } from "@components/Mint/ContractSelect";
+import { Api, Zuul } from "@pages/scripts/API";
+import { useDispatch, useSelector } from "react-redux";
+import { setContracts } from "@state/features";
+import { RootState } from "@state/store";
+import { DataGrid } from "devextreme-react";
 import {
 	Column,
 	Editing,
@@ -15,7 +15,7 @@ import {
 	SearchPanel,
 	Selection
 } from "devextreme-react/data-grid";
-import {RenderDetails} from "@components/index";
+import { RenderDetails } from "@components/index";
 import {
 	Asset,
 	ContractSetting,
@@ -30,7 +30,7 @@ import {
 	NFTContractMetadataType,
 	NFTContractType
 } from "@customtypes/index";
-import {HMApi} from "@scripts/API/HyperMintApi";
+import { HMApi } from "@pages/scripts/API/HyperMintApi";
 
 export const Mint: React.FC = () => {
 	const dispatch = useDispatch();
@@ -136,7 +136,7 @@ export const Mint: React.FC = () => {
 		if (!contract.ID.length) return;
 		(async () => {
 			await HMApi.all.getTokens(contract.PartnerContractID)
-				.then(async (res ) => {
+				.then(async (res) => {
 					let tks = res.tokens as Array<ContractToken>
 					setTokenData(tks);
 				});
@@ -159,12 +159,12 @@ export const Mint: React.FC = () => {
 
 	const contentReady = (e: any) => {
 		console.log("contentReady", e)
-		if(e.component.getSelectedRowKeys().length) {
+		if (e.component.getSelectedRowKeys().length) {
 			e.component.selectRowsByIndexes(0);
 		}
 	}
 
-	const selectionChanged = (e:  any) => {
+	const selectionChanged = (e: any) => {
 		console.log("selectionChanged", e);
 		e.component.collapseAll(-1);
 		e.component.expandRow(e.currentSelectedRowKeys[0]);
@@ -184,7 +184,7 @@ export const Mint: React.FC = () => {
 				showRowLines={true}
 				onContentReady={contentReady}
 				onSelectionChanged={selectionChanged}
-				/*onSaving={handleSave}*/
+			/*onSaving={handleSave}*/
 			>
 				<Selection mode="single" />
 				<Column dataField={"AssetNumber"} allowFiltering={true} allowEditing={false} sortOrder={"asc"} />
