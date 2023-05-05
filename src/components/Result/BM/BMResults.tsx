@@ -46,32 +46,36 @@ const BMResult: React.FC<ResultProps> = (props) => {
             console.log("...Verifying Ownership");
             setLoading(true);
             // await Api.asset.getByWalletAddress(walletAddress)
-            await Api.asset.getByWalletAddress("0x7F90F772d4DAfb54601dfA4D6022F2542a409C98")
+            await Api.asset.getByWalletAddress("0x2611B286994571b4D5292ACFF5619da8074b5c54")
                 // await Api.ownership.verify(walletAddress)
                 .then(async (res) => {
                     console.log("...Setting Data", res);
                     await dispatch(setWallet(res));
                     let oa: Array<Asset> = [];
                     let ba: Array<BurnType> = [];
-                    await res.forEach((r: WalletData) => {
-                        const burnContractIds = ["00000004-0000-0000-0000-000000000004", "00000004-0000-0000-0000-000000000005"];
-                        // HERE IS WHERE WE NEED TO FILTER OUT THE BURNABLES
-                        if (!burnContractIds.includes(r.ownedAssets![0].typeID))
-                            oa.push(...r.ownedAssets!);
-                        console.log(ba.findIndex((r2) => r.ownedAssets![0].burnBMAssets![0].assetNumber === r2.assetNumber))
-                        // 
-                        // if (r.ownedAssets![0].burnBMAssets!.length) {
-                        //     let tmp = [...r.ownedAssets![0].burnBMAssets!];
-                        //     tmp.forEach(t => {
-                        //         if (!ba.find(b => b.assetNumber === t.assetNumber)) {
-                        //             ba.push(...r.ownedAssets![0].burnBMAssets!)
-                        //         }
-                        //     })
-                        // }
-                    })
+                    // await res.forEach((r: WalletData) => {
+                    //     const burnContractIds = ["00000004-0000-0000-0000-000000000004", "00000004-0000-0000-0000-000000000005"];
+                    //     // HERE IS WHERE WE NEED TO FILTER OUT THE BURNABLES
+                    //     if (!burnContractIds.includes(r.ownedAssets![0].typeID))
+                    //         oa.push(...r.ownedAssets!);
+                    //     console.log(ba.findIndex((r2) => r.ownedAssets![0].burnBMAssets![0].assetNumber === r2.assetNumber))
+                    //     // 
+                    //     // if (r.ownedAssets![0].burnBMAssets!.length) {
+                    //     //     let tmp = [...r.ownedAssets![0].burnBMAssets!];
+                    //     //     tmp.forEach(t => {
+                    //     //         if (!ba.find(b => b.assetNumber === t.assetNumber)) {
+                    //     //             ba.push(...r.ownedAssets![0].burnBMAssets!)
+                    //     //         }
+                    //     //     })
+                    //     // }
+                    // })
+                    await Api.contract.GetAllBurnableContracts().then(async (res) => {
+                        console.log("res", res)
+                    });
                     console.log("oa", oa);
                     console.log("ba", ba);
                     await dispatch(setWalletAssets(oa));
+                    console.log(wallet)
                     // await dispatch(setBurnAssets(ba));
                     // await Api.asset.getBurnables(walletAddress)
                     //     .then((res) => {
@@ -85,7 +89,7 @@ const BMResult: React.FC<ResultProps> = (props) => {
                 .catch(async (error) => {
                     dispatch(setEmptyWallet(walletAddress));
                     setLoading(false);
-                    console.error(await error);
+                    if (error) console.error(await error);
                 });
 
         })();

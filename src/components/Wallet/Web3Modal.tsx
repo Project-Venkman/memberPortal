@@ -60,7 +60,14 @@ export const Web3ModalComponent: React.FC<Web3ModalProps> = (props) => {
 					// 	signature: signedMessage
 					// })
 
-					await Api.auth.issueTokens(message, signedMessage)
+					try {
+						await Api.auth.issueTokens(message, signedMessage)
+					} catch (error: any) {
+						if (error.response && error.response.status === 403) {
+							localStorage.setItem("IssuedToken", "true")
+						}
+					}
+
 					// set local storage with key IssuedToken and value true
 					localStorage.setItem("IssuedToken", "true")
 					// await axios.post("http://10.200.8.85:3000/Auth/IssueTokens", {
