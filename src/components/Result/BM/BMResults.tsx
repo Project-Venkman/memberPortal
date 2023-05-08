@@ -71,6 +71,9 @@ const BMResult: React.FC<ResultProps> = (props) => {
                     // })
                     await Api.contract.GetAllBurnableContracts().then(async (res) => {
                         console.log("res", res)
+                        // if the res.message contains "jwt expired" then we need to refresh the token
+
+
                     });
                     console.log("oa", oa);
                     console.log("ba", ba);
@@ -82,7 +85,7 @@ const BMResult: React.FC<ResultProps> = (props) => {
                     //         console.log("getBurnables", res);
                     //     });
                     //getBurns();
-                    if (!oa.length && burns.length) navigate('/Burn');
+                    // if (!oa.length && burns.length) navigate('/Burn');
                     //setVerified(true);
                     setLoading(false);
                 })
