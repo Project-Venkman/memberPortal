@@ -2,15 +2,24 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Burn } from "@customtypes/index";
 
 const initialBurnAssetsState: Array<Burn> = [{
-    name: "",
+    abi: [],
+    address: "",
+    archived: false,
+    burnable: false,
+    chainAPIKey: "",
+    chainId: 1,
+    chainURL: "",
+    createBy: "",
+    createdDate: "",
+    deployedBlock: "",
     description: "",
-    url: "",
-    burnTypeID: "",
-    typeID: "",
-    assetID: "",
-    assetNumber: "",
-    contractAddress: "",
-    contractType: 0
+    id: "",
+    minter: "",
+    partnerContractId: "",
+    symbol: "",
+    type: "",
+    updatedBy: "",
+    updatedDate: "",
 }];
 
 export const burnAssetsSlice = createSlice({

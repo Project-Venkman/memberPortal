@@ -17,7 +17,7 @@ const MRoutes = () => {
 			<Route path={"/"} element={<Login />} />
 			<Route path={"/Login"} element={<Login />} />
 			<Route path={"/PVLogin"} element={<PVLogin />} />
-			<Route path={"/Result"} element={<Result />} />
+			<Route path={"/BMResult"} element={<Result />} />
 			<Route path={"/ResultTest"} element={<ResultTest />} />
 			<Route path={"/Burn"} element={<Burn />} />
 			<Route path={"/CoinInventory"} element={<CoinInventory />} />

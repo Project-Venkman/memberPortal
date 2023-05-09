@@ -9,8 +9,8 @@ import {
 	SelectionOptionsListItem,
 } from "@styles/index";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
-import {RootState, setCurrentAsset, setCurrentOwnedAsset} from "@state/index";
-import {Metadata} from "@customtypes/HyperMint";
+import { RootState, setCurrentAsset, setCurrentOwnedAsset } from "@state/index";
+import { Metadata } from "@customtypes/HyperMint";
 
 export const ItemSelect: React.FC<ItemSelectProps> = (props) => {
 	const walletAssets: Array<Asset> = useSelector((state: RootState) => state.walletAssets);
@@ -19,6 +19,7 @@ export const ItemSelect: React.FC<ItemSelectProps> = (props) => {
 	let currentAsset: Asset = useSelector((state: RootState) => state.currentAsset);
 	let currentOwnedAsset: Metadata = useSelector((state: RootState) => state.currentOwnedAsset);
 	const [isOpen, setIsOpen] = useState<boolean>(false);
+
 
 	const toggleOptions = () => setIsOpen(!isOpen);
 
@@ -33,16 +34,19 @@ export const ItemSelect: React.FC<ItemSelectProps> = (props) => {
 	}
 
 	useEffect(() => {
-		if(walletAssets.length > 0) {
-			//console.log(walletAssets);
+		if (walletAssets.length > 0) {
+			console.log(walletAssets[0]);
 			dispatch(setCurrentAsset(walletAssets[0]));
+			console.log("current wallet set", currentAsset)
 		}
-		else if(ownedAssets.length > 0) {
+		else if (ownedAssets.length > 0) {
 			console.log("111", ownedAssets[0].name);
 			dispatch(setCurrentOwnedAsset(ownedAssets[0]));
 		}
-	}, [walletAssets, ownedAssets])
-
+	}, [walletAssets])
+	useEffect(() => {
+		console.log("current wallet set", currentAsset);
+	}, [currentAsset]);
 	return (
 		<SelectionContainer>
 			<SelectionHeader id={"selection-header"} onClick={(walletAssets.length > 1 || ownedAssets.length > 1) ? toggleOptions : () => { }}>
@@ -53,7 +57,7 @@ export const ItemSelect: React.FC<ItemSelectProps> = (props) => {
 					</div>
 				)}
 			</SelectionHeader>
-			{isOpen && walletAssets.length > 0 &&(
+			{isOpen && walletAssets.length > 0 && (
 				<SelectionOptionsContainer id={"selection-option-container"}>
 					<SelectionOptionsList>
 						{walletAssets.map((asset: Asset, i: number) => {
@@ -67,7 +71,7 @@ export const ItemSelect: React.FC<ItemSelectProps> = (props) => {
 					</SelectionOptionsList>
 				</SelectionOptionsContainer>)
 			}
-			{isOpen && ownedAssets.length > 0 &&(
+			{isOpen && ownedAssets.length > 0 && (
 				<SelectionOptionsContainer id={"selection-option-container"}>
 					<SelectionOptionsList>
 						{ownedAssets.map((asset: Metadata, i: number) => {

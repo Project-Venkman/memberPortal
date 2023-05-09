@@ -13,7 +13,7 @@ import PVHome from "@assets/images/PVHome.png"
 import splash from "@assets/images/COUCH-FOR-SPLASH.jpg";
 
 const Login: React.FC<LoginProps> = () => {
-    window.localStorage.clear();
+    // window.localStorage.clear();
 
     return (
         <LoginPage id={"login-page"}>

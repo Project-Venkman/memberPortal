@@ -56,7 +56,7 @@ export const Api = {
 				})
 		},
 		GetAllBurnableContracts: async () => {
-			return await ApiFx.POSTKahlilAuthenticated("Contract/GetAllBurnableContracts", mario, "").then(async res => {
+			return await ApiFx.POSTKahlilAuthenticated("Contract/GetAllBurnable", mario, "").then(async res => {
 				return await res.data
 			})
 		},

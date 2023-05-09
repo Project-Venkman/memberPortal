@@ -10,6 +10,8 @@ export const ItemAssetImage: React.FC<ItemProps> = (props) => {
 	const { } = props;
 	const asset: Asset = useSelector((state: RootState) => state.currentAsset);
 	const oAsset: Metadata = useSelector((state: RootState) => state.currentOwnedAsset);
+	let currentAsset: Asset = useSelector((state: RootState) => state.currentAsset);
+
 	const [loaded, setLoaded] = useState<boolean>(false);
 	const counter = useRef(0);
 	const onLoad = () => {
@@ -18,12 +20,13 @@ export const ItemAssetImage: React.FC<ItemProps> = (props) => {
 
 	useEffect(() => {
 		console.log("asset", asset);
+		console.log("currentAsset", currentAsset);
 	}, [])
 
 	return (
 		<React.Fragment>
 
-			<NFTImg className={loaded ? "loaded" : ""} src={asset.url || oAsset.image} onLoad={onLoad} />
+			<NFTImg className={loaded ? "loaded" : ""} src={currentAsset.image || oAsset.image!} onLoad={onLoad} />
 			{/*{!loaded && <NFTImg src={loadingGif}/>}*/}
 		</React.Fragment>
 	)

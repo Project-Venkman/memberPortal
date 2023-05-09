@@ -41,53 +41,65 @@ const BMResult: React.FC<ResultProps> = (props) => {
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        if (!walletAddress.length) return;
+        console.log("wallet length", walletAddress.length)
+        if (!walletAddress) return;
         (async () => {
             console.log("...Verifying Ownership");
             setLoading(true);
+
             // await Api.asset.getByWalletAddress(walletAddress)
             await Api.asset.getByWalletAddress("0x2611B286994571b4D5292ACFF5619da8074b5c54")
-                // await Api.ownership.verify(walletAddress)
+
                 .then(async (res) => {
                     console.log("...Setting Data", res);
                     await dispatch(setWallet(res));
                     let oa: Array<Asset> = [];
                     let ba: Array<BurnType> = [];
-                    // await res.forEach((r: WalletData) => {
-                    //     const burnContractIds = ["00000004-0000-0000-0000-000000000004", "00000004-0000-0000-0000-000000000005"];
-                    //     // HERE IS WHERE WE NEED TO FILTER OUT THE BURNABLES
-                    //     if (!burnContractIds.includes(r.ownedAssets![0].typeID))
-                    //         oa.push(...r.ownedAssets!);
-                    //     console.log(ba.findIndex((r2) => r.ownedAssets![0].burnBMAssets![0].assetNumber === r2.assetNumber))
-                    //     // 
-                    //     // if (r.ownedAssets![0].burnBMAssets!.length) {
-                    //     //     let tmp = [...r.ownedAssets![0].burnBMAssets!];
-                    //     //     tmp.forEach(t => {
-                    //     //         if (!ba.find(b => b.assetNumber === t.assetNumber)) {
-                    //     //             ba.push(...r.ownedAssets![0].burnBMAssets!)
-                    //     //         }
-                    //     //     })
-                    //     // }
-                    // })
+                    await res.forEach((r: Asset) => {
+                        oa.push(r);
+                        //     const burnContractIds = ["00000004-0000-0000-0000-000000000004", "00000004-0000-0000-0000-000000000005"];
+                        //     // HERE IS WHERE WE NEED TO FILTER OUT THE BURNABLES
+                        //     if (!burnContractIds.includes(r.ownedAssets![0].typeID))
+                        //         oa.push(...r.ownedAssets!);
+                        //     console.log(ba.findIndex((r2) => r.ownedAssets![0].burnBMAssets![0].assetNumber === r2.assetNumber))
+                        //     // 
+                        //     // if (r.ownedAssets![0].burnBMAssets!.length) {
+                        //     //     let tmp = [...r.ownedAssets![0].burnBMAssets!];
+                        //     //     tmp.forEach(t => {
+                        //     //         if (!ba.find(b => b.assetNumber === t.assetNumber)) {
+                        //     //             ba.push(...r.ownedAssets![0].burnBMAssets!)
+                        //     //         }
+                        //     //     })
+                        //     // }
+                    })
+
+
                     await Api.contract.GetAllBurnableContracts().then(async (res) => {
-                        console.log("res", res)
+                        await res.forEach((r: BurnType) => {
+                            ba.push(res)
+                        })
+
+
                         // if the res.message contains "jwt expired" then we need to refresh the token
 
 
                     });
                     console.log("oa", oa);
                     console.log("ba", ba);
-                    await dispatch(setWalletAssets(oa));
+                    dispatch(setWalletAssets(oa));
                     console.log(wallet)
+                    dispatch(setBurnAssets(ba));
+                    console.log(burns)
                     // await dispatch(setBurnAssets(ba));
                     // await Api.asset.getBurnables(walletAddress)
                     //     .then((res) => {
                     //         console.log("getBurnables", res);
                     //     });
-                    //getBurns();
-                    // if (!oa.length && burns.length) navigate('/Burn');
+                    // getBurns();
+                    if (!oa.length && ba.length) navigate('/Burn');
                     //setVerified(true);
                     setLoading(false);
+
                 })
                 .catch(async (error) => {
                     dispatch(setEmptyWallet(walletAddress));

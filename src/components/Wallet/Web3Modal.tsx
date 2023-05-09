@@ -36,48 +36,44 @@ export const Web3ModalComponent: React.FC<Web3ModalProps> = (props) => {
 			let message = ""
 			if (accounts) {
 				// if local storage has a varible called IssuedToken and the value is true then dont run 
-				if (localStorage.getItem("IssuedToken") === "true") {
-					console.log("User Already Issued Token")
-					await Api.auth.renewTokens();
-				} else {
-					let nonce = await Api.auth.generateChallenge()
-					// let nonce = (await axios.get("http://10.200.8.85:3000/Auth/GenerateChallenge")).data
-					// let nonce = (await axios.get("https://apiv2.projectvenkman.com/Auth/GenerateChallenge")).data
+				// await Api.auth.renewTokens();
+				let nonce = await Api.auth.generateChallenge()
+				// let nonce = (await axios.get("http://10.200.8.85:3000/Auth/GenerateChallenge")).data
+				// let nonce = (await axios.get("https://apiv2.projectvenkman.com/Auth/GenerateChallenge")).data
 
-					let siweMessage = new SiweMessage({
-						domain: domain,
-						address: accounts[0],
-						statement: statement,
-						uri: origin,
-						version: '1',
-						chainId: 1,
-						nonce: nonce
-					});
-					message = siweMessage.prepareMessage();
-					let signedMessage = await signer.signMessage(message);
-					// await axios.post("http://10.200.8.85:3000/Auth/IssueTokens", {
-					// 	message: message,
-					// 	signature: signedMessage
-					// })
+				let siweMessage = new SiweMessage({
+					domain: domain,
+					address: accounts[0],
+					statement: statement,
+					uri: origin,
+					version: '1',
+					chainId: 1,
+					nonce: nonce
+				});
+				message = siweMessage.prepareMessage();
+				let signedMessage = await signer.signMessage(message);
+				// await axios.post("http://10.200.8.85:3000/Auth/IssueTokens", {
+				// 	message: message,
+				// 	signature: signedMessage
+				// })
 
-					try {
-						await Api.auth.issueTokens(message, signedMessage)
-					} catch (error: any) {
-						if (error.response && error.response.status === 403) {
-							localStorage.setItem("IssuedToken", "true")
-						}
+				try {
+					await Api.auth.issueTokens(message, signedMessage)
+				} catch (error: any) {
+					if (error.response && error.response.status === 403) {
+						localStorage.setItem("IssuedToken", "true")
+						console.log("error here ")
 					}
-
-					// set local storage with key IssuedToken and value true
-					localStorage.setItem("IssuedToken", "true")
-					// await axios.post("http://10.200.8.85:3000/Auth/IssueTokens", {
-					// 	message: message,
-					// 	signature: signedMessage
-					// }, {
-					// 	withCredentials: true
-					// });
 				}
 
+				// set local storage with key IssuedToken and value true
+				localStorage.setItem("IssuedToken", "true")
+				// await axios.post("http://10.200.8.85:3000/Auth/IssueTokens", {
+				// 	message: message,
+				// 	signature: signedMessage
+				// }, {
+				// 	withCredentials: true
+				// });
 			}
 			console.log(accounts)
 			dispatch(setWalletAddress(accounts[0]));
@@ -88,7 +84,7 @@ export const Web3ModalComponent: React.FC<Web3ModalProps> = (props) => {
 			} else if (url.pathname.includes("ELF")) {
 				navigate("/ELFResult");
 			} else {
-				navigate("/Result")
+				navigate("/BMResult")
 			}
 		} catch (error) {
 			console.log(error);

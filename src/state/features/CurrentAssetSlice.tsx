@@ -1,19 +1,46 @@
-import {combineReducers, createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {Asset, Burn} from "@customtypes/index";
-import {act} from "react-dom/test-utils";
+import { combineReducers, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Asset, Burn } from "@customtypes/index";
+import { act } from "react-dom/test-utils";
 
 const initialCurrentAssetState: Asset = {
-    name: "",
+    animation: "",
+    animationSmall: "",
+    archived: false,
+    attributes: [],
+    contractId: "",
+    createdBy: "",
+    createdDate: "",
     description: "",
-    url: "",
-    typeID: "",
-    assetID: "",
-    assetNumber: "",
-    assetOwnerID: ""
+    id: "",
+    image: "",
+    imageSmall: "",
+    name: "",
+    ownerId: "",
+    status: "",
+    tokenId: "",
+    updatedBy: "",
+    updatedDate: "",
 };
 
 const initialCurrentBurnAssetState: Burn = {
-    assetNumber: "", contractAddress: "", contractType: 0, typeID: "", assetID: ""
+    abi: [],
+    address: "",
+    archived: false,
+    burnable: false,
+    chainAPIKey: "",
+    chainId: 1,
+    chainURL: "",
+    createBy: "",
+    createdDate: "",
+    deployedBlock: "",
+    description: "",
+    id: "",
+    minter: "",
+    partnerContractId: "",
+    symbol: "",
+    type: "",
+    updatedBy: "",
+    updatedDate: "",
 }
 
 export const currentAssetSlice = createSlice({
@@ -21,7 +48,7 @@ export const currentAssetSlice = createSlice({
     name: "currentAsset",
     reducers: {
         setCurrentAsset: (state, action: PayloadAction<Asset>) => {
-            return {...state, ...action.payload};
+            return { ...state, ...action.payload };
         }
     }
 });
@@ -31,7 +58,7 @@ export const currentBurnAssetSlice = createSlice({
     name: "currentBurnAsset",
     reducers: {
         setCurrentBurnAsset: (state, action: PayloadAction<Burn>) => {
-            return {...state, ...action.payload};
+            return { ...state, ...action.payload };
         }
     }
 });
