@@ -1,21 +1,21 @@
-import React, {useEffect, useState} from "react";
-import {Coin, CoinInventoryProps} from "@customtypes/CoinInventory";
-import {Api} from "@scripts/API";
-import {DataGrid} from "devextreme-react";
-import {Column, Editing, FilterRow, Pager, Scrolling, SearchPanel} from "devextreme-react/data-grid";
+import React, { useEffect, useState } from "react";
+import { Coin, CoinInventoryProps } from "@customtypes/CoinInventory";
+import { Api } from "@pages/scripts/API";
+import { DataGrid } from "devextreme-react";
+import { Column, Editing, FilterRow, Pager, Scrolling, SearchPanel } from "devextreme-react/data-grid";
 import EventInfo from "devextreme/ui/data_grid";
 import 'devextreme/dist/css/dx.dark.css';
-import {Claim} from "@customtypes/Claim";
+import { Claim } from "@customtypes/Claim";
 
 export const CoinInventory: React.FC<CoinInventoryProps> = (props) => {
 	const { } = props;
 	const [coins, setCoins] = useState<Array<Claim>>([]);
-	const [change, setChange] = useState<Claim|null>(null);
+	const [change, setChange] = useState<Claim | null>(null);
 
 	const pageSizes = [10, 25, 50, 100];
 
 	useEffect(() => {
-		if(coins.length) return;
+		if (coins.length) return;
 		(async () => {
 			await Api.claim.getByTypeId("40000001-0000-0000-0000-000000000001")
 				.then((res) => {
@@ -26,8 +26,8 @@ export const CoinInventory: React.FC<CoinInventoryProps> = (props) => {
 	}, [coins])
 
 	useEffect(() => {
-		if(change === null) return;
-		(async () =>{
+		if (change === null) return;
+		(async () => {
 			await Api.claim.update(change)
 				.then(res => setChange(null));
 		})();
@@ -50,13 +50,13 @@ export const CoinInventory: React.FC<CoinInventoryProps> = (props) => {
 			onSaving={handleSave}
 		>
 			<Column dataField={"TokenID"} allowFiltering={true} allowEditing={false} sortOrder={"asc"}></Column>
-			<Column dataField={"Claimed"} allowFiltering={false}><input type={"checkbox"} checked={!this}/></Column>
+			<Column dataField={"Claimed"} allowFiltering={false}><input type={"checkbox"} checked={!this} /></Column>
 			<Column dataField={"Code"} allowFiltering={true} allowEditing={false}></Column>
 			<Column dataField={"Url"} allowFiltering={false} allowEditing={false}></Column>
 			<Column dataField={"Description"} allowFiltering={false}></Column>
 			<Column dataField={"OrderID"} allowFiltering={true}></Column>
 			<Pager allowedPageSizes={pageSizes} showPageSizeSelector={true} />
-			<Editing mode={"cell"} allowUpdating={true} allowDeleting={false} allowAdding={false}/>
+			<Editing mode={"cell"} allowUpdating={true} allowDeleting={false} allowAdding={false} />
 			<FilterRow visible={true} />
 			<SearchPanel visible={true} />
 			<Scrolling mode="virtual" />

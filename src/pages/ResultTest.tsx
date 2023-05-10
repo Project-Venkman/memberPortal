@@ -1,5 +1,5 @@
-import React, {useEffect, useRef, useState} from "react";
-import {Asset, WalletData, ResultProps, CompanyUser, UidPwd, ContractSetting} from "@customtypes/index";
+import React, { useEffect, useRef, useState } from "react";
+import { Asset, WalletData, ResultProps, CompanyUser, UidPwd, ContractSetting } from "@customtypes/index";
 import { Invalid, ItemAssetImage, ItemModal, ItemSelect, NavbarDesktop, NavbarMobile } from "@components/index";
 import {
 	FrameImg,
@@ -13,7 +13,7 @@ import { RootState } from "@state/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentAsset } from "@state/features/CurrentAssetSlice";
 import { setWinner } from "@state/features/WinnerSlice";
-import { Api, Zuul } from "@scripts/API";
+import { Api, Zuul } from "@pages/scripts/API";
 import {
 	setWallet,
 	setEmptyWallet,
@@ -22,10 +22,10 @@ import {
 	clearCredentials,
 	setContracts, setOwnedAssets
 } from "@state/features";
-import { truncateAddress } from "@scripts/utils";
-import {HMApi} from "@scripts/API/HyperMintApi";
-import {Guid} from "guid-typescript";
-import {Metadata, Token, TokenOwnershipResponse} from "@customtypes/HyperMint";
+import { truncateAddress } from "@pages/scripts/utils";
+import { HMApi } from "@pages/scripts/API/HyperMintApi";
+import { Guid } from "guid-typescript";
+import { Metadata, Token, TokenOwnershipResponse } from "@customtypes/HyperMint";
 
 const ResultTest: React.FC<ResultProps> = (props) => {
 	const wallet: WalletData = useSelector((state: RootState) => state.wallet);
@@ -36,8 +36,8 @@ const ResultTest: React.FC<ResultProps> = (props) => {
 	const dispatch = useDispatch();
 	const [modalOpen, setModalOpen] = useState<boolean>(false);
 	const [modalType, setModalType] = useState<string>("");
-	const [currentContract, setCurrentContract] = useState<ContractSetting|undefined>(undefined);
-	const [ownedTokens, setOwnedTokens] = useState<Array<Token>|null>(null);
+	const [currentContract, setCurrentContract] = useState<ContractSetting | undefined>(undefined);
+	const [ownedTokens, setOwnedTokens] = useState<Array<Token> | null>(null);
 	const [loading, setLoading] = useState<boolean>(false);
 
 	useEffect(() => {
@@ -48,23 +48,23 @@ const ResultTest: React.FC<ResultProps> = (props) => {
 	}, [walletAddress])
 
 	useEffect(() => {
-		if(contracts !== null)
+		if (contracts !== null)
 			setCurrentContract(contracts.filter((contract: ContractSetting) => contract.ID === "40000001-0001-0001-0002-000000000001")[0]);
 	}, [contracts])
 
 	useEffect(() => {
-		if(currentContract !== undefined){
+		if (currentContract !== undefined) {
 			let contractId = currentContract.PartnerContractID;
 			console.log(contractId)
 			HMApi.all.getOwnedTokens(contractId, "0xc8FC1962214E0B5fbaF0E707c503CA22cE93731E")
-				.then(async (res:TokenOwnershipResponse) => {
+				.then(async (res: TokenOwnershipResponse) => {
 					setOwnedTokens(res.tokens);
 				});
 		}
 	}, [currentContract])
 
 	useEffect(() => {
-		if(ownedTokens !== null){
+		if (ownedTokens !== null) {
 			let oa: Array<Metadata> = new Array<Metadata>();
 			ownedTokens.forEach(async (token: Token, index: number) => {
 				let temp = await HMApi.all.getTokenHostedMetadata(currentContract!.PartnerContractID, token.tokenId.toString())
@@ -81,7 +81,7 @@ const ResultTest: React.FC<ResultProps> = (props) => {
 	}, [ownedTokens])
 
 	useEffect(() => {
-		if(ownedAssets.length)
+		if (ownedAssets.length)
 			console.log(99, ownedAssets);
 	}, [ownedAssets]);
 

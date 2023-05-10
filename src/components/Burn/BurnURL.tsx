@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { BurnURLProps } from "@customtypes/Burn";
 import { BurnURLContainer } from "@styles/index";
-import {Api} from "@scripts/API";
+import { Api } from "@pages/scripts/API";
 
 export const BurnURL: React.FC<BurnURLProps> = (props) => {
 	const { options } = props;

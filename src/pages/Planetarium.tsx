@@ -13,7 +13,7 @@ import splash from "@assets/images/COUCH-FOR-SPLASH.jpg";
 import spacebg from "@assets/images/hero-33.png";
 
 const PlanetariumLogin: React.FC<LoginProps> = () => {
-    window.localStorage.clear();
+    // window.localStorage.clear();
 
     return (
         <LoginPage id={"login-page"}>

@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import {
+    BurnAsset,
     Asset,
     WalletData,
     ResultProps,
@@ -17,14 +18,14 @@ import {
 import frame from "@assets/bill/FRAME-NO-BILL2.png";
 import { RootState } from "@state/store";
 import { useDispatch, useSelector } from "react-redux";
-import { Api } from "@scripts/API";
+import { Api } from "@pages/scripts/API";
 import {
     setWallet,
     setEmptyWallet,
     setWalletAssets,
     setBurnAssets
 } from "@state/features";
-import { truncateAddress } from "@scripts/utils";
+import { truncateAddress } from "@pages/scripts/utils";
 import { LoadIndicator } from "devextreme-react";
 import { useNavigate } from "react-router-dom";
 
@@ -34,56 +35,71 @@ const BMResult: React.FC<ResultProps> = (props) => {
     const wallet: WalletData = useSelector((state: RootState) => state.wallet);
     const walletAddress: string = useSelector((state: RootState) => state.walletAddress);
     const walletAssets: Array<Asset> = useSelector((state: RootState) => state.walletAssets);
-    const burns: Array<BurnType> = useSelector((state: RootState) => state.burnAssets as Array<BurnType>);
+    const burns: Array<Asset> = useSelector((state: RootState) => state.burnAssets as Array<Asset>);
     const dispatch = useDispatch();
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [modalType, setModalType] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        if (!walletAddress.length) return;
+        if (!walletAddress || walletAddress.length < 1 || walletAddress === undefined) return;
         (async () => {
             console.log("...Verifying Ownership");
             setLoading(true);
-            await Api.ownership.verify(walletAddress)
+            const burnContracts = await Api.contract.GetAllBurnableContracts();
+            // await Api.asset.getByWalletAddress(walletAddress)
+            await Api.asset.getByWalletAddress("0x2611B286994571b4D5292ACFF5619da8074b5c54")
                 .then(async (res) => {
                     console.log("...Setting Data", res);
-                    await dispatch(setWallet(res));
+                    dispatch(setWallet(res));
                     let oa: Array<Asset> = [];
-                    let ba: Array<BurnType> = [];
-                    await res.forEach((r: WalletData) => {
-                        const burnContractIds = ["00000004-0000-0000-0000-000000000004", "00000004-0000-0000-0000-000000000005"];
-                        // HERE IS WHERE WE NEED TO FILTER OUT THE BURNABLES
-                        if (!burnContractIds.includes(r.ownedAssets![0].typeID))
-                            oa.push(...r.ownedAssets!);
-                        console.log(ba.findIndex((r2) => r.ownedAssets![0].burnBMAssets![0].assetNumber === r2.assetNumber))
-                        // 
-                        if (r.ownedAssets![0].burnBMAssets!.length) {
-                            let tmp = [...r.ownedAssets![0].burnBMAssets!];
-                            tmp.forEach(t => {
-                                if (!ba.find(b => b.assetNumber === t.assetNumber)) {
-                                    ba.push(...r.ownedAssets![0].burnBMAssets!)
-                                }
-                            })
+                    let ba: Array<BurnAsset> = [];
+                    await res.forEach((r: Asset) => {
+                        oa.push(r);
+                        //     const burnContractIds = ["00000004-0000-0000-0000-000000000004", "00000004-0000-0000-0000-000000000005"];
+                        //     // HERE IS WHERE WE NEED TO FILTER OUT THE BURNABLES
+                        //     if (!burnContractIds.includes(r.ownedAssets![0].typeID))
+                        //         oa.push(...r.ownedAssets!);
+                        //     console.log(ba.findIndex((r2) => r.ownedAssets![0].burnBMAssets![0].assetNumber === r2.assetNumber))
+                        //     // 
+                        //     // if (r.ownedAssets![0].burnBMAssets!.length) {
+                        //     //     let tmp = [...r.ownedAssets![0].burnBMAssets!];
+                        //     //     tmp.forEach(t => {
+                        //     //         if (!ba.find(b => b.assetNumber === t.assetNumber)) {
+                        //     //             ba.push(...r.ownedAssets![0].burnBMAssets!)
+                        //     //         }
+                        //     //     })
+                        //     // }
+                        if (burnContracts.filter((b: BurnAsset) => b.id === r.contractId).length) {
+                            let tmp = burnContracts.filter((b: BurnAsset) => b.id === r.contractId)[0];
+                            console.log({ tmp })
+                            let tmpR: BurnAsset = { ...r, contractAddress: tmp.address };
+                            tmpR.name = tmp.description;
+                            ba.push(tmpR);
+                            // ba.push(r[i]!);
                         }
-                    })
+                    });
                     console.log("oa", oa);
                     console.log("ba", ba);
-                    await dispatch(setWalletAssets(oa));
-                    await dispatch(setBurnAssets(ba));
-                    await Api.asset.getBurnables(walletAddress)
-                        .then((res) => {
-                            console.log("getBurnables", res);
-                        });
-                    //getBurns();
-                    if (!oa.length && burns.length) navigate('/Burn');
+                    dispatch(setWalletAssets(oa));
+                    dispatch(setBurnAssets(ba));
+                    // await dispatch(setBurnAssets(ba));
+                    // await Api.asset.getBurnables(walletAddress)
+                    //     .then((res) => {
+                    //         console.log("getBurnables", res);
+                    //     });
+                    // getBurns();
+                    // if (!oa.length && ba.length) navigate('/Burn');
+
+                    if (ba.length) navigate('/Burn');
                     //setVerified(true);
                     setLoading(false);
+
                 })
                 .catch(async (error) => {
                     dispatch(setEmptyWallet(walletAddress));
                     setLoading(false);
-                    console.error(await error);
+                    if (error) console.error(await error);
                 });
 
         })();
