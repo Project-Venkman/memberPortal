@@ -14,6 +14,7 @@ import { Web3ModalProvider } from "@components/Wallet";
 import axios from "axios";
 import { SiweMessage } from "siwe";
 import { Api } from "@pages/scripts/API";
+import { setProvider } from "@state/features/ProviderSlice";
 export const Web3ModalComponent: React.FC<Web3ModalProps> = (props) => {
 	axios.defaults.withCredentials = true;
 	let { } = props;
@@ -25,12 +26,10 @@ export const Web3ModalComponent: React.FC<Web3ModalProps> = (props) => {
 		const origin = window.location.origin;
 		const statement = 'Please sign this message to authenticate';
 		try {
-			Web3ModalProvider.clearCachedProvider();
-			console.log(Web3ModalProvider)
 			const provider = await Web3ModalProvider.connect();
-			//let ethProvider = new ethers.providers.Web3Provider(provider);
 			let ethProvider = new ethers.providers.Web3Provider(provider)
-			//dispatch(setProvider(provider));
+			// dispatch(setProvider(ethProvider.provider.path))
+
 			const accounts = await ethProvider.listAccounts();
 			const signer = ethProvider.getSigner();
 			let message = ""

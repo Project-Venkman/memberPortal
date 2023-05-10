@@ -21,6 +21,9 @@ export interface Asset {
     updatedBy: string;
     updatedDate: string;
 }
+export interface BurnAsset extends Asset {
+    contractAddress: string;
+}
 
 export interface IpfsItem {
     AssetID: string;

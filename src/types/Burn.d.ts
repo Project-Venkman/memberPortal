@@ -7,10 +7,13 @@ export type BurnsContainerProps<
 export type BurnCardProps<
     P = {
         index: number;
-        burnAsset: Burn;
+        burnAsset: Asset;
         copiedAddress: boolean;
     }
-> = P;
+> = P & {
+    onClick?: (index: number) => void;
+};
+
 export type BurnURLProps<
     P = {
         options: BurnDataOptions;

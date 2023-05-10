@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import {
+    BurnAsset,
     Asset,
     WalletData,
     ResultProps,
@@ -34,27 +35,25 @@ const BMResult: React.FC<ResultProps> = (props) => {
     const wallet: WalletData = useSelector((state: RootState) => state.wallet);
     const walletAddress: string = useSelector((state: RootState) => state.walletAddress);
     const walletAssets: Array<Asset> = useSelector((state: RootState) => state.walletAssets);
-    const burns: Array<BurnType> = useSelector((state: RootState) => state.burnAssets as Array<BurnType>);
+    const burns: Array<Asset> = useSelector((state: RootState) => state.burnAssets as Array<Asset>);
     const dispatch = useDispatch();
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [modalType, setModalType] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        console.log("wallet length", walletAddress.length)
-        if (!walletAddress) return;
+        if (!walletAddress || walletAddress.length < 1 || walletAddress === undefined) return;
         (async () => {
             console.log("...Verifying Ownership");
             setLoading(true);
-
+            const burnContracts = await Api.contract.GetAllBurnableContracts();
             // await Api.asset.getByWalletAddress(walletAddress)
             await Api.asset.getByWalletAddress("0x2611B286994571b4D5292ACFF5619da8074b5c54")
-
                 .then(async (res) => {
                     console.log("...Setting Data", res);
-                    await dispatch(setWallet(res));
+                    dispatch(setWallet(res));
                     let oa: Array<Asset> = [];
-                    let ba: Array<BurnType> = [];
+                    let ba: Array<BurnAsset> = [];
                     await res.forEach((r: Asset) => {
                         oa.push(r);
                         //     const burnContractIds = ["00000004-0000-0000-0000-000000000004", "00000004-0000-0000-0000-000000000005"];
@@ -71,32 +70,28 @@ const BMResult: React.FC<ResultProps> = (props) => {
                         //     //         }
                         //     //     })
                         //     // }
-                    })
-
-
-                    await Api.contract.GetAllBurnableContracts().then(async (res) => {
-                        await res.forEach((r: BurnType) => {
-                            ba.push(res)
-                        })
-
-
-                        // if the res.message contains "jwt expired" then we need to refresh the token
-
-
+                        if (burnContracts.filter((b: BurnAsset) => b.id === r.contractId).length) {
+                            let tmp = burnContracts.filter((b: BurnAsset) => b.id === r.contractId)[0];
+                            console.log({ tmp })
+                            let tmpR: BurnAsset = { ...r, contractAddress: tmp.address };
+                            tmpR.name = tmp.description;
+                            ba.push(tmpR);
+                            // ba.push(r[i]!);
+                        }
                     });
                     console.log("oa", oa);
                     console.log("ba", ba);
                     dispatch(setWalletAssets(oa));
-                    console.log(wallet)
                     dispatch(setBurnAssets(ba));
-                    console.log(burns)
                     // await dispatch(setBurnAssets(ba));
                     // await Api.asset.getBurnables(walletAddress)
                     //     .then((res) => {
                     //         console.log("getBurnables", res);
                     //     });
                     // getBurns();
-                    if (!oa.length && ba.length) navigate('/Burn');
+                    // if (!oa.length && ba.length) navigate('/Burn');
+
+                    if (ba.length) navigate('/Burn');
                     //setVerified(true);
                     setLoading(false);
 
