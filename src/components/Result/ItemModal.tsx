@@ -49,9 +49,16 @@ export const ItemModal: React.FC<ResultModalProps> = (props) => {
 				const claimAssets: Array<ClaimType> = AssetClaim as Array<ClaimType>;
 				dispatch(setClaimAssets(claimAssets));
 			});
+
+			await Api.media.getAllByAsset(assetId).then(async (res) => {
+				console.log(res);
+				let Media = res
+				const mediaAssets: Array<MediaType> = Media as Array<MediaType>;
+				console.log(mediaAssets)
+				dispatch(setMediaAssets(mediaAssets));
+			});
 			// const mediaAssets: Array<MediaType> = asset.mediaAssets as Array<MediaType>;
 			// // const burnBMAssets: Array<BurnType> = [...asset.burnBMAssets as Array<BurnType>, ...asset.burnTixAssets as Array<BurnType>];
-			// dispatch(setMediaAssets(mediaAssets));
 		})();
 		// dispatch(setBurnAssets(burnBMAssets));
 	}, [currentAsset])
