@@ -2,14 +2,20 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Claim } from "@customtypes/index";
 
 const initialClaimAssetsState: Array<Claim> = [{
-    name: "",
-    description: "",
-    url: "",
-    claimTypeID: "",
-    contractTypeID: "",
-    code: "",
+    archived: false,
+    assetId: "",
     claimed: false,
-    tokenID: ""
+    code: "",
+    createBy: "",
+    createDate: "",
+    description: "",
+    id: "",
+    name: "",
+    orderId: "",
+    tokenId: "",
+    updateBy: "",
+    updateDate: "",
+    url: "",
 }];
 
 export const claimAssetsSlice = createSlice({

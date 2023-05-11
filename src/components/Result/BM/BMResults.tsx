@@ -72,7 +72,7 @@ const BMResult: React.FC<ResultProps> = (props) => {
                         //     // }
                         if (burnContracts.filter((b: BurnAsset) => b.id === r.contractId).length) {
                             let tmp = burnContracts.filter((b: BurnAsset) => b.id === r.contractId)[0];
-                            console.log({ tmp })
+                            // console.log({ tmp })
                             let tmpR: BurnAsset = { ...r, contractAddress: tmp.address };
                             tmpR.name = tmp.description;
                             ba.push(tmpR);
@@ -91,7 +91,7 @@ const BMResult: React.FC<ResultProps> = (props) => {
                     // getBurns();
                     // if (!oa.length && ba.length) navigate('/Burn');
 
-                    if (ba.length) navigate('/Burn');
+                    // if (ba.length) navigate('/Burn');
                     //setVerified(true);
                     setLoading(false);
 
