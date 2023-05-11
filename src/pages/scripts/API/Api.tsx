@@ -141,6 +141,13 @@ export const Api = {
 				.then(async res => {
 					return await res.data
 				})
+		},
+		getAllByAsset: async (assetId: string) => {
+			let data = { "assetId": assetId }
+			return await ApiFx.POSTKahlilAuthenticated("Media/GetAllByAsset", mario, data)
+				.then(async res => {
+					return await res.data;
+				})
 		}
 	},
 	events: {
