@@ -74,7 +74,6 @@ export const Web3ModalComponent: React.FC<Web3ModalProps> = (props) => {
 				// 	withCredentials: true
 				// });
 			}
-			console.log(accounts)
 			dispatch(setWalletAddress(accounts[0]));
 			const url = new URL(window.location.href);
 			// if the url contains pvlogin, then navigate to ("PVResults")

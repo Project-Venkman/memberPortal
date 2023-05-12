@@ -15,7 +15,6 @@ export const Claim: React.FC<ClaimProps> = (props) => {
 	const claims: Array<ClaimType> = useSelector((state: RootState) => state.claimAssets as Array<ClaimType>);
 
 	useEffect(() => {
-		console.log("all claims", claims);
 	}, [claims]);
 
 	return (

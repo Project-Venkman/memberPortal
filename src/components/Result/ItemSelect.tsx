@@ -34,9 +34,7 @@ export const ItemSelect: React.FC<ItemSelectProps> = (props) => {
 
 	useEffect(() => {
 		if (walletAssets.length > 0) {
-			console.log(walletAssets[0]);
 			dispatch(setCurrentAsset(walletAssets[0]));
-			console.log("current wallet set", currentAsset)
 		}
 		else if (ownedAssets.length > 0) {
 			console.log("111", ownedAssets[0].name);

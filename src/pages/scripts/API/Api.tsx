@@ -161,7 +161,6 @@ export const Api = {
 	registration: {
 		signup: async (dbrecord: Claim, WalletAddress: string) => {
 			const data = WalletAddress;
-			console.log(dbrecord.url);
 			return await ApiFx.POSTKahlilAuthenticated(dbrecord.url as string, mario, data)
 				.then(async (res: any) => {
 					return await res.data

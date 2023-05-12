@@ -48,7 +48,6 @@ const generateConfig = (dts: string, signature: string) => {
 
 const generateConfigAuthenticated = (dts: string, signature: string/*, CompanyUser: CompanyUser, ContractId?: string*/) => {
     const cu: CompanyUser = JSON.parse(window.sessionStorage.getItem("sessionData")!);
-    console.log("headers", axios.defaults.headers.common)
     return {
         withCredentials: true,
         headers: {

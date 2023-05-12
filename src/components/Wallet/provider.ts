@@ -4,7 +4,6 @@ import Web3Modal from 'web3modal';
 import { Magic, UserInfo } from 'magic-sdk';
 import axios from 'axios';
 const magicKey: string | undefined = process.env.REACT_APP_MAGIC_KEY as string;
-console.log(magicKey);
 const magic = new Magic(magicKey, {
     network: 'mainnet',
 });
@@ -44,7 +43,6 @@ const providerOptions = {
             name: 'MagicLink',
             description: 'Log in with MagicLink',
             onClick: () => {
-                console.log('onClick');
                 // Implement the MagicLink login logic here
             },
         },
@@ -52,13 +50,11 @@ const providerOptions = {
 
         connector: async () => {
             const accounts: string[] = await magic.wallet.connectWithUI();
-            console.log('Logged in user:', accounts[0]);
             try {
                 const userInfo: UserInfo =
                     await magic.wallet.requestUserInfoWithUI({
                         scope: { email: 'required' },
                     });
-                console.log('userinfo', userInfo);
             } catch (err) {
                 console.log(err);
             }

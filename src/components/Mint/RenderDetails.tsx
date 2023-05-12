@@ -3,7 +3,6 @@ import {DetailProps} from "@customtypes/Asset";
 
 export const RenderDetails: React.FC<DetailProps> = (props) => {
 	const { IpfsItems, AssetOwner } = props.data
-	console.log("ipfsItems", IpfsItems![0].ItemName)
 	return (
 		<div className="asset-data5">
 			{IpfsItems?.length &&

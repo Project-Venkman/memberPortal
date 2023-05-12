@@ -16,7 +16,7 @@ export type BurnCardProps<
 
 export type BurnURLProps<
     P = {
-        options: BurnDataOptions;
+        // options: BurnDataOptions;
     }
 > = P;
 export interface BurnDataOptions {

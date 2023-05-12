@@ -34,11 +34,17 @@ export type ImageSliderProps<
 	> = P;
 
 export interface Media {
-	mediaTypeID?: string;
-	contractTypeID?: string;
-	name?: string;
-	url?: string;
-	description?: string;
+archived: boolean;
+createBy: string;
+createDate: string;
+description: string;
+id: string;
+map: MediaMap;
+name: string;
+type: string;
+updateBy: string;
+updateDate: string;
+url: string;
 }
 
 export interface Slide {

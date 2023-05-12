@@ -19,8 +19,7 @@ export const ItemAssetImage: React.FC<ItemProps> = (props) => {
 	}
 
 	useEffect(() => {
-		console.log("asset", asset);
-		console.log("currentAsset", currentAsset);
+
 	}, [])
 
 	return (
