@@ -20,7 +20,6 @@ export const ItemSelect: React.FC<ItemSelectProps> = (props) => {
 	let currentOwnedAsset: Metadata = useSelector((state: RootState) => state.currentOwnedAsset);
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 
-
 	const toggleOptions = () => setIsOpen(!isOpen);
 
 	const handleSelectionClick = (value: number) => {
@@ -35,9 +34,7 @@ export const ItemSelect: React.FC<ItemSelectProps> = (props) => {
 
 	useEffect(() => {
 		if (walletAssets.length > 0) {
-			console.log(walletAssets[0]);
 			dispatch(setCurrentAsset(walletAssets[0]));
-			console.log("current wallet set", currentAsset)
 		}
 		else if (ownedAssets.length > 0) {
 			console.log("111", ownedAssets[0].name);
@@ -45,7 +42,7 @@ export const ItemSelect: React.FC<ItemSelectProps> = (props) => {
 		}
 	}, [walletAssets])
 	useEffect(() => {
-		console.log("current wallet set", currentAsset);
+		// console.log("current wallet set", currentAsset);
 	}, [currentAsset]);
 	return (
 		<SelectionContainer>

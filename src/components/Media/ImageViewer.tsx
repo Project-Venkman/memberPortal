@@ -12,22 +12,18 @@ export const ImageViewer: React.FC<ImageViewerProps> = (props) => {
     const [testImages, setTestImages] = useState<Array<Media>>([])
 
     useEffect(() => {
-        console.log(testImages);
         setImageCount(testImages.length);
     }, [testImages])
 
     useEffect(() => {
-        console.log(imageCount, "imageCount")
         if(imageCount > 1){
             if(currentImage === 0) {
-                console.log("currentImage === 0")
                 setPreviousImage(undefined);
                 setNextImage(currentImage + 1);
             }
             else setPreviousImage(currentImage - 1 );
 
             if(currentImage === imageCount - 1) {
-                console.log("currentImage === length")
                 setNextImage(undefined);
                 setPreviousImage(currentImage - 1);
             }

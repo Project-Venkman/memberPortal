@@ -25,7 +25,7 @@ export const MediaPlayerComponent: React.FC<MediaPlayerProps> = (props) => {
         video: "40000001-0000-0000-0000-000000000003",
         audio: "40000001-0000-0000-0000-000000000004"
     }
-
+console.log(activeAssets)
     const handleMediaClick = (e: Media) => {
         if (e) {
             setCurrentMedia(e.url!);
@@ -34,10 +34,11 @@ export const MediaPlayerComponent: React.FC<MediaPlayerProps> = (props) => {
     }
 
     useEffect(() => {
+        // console.log(media)
         let mediaAssets: Array<Media> = media.filter((m: Media) => {
-            if (mediaType === "video") return m.mediaTypeID === id.video;
-            if (mediaType === "image") return m.mediaTypeID === id.image;
-            if (mediaType === "audio") return m.mediaTypeID === id.audio;
+            if (mediaType === "video") return m.type === "video";
+            if (mediaType === "image") return m.type === "image";
+            if (mediaType === "audio") return m.type === "audio";
         });
         if (mediaAssets.length) {
             setCurrentMedia(mediaAssets[0]!.url!);
@@ -46,6 +47,11 @@ export const MediaPlayerComponent: React.FC<MediaPlayerProps> = (props) => {
         setActiveAssets(mediaAssets);
     }, [mediaType])
 
+
+    const handleClick = (e: Media) => {
+
+    }
+// console.log()
     useEffect(() => {
         if (activeAssets.length && activeAssets[0].url && !currentMedia.length) {
             setCurrentMedia(activeAssets[0].url)

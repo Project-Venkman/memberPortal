@@ -50,17 +50,14 @@ const ELFResult: React.FC<ResultProps> = (props) => {
     const [modalType, setModalType] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
     const currentUrl = new URL(window.location.href);
-    console.log(currentUrl)
     useEffect(() => {
         if (!walletAddress.length) return;
         (async () => {
-            console.log("...Verifying Ownership");
             setLoading(true);
             await Api.asset.getByWalletAddress(walletAddress)
 
                 // await Api.ownership.verify(walletAddress)
                 .then(async (res) => {
-                    console.log("...Setting Data", res);
                     await dispatch(setWallet(res));
                     let oa: Array<Asset> = [];
                     let ba: Array<BurnType> = [];
@@ -69,8 +66,7 @@ const ELFResult: React.FC<ResultProps> = (props) => {
                         // HERE IS WHERE WE NEED TO FILTER OUT THE BURNABLES
                         if (!burnContractIds.includes(r.ownedAssets![0].typeID))
                             oa.push(...r.ownedAssets!);
-                        console.log(ba.findIndex((r2) => r.ownedAssets![0].burnBMAssets![0].assetNumber === r2.assetNumber))
-                        // 
+                        //
                         if (r.ownedAssets![0].burnBMAssets!.length) {
                             let tmp = [...r.ownedAssets![0].burnBMAssets!];
                             tmp.forEach(t => {
@@ -80,8 +76,7 @@ const ELFResult: React.FC<ResultProps> = (props) => {
                             })
                         }
                     })
-                    console.log("oa", oa);
-                    console.log("ba", ba);
+
                     await dispatch(setWalletAssets(oa));
                     await dispatch(setBurnAssets(ba));
                     await Api.asset.getBurnables(walletAddress)

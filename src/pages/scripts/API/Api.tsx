@@ -125,6 +125,14 @@ export const Api = {
 				.then(async res => {
 					return await res.data;
 				})
+		},
+		getAllByAsset: async (assetId: string) => {
+			let data = { "assetId": assetId }
+
+			return await ApiFx.POSTKahlilAuthenticated("Claim/GetAllByAsset", mario, data)
+				.then(async res => {
+					return await res.data;
+				})
 		}
 	},
 	media: {
@@ -132,6 +140,13 @@ export const Api = {
 			return await ApiFx.POSTKahlilAuthenticated("Something/Media", mario, data)
 				.then(async res => {
 					return await res.data
+				})
+		},
+		getAllByAsset: async (assetId: string) => {
+			let data = { "assetId": assetId }
+			return await ApiFx.POSTKahlilAuthenticated("Media/GetAllByAsset", mario, data)
+				.then(async res => {
+					return await res.data;
 				})
 		}
 	},
@@ -146,7 +161,6 @@ export const Api = {
 	registration: {
 		signup: async (dbrecord: Claim, WalletAddress: string) => {
 			const data = WalletAddress;
-			console.log(dbrecord.url);
 			return await ApiFx.POSTKahlilAuthenticated(dbrecord.url as string, mario, data)
 				.then(async (res: any) => {
 					return await res.data
