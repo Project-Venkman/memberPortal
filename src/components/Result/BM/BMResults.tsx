@@ -38,12 +38,11 @@ const BMResult: React.FC<ResultProps> = (props) => {
     const walletAssets: Array<Asset> = useSelector(
         (state: RootState) => state.walletAssets
     );
-
     const dispatch = useDispatch();
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [modalType, setModalType] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
-
+  
     return (
         <ResultPage>
             {walletAssets.length > 0 && !loading && <ItemSelect />}
