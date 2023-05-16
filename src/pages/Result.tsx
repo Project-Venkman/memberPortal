@@ -107,7 +107,7 @@ const Result: React.FC<ResultProps> = (props) => {
                 });
         })();
     }, [walletAddress]);
-
+    
     return (
         <>
             {currentUrl.pathname.includes('pvlogin') ? (
