@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Asset, WalletData, ResultProps, BurnAsset } from '@customtypes/index';
-import {
-    Asset,
-    WalletData,
-    ResultProps,
-    Burn as BurnType,
-} from '@customtypes/index';
 import { RootState } from '@state/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { Api } from '@pages/scripts/API';
@@ -113,7 +107,7 @@ const Result: React.FC<ResultProps> = (props) => {
                 });
         })();
     }, [walletAddress]);
-    
+
     return (
         <>
             {currentUrl.pathname.includes('pvlogin') ? (
