@@ -3,7 +3,7 @@ import CoinbaseWalletSDK from '@coinbase/wallet-sdk';
 import Web3Modal from 'web3modal';
 import { Magic, UserInfo } from 'magic-sdk';
 import axios from 'axios';
-const magicKey: string | undefined = process.env.REACT_APP_MAGIC_KEY as string;
+const magicKey: string | undefined = process.env.MAGIC_KEY as string;
 const magic = new Magic(magicKey, {
     network: 'mainnet',
 });
