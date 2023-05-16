@@ -1,9 +1,9 @@
 import * as ApiFx from "./ApiFunctions";
-import { environments } from "./environment";
 import { Claim, KahlilApi } from "@customtypes/index";
 
 const mario: KahlilApi = {
-	host: environments[process.env.REACT_APP_DEV as keyof typeof environments].ProtonPack,
+	//host: environments[process.env.REACT_APP_DEV as keyof typeof environments].ProtonPack,
+	host: 'https://apiv2.projectvenkman.com/',
 	//version: "", // add a / to end of string if version is included
 	//key: "",
 	//secret: "",

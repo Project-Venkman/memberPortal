@@ -28,9 +28,8 @@ import {
 } from "@customtypes/HyperMint";
 import { KahlilApi } from "@customtypes/Base";
 import * as ApiFx from "@pages/scripts/API/ApiFunctions";
-import { environments } from "@pages/scripts/API/environment";
 
-const url = environments[process.env.REACT_APP_DEV as keyof typeof environments].Hypermint;
+const url = 'https://protonpackapiserver-dooxr4hhta-uc.a.run.app/';
 
 export const HMApi = {
 	utilities: {
