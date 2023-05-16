@@ -8,7 +8,14 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
     const { modalOpen, setModalOpen, setModalType } = props;
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const navButtons: Array<string> = ['media', 'claim', 'events', 'Burn'];
+    const navButtons: Array<string> = [
+        'media',
+        'claim',
+        'events',
+        'Burn',
+        'Profile',
+    ];
+
 
     // const navButtons: Array<string> = ["media", "claim", "events", "Profile"];
 
@@ -55,9 +62,10 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
                         {btn === 'Burn' && (
                             <span onClick={handleBurnClick}>{btn}</span>
                         )}
-                        {/*{btn === 'Profile' && (*/}
-                        {/*    <span onClick={handleProfileClick}>{btn}</span>*/}
-                        {/*)}*/}
+                        {btn === 'Profile' && (
+                            <span onClick={handleProfileClick}>{btn}</span>
+                        )}
+
                     </ResultPageNavButton>
                 );
             })}
