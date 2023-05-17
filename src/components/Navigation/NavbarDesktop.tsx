@@ -41,7 +41,7 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
         navigate('/Burn');
     };
     const handleProfileClick = () => {
-        navigate('/ProfilePage');
+        navigate('/Transfer');
     };
 
     return (

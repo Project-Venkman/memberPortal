@@ -5,7 +5,7 @@ import {
     ResultProps,
     Burn as BurnType
 } from "@customtypes/index";
-import { Invalid, ItemAssetImageELF, ItemAssetImage, ItemModal, ItemSelect, NavbarDesktop, NavbarMobile } from "@components/index";
+import { Invalid, ItemAssetImage, ItemModal, ItemSelect, NavbarDesktop, NavbarMobile } from "@components/index";
 import {
     FrameImg,
     ImageContainer,

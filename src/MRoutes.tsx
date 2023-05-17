@@ -9,11 +9,13 @@ import PVLogin from "@components/Result/PV/PVLogin";
 import PVResults from "@components/Result/PV/PVResults";
 import { accordionData } from "@pages/ChooseContract"
 import ProfilePage from "@pages/Profile";
+import TransferPage from "@pages/Transfer"
 const MRoutes = () => {
 	return (
 		<Routes>
 			<Route path={"/"} element={<Login />} />
 			<Route path={"/Login"} element={<Login />} />
+			<Route path={"/Transfer"} element={<TransferPage />} />
 			<Route path={"/PVLogin"} element={<PVLogin />} />
 			<Route path={"/BMResult"} element={<Result />} />
 			<Route path={"/Burn"} element={<Burn />} />
