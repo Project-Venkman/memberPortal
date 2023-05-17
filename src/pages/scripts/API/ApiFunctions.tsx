@@ -21,7 +21,7 @@ const generateSignature = (method: string, host: KahlilApi, data: any) => {
     let dts = new Date().toISOString(); // format yyyy-mm-ddThh:mm:ss.000Z
     //    let payload = data // serialized post data (form fields)
     // if (!data) throw new Error("No data provided");
-    let payload = data ? JSON.stringify(data) : {} // serialized post data (form fields)
+    let payload = data ? JSON.stringify(data) : "" // serialized post data (form fields)
     let string_to_sign = dts + ' ' + host.host + '/' + method + '/' /*+ host.version*/ + ' ' + CryptoJS.SHA256(payload).toString(); // create the string to sign
     let hash = CryptoJS.HmacSHA256(string_to_sign, ""/*, host.secret*/);
     let signature = hash.toString();
