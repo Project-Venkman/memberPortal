@@ -41,7 +41,7 @@ const Result: React.FC<ResultProps> = (props) => {
             // await Api.asset.getByWalletAddress(walletAddress)
             await Api.asset
                 .getByWalletAddress(
-                    '0x2611B286994571b4D5292ACFF5619da8074b5c54'
+                    walletAddress
                 )
                 .then(async (res) => {
                     dispatch(setWallet(res));
