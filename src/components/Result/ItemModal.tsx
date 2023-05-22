@@ -56,16 +56,23 @@ export const ItemModal: React.FC<ResultModalProps> = (props) => {
         if (!currentAsset) return;
         let allClaims: Array<ClaimType> = [];
         let allMedia: Array<MediaType> = [];
+        let assetIds: Array<string> = [];
 
         (async () => {
             for (let i = 0; i < walletAssets.length; i++) {
                 let assetId = walletAssets[i].id;
-                await Api.claim.getAllByAsset(assetId).then(async (res) => {
-                    let AssetClaim = res;
-                    allClaims = [...allClaims, ...AssetClaim];
-                    // const claimAssets: Array<ClaimType> = AssetClaim as Array<ClaimType>;
-                });
+                // await Api.claim.getAllByAsset(assetId).then(async (res) => {
+                //     let AssetClaim = res;
+                //     allClaims = [...allClaims, ...AssetClaim];
+                //     // const claimAssets: Array<ClaimType> = AssetClaim as Array<ClaimType>;
+                // });
+                assetIds.push(assetId);
             }
+            let allClaims = await Api.claim
+                .getAllByAssetIds(assetIds)
+                .then(async (res) => {
+                    return res;
+                });
 
             for (let i = 0; i < walletAssets.length; i++) {
                 let assetId = walletAssets[i].id;
