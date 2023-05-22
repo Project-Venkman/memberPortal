@@ -16,7 +16,6 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
         'Profile',
     ];
 
-
     // const navButtons: Array<string> = ["media", "claim", "events", "Profile"];
 
     const handleDataModalClick = (e: string) => {
@@ -41,7 +40,7 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
         navigate('/Burn');
     };
     const handleProfileClick = () => {
-        navigate('/ProfilePage');
+        navigate('/Transfer');
     };
 
     return (
@@ -65,7 +64,6 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
                         {/*{btn === 'Profile' && (*/}
                         {/*    <span onClick={handleProfileClick}>{btn}</span>*/}
                         {/*)}*/}
-
                     </ResultPageNavButton>
                 );
             })}

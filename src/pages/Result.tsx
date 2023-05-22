@@ -38,7 +38,6 @@ const Result: React.FC<ResultProps> = (props) => {
         (async () => {
             setLoading(true);
             const burnContracts = await Api.contract.GetAllBurnableContracts();
-            // await Api.asset.getByWalletAddress(walletAddress)
             await Api.asset
                 .getByWalletAddress(
                     walletAddress
@@ -107,7 +106,7 @@ const Result: React.FC<ResultProps> = (props) => {
                 });
         })();
     }, [walletAddress]);
-    
+
     return (
         <>
             {currentUrl.pathname.includes('pvlogin') ? (
