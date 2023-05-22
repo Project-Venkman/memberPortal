@@ -51,7 +51,6 @@ export const ClaimCard: React.FC<ClaimCardProps> = (props) => {
     }, [claim]);
 
     if (!claims![0].assetId) {
-        console.log('happening');
         return <LoadingIcon />; // Render loading state while claim is null
     }
     // return <LoadingIcon />;
