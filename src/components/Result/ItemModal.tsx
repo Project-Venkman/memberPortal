@@ -42,7 +42,6 @@ export const ItemModal: React.FC<ResultModalProps> = (props) => {
         burnBM: '00000004-0000-0000-0000-000000000004',
         burnTix: '00000004-0000-0000-0000-000000000005',
     };
-    console.log(walletAssets);
     // useEffect(() => {
     // 	if (!asset) return;
     // 	const claimAssets: Array<ClaimType> = asset.claimAssets as Array<ClaimType>;

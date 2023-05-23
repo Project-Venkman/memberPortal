@@ -32,10 +32,11 @@ export const Api = {
                 return res.data;
             });
         },
-        renewTokens: async () => {
+        whoamI: async () => {
             return await ApiFx.POSTKahlilAuthenticated(
-                'Auth/RenewTokens',
-                mario
+                'Auth/WhoAmI',
+                mario,
+                ''
             ).then(async (res) => {
                 return res.data;
             });
