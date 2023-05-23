@@ -53,7 +53,11 @@ export const Burn: React.FC<BurnProps> = (props) => {
         navigate('/BMResult');
     };
 
-    useEffect(() => {}, [burns]);
+    useEffect(() => {
+        if (burns.length < 1) {
+            navigate('/BMResult');
+        }
+    }, [burns]);
 
     return (
         <BurnPage className={'max-w-[1920px] px-32 mt-16'} id={'burn-page'}>

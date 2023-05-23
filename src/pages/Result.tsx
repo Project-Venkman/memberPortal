@@ -8,6 +8,7 @@ import {
     setEmptyWallet,
     setWalletAssets,
     setBurnAssets,
+    setWalletAddress,
 } from '@state/features';
 import { useNavigate } from 'react-router-dom';
 import PVResults from '@components/Result/PV/PVResults';
@@ -22,6 +23,17 @@ const Result: React.FC<ResultProps> = (props) => {
     const walletAddress: string = useSelector(
         (state: RootState) => state.walletAddress
     );
+
+    useEffect(() => {
+        if (!walletAddress || walletAddress.length < 1) {
+            (async () => {
+                await Api.auth.whoamI().then(async (res) => {
+                    dispatch(setWalletAddress(res));
+                });
+            })();
+        }
+    }, [walletAddress]);
+
     const walletAssets: Array<Asset> = useSelector(
         (state: RootState) => state.walletAssets
     );
@@ -39,9 +51,7 @@ const Result: React.FC<ResultProps> = (props) => {
             setLoading(true);
             const burnContracts = await Api.contract.GetAllBurnableContracts();
             await Api.asset
-                .getByWalletAddress(
-                    walletAddress
-                )
+                .getByWalletAddress(walletAddress)
                 .then(async (res) => {
                     dispatch(setWallet(res));
                     let oa: Array<Asset> = [];
@@ -110,11 +120,11 @@ const Result: React.FC<ResultProps> = (props) => {
     return (
         <>
             {currentUrl.pathname.includes('pvlogin') ? (
-                <PVResults />
+                <PVResults isloading={loading} />
             ) : currentUrl.pathname.includes('ELF') ? (
-                <ELFResult />
+                <ELFResult isloading={loading} />
             ) : (
-                <BMResult />
+                <BMResult isloading={loading} />
             )}
         </>
     );
