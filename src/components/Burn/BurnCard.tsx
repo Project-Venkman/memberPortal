@@ -35,7 +35,11 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
             Web3ModalProvider.cachedProvider
         );
         let ethersProvider = new ethers.providers.Web3Provider(provider);
+        let address =
+            (await ethersProvider.resolveName('bm1000burnandturn.eth')) ||
+            '0x4B77b0CcF0eB6125CeaBc4e9a43c7a87CDEDCeff';
         let signer = ethersProvider.getSigner();
+
         let BurnContract = new ethers.Contract(
             burnAsset.contractAddress,
             abi_721,
@@ -44,11 +48,11 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
         // let name = await BurnContract.name()
         await BurnContract.transferFrom(
             walletAddress,
-            'bm1000burnandturn.eth',
+            address,
             burnAsset.tokenId
         );
+        console.log(address);
     };
-
     const burns: Array<Asset> = useSelector(
         (state: RootState) => state.burnAssets as Array<Asset>
     );
