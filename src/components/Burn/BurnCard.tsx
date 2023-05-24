@@ -79,6 +79,7 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
         );
         setRefreshBurn(true);
         await navigate('/burn');
+
     };
     const burns: Array<Asset> = useSelector(
         (state: RootState) => state.burnAssets as Array<Asset>

@@ -26,6 +26,17 @@ const Result: React.FC<ResultProps> = (props) => {
     const walletAddress: string = useSelector(
         (state: RootState) => state.walletAddress
     );
+
+    useEffect(() => {
+        if (!walletAddress || walletAddress.length < 1) {
+            (async () => {
+                await Api.auth.whoamI().then(async (res) => {
+                    dispatch(setWalletAddress(res));
+                });
+            })();
+        }
+    }, [walletAddress]);
+
     const walletAssets: Array<Asset> = useSelector(
         (state: RootState) => state.walletAssets
     );
@@ -65,11 +76,11 @@ const Result: React.FC<ResultProps> = (props) => {
     return (
         <>
             {currentUrl.pathname.includes('pvlogin') ? (
-                <PVResults />
+                <PVResults isloading={loading} />
             ) : currentUrl.pathname.includes('ELF') ? (
-                <ELFResult />
+                <ELFResult isloading={loading} />
             ) : (
-                <BMResult />
+                <BMResult isloading={loading} />
             )}
         </>
     );
