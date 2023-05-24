@@ -19,7 +19,6 @@ export const Invalid: React.FC<PeachProps> = (props) => {
     const walletAssets: Array<Asset> = useSelector(
         (state: RootState) => state.walletAssets
     );
-    console.log(walletAssets);
     const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         // window.localStorage.clear();
         dispatch({ type: 'RESET' });

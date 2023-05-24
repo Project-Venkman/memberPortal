@@ -44,7 +44,6 @@ export const useSetAssets = async (walletAddress: string) => {
 
             dispatch(setWalletAssets(oa));
             dispatch(setBurnAssets(ba));
-            console.log(oa, ba);
         } catch (error) {
             dispatch(setEmptyWallet(walletAddress));
             console.error(error);

@@ -10,12 +10,7 @@ export const NavbarMobile: React.FC<NavBarProps> = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState<boolean>(false);
-    const navMobileButtons: Array<string> = [
-        'media',
-        'claim',
-        'events',
-        'burn',
-    ];
+    const navMobileButtons: Array<string> = ['media', 'claim', 'burn'];
 
     const handleMobileDataModalClick = (e: string) => {
         setModalType(e);
@@ -57,19 +52,24 @@ export const NavbarMobile: React.FC<NavBarProps> = (props) => {
                     return (
                         <ResultPageNavListItem
                             key={btn}
-                            hidden={btn === 'events'}
+                            // hidden={btn === 'burn'}
                             value={btn}
                             onClick={() => {
-                                // if (modalOpen) setModalOpen(!modalOpen);
-                                // handleMobileDataModalClick(btn);
-                                // setShowMenu(!showMenu);
+                                if (btn === 'media' || btn === 'claim') {
+                                    if (modalOpen) setModalOpen(!modalOpen);
+                                    handleMobileDataModalClick(btn);
+                                    setShowMenu(!showMenu);
+                                } else if (btn === 'burn') {
+                                    handleBurnClick();
+                                }
                             }}
                         >
-                            {btn === 'burn' && (
-                                <span onClick={handleBurnClick}>{btn}</span>
-                            )}
+                            {/*{btn === 'burn' && (*/}
+                            {/*    <span onClick={handleBurnClick}></span>*/}
+                            {/*)}*/}
                             {btn === 'claim' && <span>{btn}</span>}
                             {btn === 'media' && <span>{btn}</span>}
+                            {btn === 'burn' && <span>{btn}</span>}
                         </ResultPageNavListItem>
                     );
                 })}

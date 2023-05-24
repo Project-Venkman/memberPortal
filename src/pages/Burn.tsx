@@ -44,10 +44,6 @@ export const Burn: React.FC<BurnProps> = (props) => {
         (state: RootState) => state.burnAssets as Array<Asset>
     );
     const [copied, setCopied] = useState<boolean>(false);
-    const copyAddress = () => {
-        setCopied(true);
-        navigator.clipboard.writeText('bm1000burnandturn.eth');
-    };
 
     const handleHomeClick = () => {
         navigate('/BMResult');
