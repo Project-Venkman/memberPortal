@@ -24,6 +24,7 @@ import {
     setEmptyWallet,
     setWalletAssets,
     setBurnAssets,
+    LoadingState,
 } from '@state/features';
 import { truncateAddress } from '@pages/scripts/utils';
 import { LoadIndicator } from 'devextreme-react';
@@ -41,11 +42,13 @@ const BMResult: React.FC<ResultProps> = (props) => {
     const dispatch = useDispatch();
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [modalType, setModalType] = useState<string>('');
-    const [loading, setLoading] = useState<boolean>(false);
+    const loading: boolean = useSelector(
+        (state: RootState) => state.isLoading
+    ).isLoading;
     return (
         <ResultPage>
             {walletAssets.length > 0 && !loading && <ItemSelect />}
-            {!props.isloading &&
+            {!loading &&
                 walletAssets.length && [
                     <NavbarDesktop
                         key={0}
@@ -60,7 +63,7 @@ const BMResult: React.FC<ResultProps> = (props) => {
                         setModalType={setModalType}
                     />,
                 ]}
-            {props.isloading && !walletAssets.length && (
+            {loading && !walletAssets.length && (
                 <ResultCard id={'result-card'}>
                     <ResultCardContent id={'result-card-content'}>
                         <FrameImg id={'frame'} src={frame} />
@@ -75,7 +78,7 @@ const BMResult: React.FC<ResultProps> = (props) => {
                                     walletAddress
                                 )}`}</p>
                                 <LoadIndicator
-                                    visible={loading}
+                                    visible={!loading}
                                 ></LoadIndicator>
                             </div>
                         </ImageContainer>
@@ -92,7 +95,7 @@ const BMResult: React.FC<ResultProps> = (props) => {
                     </ResultCardContent>
                 </ResultCard>
             )}
-            {!walletAssets.length && !props.isloading && (
+            {!walletAssets.length && !loading && (
                 <ResultCard id={'result-card'}>
                     <ResultCardContent id={'result-card-content'}>
                         <FrameImg id={'frame'} src={frame} />

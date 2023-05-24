@@ -60,7 +60,7 @@ export const Burn: React.FC<BurnProps> = (props) => {
     }, [burns]);
 
     return (
-        <BurnPage className={'max-w-[1920px] px-32 mt-16'} id={'burn-page'}>
+        <BurnPage className={'max-w-[1920px] md:px-32 mt-16'} id={'burn-page'}>
             <div>
                 <button
                     className={
@@ -75,51 +75,13 @@ export const Burn: React.FC<BurnProps> = (props) => {
                 <BurnContainerHeader id={'Burn-header'}>
                     <BurnHeader>Burn and Turn!</BurnHeader>
                 </BurnContainerHeader>
-                {/*<ul className={'text-white text-xl m-4'}>*/}
-                {/*    <li className={'mb-4'}>*/}
-                {/*        We know you’ve all been patiently waiting for the*/}
-                {/*        opportunity to burn those Burning Curtains in your*/}
-                {/*        wallets for some 3D Glasses! Well, the wait is over.*/}
-                {/*    </li>*/}
-                {/*    <li className={'mb-4 flex flex-row'}>*/}
-                {/*        To burn, all you need to do is transfer your Burning*/}
-                {/*        Curtains to this ETH address:&ensp;*/}
-                {/*        <div>*/}
-                {/*            <span className={'text-gold'}>*/}
-                {/*                bm1000burnandturn.eth*/}
-                {/*            </span>*/}
-                {/*        </div>*/}
-                {/*        {copied ? (*/}
-                {/*            <FaCheckCircle className={'ml-2'} />*/}
-                {/*        ) : (*/}
-                {/*            <button*/}
-                {/*                className={'ml-1 text-lg hover:text-gold'}*/}
-                {/*                onClick={copyAddress}*/}
-                {/*            >*/}
-                {/*                <FaRegCopy />*/}
-                {/*            </button>*/}
-                {/*        )}*/}
-                {/*    </li>*/}
-                {/*    <li className={'mb-4'}>*/}
-                {/*        Project Venkman will airdrop one pair of 3D Glasses into*/}
-                {/*        your wallet for every Burning Curtain that you redeem!*/}
-                {/*        We expect a firestorm of curtains in these first few*/}
-                {/*        days, but we will get the airdrops to you as quickly as*/}
-                {/*        possible!*/}
-                {/*    </li>*/}
-                {/*    <li className={'mb-4'}>*/}
-                {/*        After the burn is completed, we will update the Member*/}
-                {/*        Portal with a new minting function (3D Glasses) where*/}
-                {/*        you can redeem 3D Glasses for a custom attribute upgrade*/}
-                {/*        or a new collection claim.*/}
-                {/*    </li>*/}
-                {/*</ul>*/}
+
                 <BurnItems id={'burn-items'}>
                     {/* {!copied && <BurnBlocker><p>Copy ETH Address Above To Burn</p></BurnBlocker>} */}
                     {burns[0] && (
                         // Height needs to be 90% and width 100% to make the carousel work
                         <Carousel
-                            className="items-center relative w-full sm:mx-auto align-middle 2xl:justify-center"
+                            className="flex-col lg:flex-row lg:items-center lg:relative lg:w-full sm:mx-auto lg:align-middle 2xl:justify-center"
                             swipeable={true}
                             draggable={false}
                             showDots={false}
@@ -130,10 +92,10 @@ export const Burn: React.FC<BurnProps> = (props) => {
                             keyBoardControl={true}
                             customTransition="all .5"
                             transitionDuration={500}
-                            containerClass="carousel-container flex overflow-hidden"
+                            containerClass="carousel-container flex flex-col items-center overflow-hidden"
                             dotListClass="custom-dot-list-style"
-                            sliderClass={'flex relative w-full justify-center'}
-                            itemClass="carousel-item-padding-40-px w-1/2 max-w-[300px] h-full"
+                            sliderClass="flex sm:flex-wrap-reverse md:flex-nowrap items-center justify-center w-full"
+                            itemClass="carousel-item-padding-40-px w-1/2 max-w-[300px] h-full mt-12 min-h-[320px]"
                         >
                             {burns.map((burn: Asset, i: number) => {
                                 return (
