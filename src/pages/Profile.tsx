@@ -52,7 +52,6 @@ const ProfilePage: React.FC<ProfileProps> = (props) => {
     const walletAddress: string = useSelector(
         (state: RootState) => state.walletAddress
     );
-    console.log(walletAddress);
     // use wallet address to get id
     useEffect(() => {}, []);
 

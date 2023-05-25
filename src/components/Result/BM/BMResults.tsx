@@ -24,6 +24,7 @@ import {
     setEmptyWallet,
     setWalletAssets,
     setBurnAssets,
+    LoadingState,
 } from '@state/features';
 import { truncateAddress } from '@pages/scripts/utils';
 import { LoadIndicator } from 'devextreme-react';
@@ -41,7 +42,9 @@ const BMResult: React.FC<ResultProps> = (props) => {
     const dispatch = useDispatch();
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [modalType, setModalType] = useState<string>('');
-    const [loading, setLoading] = useState<boolean>(false);
+    const loading: boolean = useSelector(
+        (state: RootState) => state.isLoading
+    ).isLoading;
     return (
         <ResultPage>
             {walletAssets.length > 0 && !loading && <ItemSelect />}
@@ -75,7 +78,7 @@ const BMResult: React.FC<ResultProps> = (props) => {
                                     walletAddress
                                 )}`}</p>
                                 <LoadIndicator
-                                    visible={loading}
+                                    visible={!loading}
                                 ></LoadIndicator>
                             </div>
                         </ImageContainer>

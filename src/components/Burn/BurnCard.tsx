@@ -8,7 +8,7 @@ import {
     BurnName,
 } from '@styles/index';
 import { Burn, BurnCardProps, BurnDataOptions } from '@customtypes/Burn';
-import { Asset } from '@customtypes/index';
+import { Asset, BurnAsset } from '@customtypes/index';
 import { RootState } from '@state/store';
 import { ethers } from 'ethers';
 import { abi_721 } from '@components/Burn/abi_721';
@@ -16,6 +16,15 @@ import Web3Modal from 'web3modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { Web3ModalProvider } from '@components/Wallet';
 import { BurnURL } from '@components/Burn/BurnURL';
+import { Api } from '@pages/scripts';
+import {
+    setBurnAssets,
+    setEmptyWallet,
+    setWallet,
+    setWalletAssets,
+} from '@state/features';
+import { useNavigate } from 'react-router-dom';
+import { useSetAssets } from '@components/Loading';
 
 // let initialBurn: Burn = {
 // 	contractAddress: "",
@@ -26,10 +35,27 @@ import { BurnURL } from '@components/Burn/BurnURL';
 // }
 
 export const BurnCard: React.FC<BurnCardProps> = (props) => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const walletAddress: string = useSelector(
         (state: RootState) => state.walletAddress
     );
-
+    const walletAssets: Array<Asset> = useSelector(
+        (state: RootState) => state.walletAssets
+    );
+    const [refreshBurn, setRefreshBurn] = useState<boolean>(false);
+    const setAssets = useSetAssets(walletAddress);
+    useEffect(() => {
+        if (!walletAddress || walletAddress.length < 1) return;
+        if (refreshBurn) {
+            (async () => {
+                await (
+                    await setAssets
+                )();
+                setRefreshBurn(false);
+            })();
+        }
+    }, [refreshBurn]);
     const getProvider = async () => {
         let provider = await Web3ModalProvider.connectTo(
             Web3ModalProvider.cachedProvider
@@ -51,15 +77,18 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
             address,
             burnAsset.tokenId
         );
-        console.log(address);
+        setRefreshBurn(true);
+        await navigate('/burn');
+
     };
     const burns: Array<Asset> = useSelector(
         (state: RootState) => state.burnAssets as Array<Asset>
     );
+
     const { index, burnAsset, copiedAddress, onClick } = props;
 
-    const handleCardClick = () => {
-        getProvider();
+    const handleCardClick = async () => {
+        await getProvider();
     };
     // const [burnOptions, setBurnOptions] = useState<BurnDataOptions>({
     // 	contractAddress: "",
