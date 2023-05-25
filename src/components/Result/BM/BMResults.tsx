@@ -48,7 +48,7 @@ const BMResult: React.FC<ResultProps> = (props) => {
     return (
         <ResultPage>
             {walletAssets.length > 0 && !loading && <ItemSelect />}
-            {!props.isloading &&
+            {!loading &&
                 walletAssets.length && [
                     <NavbarDesktop
                         key={0}
@@ -63,7 +63,7 @@ const BMResult: React.FC<ResultProps> = (props) => {
                         setModalType={setModalType}
                     />,
                 ]}
-            {props.isloading && !walletAssets.length && (
+            {loading && !walletAssets.length && (
                 <ResultCard id={'result-card'}>
                     <ResultCardContent id={'result-card-content'}>
                         <FrameImg id={'frame'} src={frame} />
@@ -95,7 +95,7 @@ const BMResult: React.FC<ResultProps> = (props) => {
                     </ResultCardContent>
                 </ResultCard>
             )}
-            {!walletAssets.length && !props.isloading && (
+            {!walletAssets.length && !loading && (
                 <ResultCard id={'result-card'}>
                     <ResultCardContent id={'result-card-content'}>
                         <FrameImg id={'frame'} src={frame} />
