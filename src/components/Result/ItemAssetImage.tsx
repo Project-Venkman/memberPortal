@@ -21,11 +21,14 @@ export const ItemAssetImage: React.FC<ItemProps> = (props) => {
 	useEffect(() => {
 
 	}, [])
-
+console.log(oAsset, currentAsset)
 	return (
 		<React.Fragment>
-
-			<NFTImg className={loaded ? "loaded" : ""} src={currentAsset.image || oAsset.image!} onLoad={onLoad} />
+          <NFTImg
+            className={loaded ? "loaded" : ""}
+            src={currentAsset.imageSmall !== null ? currentAsset.imageSmall : currentAsset.image}
+            onLoad={onLoad}
+ />
 			{/*{!loaded && <NFTImg src={loadingGif}/>}*/}
 		</React.Fragment>
 	)
