@@ -19,9 +19,6 @@ export const ItemAssetImage: React.FC<ItemProps> = (props) => {
   };
 
   useEffect(() => {}, []);
-
-  console.log(oAsset, currentAsset);
-
   return (
     <React.Fragment>
       {currentAsset.imageSmall !== null ? (
