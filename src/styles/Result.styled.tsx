@@ -39,7 +39,17 @@ export const ResultCard = styled.div`
 		xs:tall:portrait:-top-8 short:portrait:-top-2 md:tall:portrait:-top-6 md:portrait:-top-20 
 	`};
 `;
+export const ResultCardELF = styled.div`
+    background-image: url(${space});
 
+    ${tw`
+		relative
+		rounded-full
+		w-4/5 md:portrait:w-4/5 md:w-4/5 xl:w-2/3
+		top-14 md:-top-16 xl:-top-4 sm:-top-20 xxxs:-top-6 lg:-top-10
+		xs:tall:portrait:-top-8 short:portrait:-top-2 md:tall:portrait:-top-6 md:portrait:-top-20 
+	`};
+`;
 export const ResultCardContent = styled.div`
     ${tw`relative w-full h-full flex flex-col justify-center items-center`};
     transform: rotate(-4deg);
@@ -123,18 +133,6 @@ export const SelectionOptionsListItem = styled.li`
 
 export const TelescopeImg = styled.img`
     ${tw`z-30 w-8/12 xxxs:w-full xxs:w-full xs:w-full md:w-full lg:w-full xl:w-full`};
-`;
-
-export const ResultCardELF = styled.div`
-    background-image: url(${space});
-
-    ${tw`
-		relative
-		rounded-full
-		w-4/5 md:portrait:w-4/5 md:w-4/5 xl:w-2/3
-		top-14 md:-top-16 xl:-top-4 sm:-top-20 xxxs:-top-6 lg:-top-10
-		xs:tall:portrait:-top-8 short:portrait:-top-2 md:tall:portrait:-top-6 md:portrait:-top-20 
-	`};
 `;
 
 export const ResultCardContentELF = styled.div`

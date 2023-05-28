@@ -77,13 +77,9 @@ export const Web3ModalComponent: React.FC<Web3ModalProps> = (props) => {
             }
             const url = new URL(window.location.href);
             // if the url contains pvlogin, then navigate to ("PVResults")
-            if (url.pathname.includes('pvlogin')) {
-                navigate('/PVResult');
-            } else if (url.pathname.includes('ELF')) {
-                navigate('/ELFResult');
-            } else {
-                navigate('/BMResult');
-            }
+
+                navigate('/Results');
+
         } catch (error) {
             console.log(error);
         }

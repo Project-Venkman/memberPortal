@@ -46,12 +46,12 @@ export const Burn: React.FC<BurnProps> = (props) => {
     const [copied, setCopied] = useState<boolean>(false);
 
     const handleHomeClick = () => {
-        navigate('/BMResult');
+        navigate('/Results');
     };
 
     useEffect(() => {
         if (burns.length < 1) {
-            navigate('/BMResult');
+            navigate('/Results');
         }
     }, [burns]);
 
