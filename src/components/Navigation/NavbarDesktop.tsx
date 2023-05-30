@@ -1,11 +1,18 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { NavBarProps } from '@customtypes/index';
+import { Asset, Claim as ClaimType, NavBarProps } from '@customtypes/index';
 import { ResultPageNav, ResultPageNavButton } from '@styles/index';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@state/store';
 
 export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
     const { modalOpen, setModalOpen, setModalType } = props;
+    const claims: Array<ClaimType> = useSelector(
+        (state: RootState) => state.claimAssets as Array<ClaimType>
+    );
+    const burns: Array<Asset> = useSelector(
+        (state: RootState) => state.burnAssets as Array<Asset>
+    );
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const navButtons: Array<string> = [
@@ -56,9 +63,11 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
                             handleDataModalClick(btn);
                         }}
                     >
-                        {btn === 'claim' && <span>{btn}</span>}
+                        {btn === 'claim' && claims.length > 0 && (
+                            <span>{btn}</span>
+                        )}
                         {btn === 'media' && <span>{btn}</span>}
-                        {btn === 'Burn' && (
+                        {btn === 'Burn' && burns.length > 0 && (
                             <span onClick={handleBurnClick}>{btn}</span>
                         )}
                         {/*{btn === 'Profile' && (*/}

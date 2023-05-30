@@ -1,13 +1,19 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
     setBurnAssets,
+    setClaimAssets,
     setEmptyWallet,
     setLoading,
+    setMediaAssets,
     setWallet,
     setWalletAssets,
 } from '@state/features';
 import { Api } from '@pages/scripts';
 import { Asset, BurnAsset } from '@customtypes/Asset';
+import { useEffect, useState } from 'react';
+import { Claim as ClaimType } from '@customtypes/Claim';
+import { Media as MediaType } from '@customtypes/Media';
+import { RootState } from '@state/store';
 
 export const useSetAssets = async (walletAddress: string) => {
     const dispatch = useDispatch();
@@ -41,7 +47,7 @@ export const useSetAssets = async (walletAddress: string) => {
                     oa.push(r);
                 }
             });
-
+            // console.log(ba);
             dispatch(setWalletAssets(oa));
             dispatch(setBurnAssets(ba));
         } catch (error) {
@@ -51,6 +57,5 @@ export const useSetAssets = async (walletAddress: string) => {
             dispatch(setLoading(false));
         }
     };
-
     return setAssets; // Return the setAssets function
 };
