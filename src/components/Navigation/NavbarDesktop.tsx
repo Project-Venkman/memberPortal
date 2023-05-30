@@ -13,6 +13,7 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
     const burns: Array<Asset> = useSelector(
         (state: RootState) => state.burnAssets as Array<Asset>
     );
+    console.log(burns, claims);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const navButtons: Array<string> = [
@@ -63,7 +64,7 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
                             handleDataModalClick(btn);
                         }}
                     >
-                        {btn === 'claim' && claims.length > 0 && (
+                        {btn === 'claim' && claims[0].assetId && (
                             <span>{btn}</span>
                         )}
                         {btn === 'media' && <span>{btn}</span>}
