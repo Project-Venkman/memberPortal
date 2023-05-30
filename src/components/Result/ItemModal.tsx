@@ -75,13 +75,18 @@ export const ItemModal: React.FC<ResultModalProps> = (props) => {
 
             for (let i = 0; i < walletAssets.length; i++) {
                 let assetId = walletAssets[i].id;
-                await Api.media.getAllByAsset(assetId).then(async (res) => {
-                    let newMedia = res.filter(
-                        (media: MediaType) =>
-                            !allMedia.some((m) => m.id === media.id)
-                    );
-                    allMedia = [...allMedia, ...newMedia];
-                });
+                if (
+                    assetId !== 'a8cfad6d-0a38-4f8c-b50c-31d28124dc61' &&
+                    assetId !== 'b634b38c-46c9-49e5-b3a7-9fee034cd339'
+                ) {
+                    await Api.media.getAllByAsset(assetId).then(async (res) => {
+                        let newMedia = res.filter(
+                            (media: MediaType) =>
+                                !allMedia.some((m) => m.id === media.id)
+                        );
+                        allMedia = [...allMedia, ...newMedia];
+                    });
+                }
             }
             dispatch(setClaimAssets(allClaims));
             dispatch(setMediaAssets(allMedia));

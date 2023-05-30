@@ -71,41 +71,21 @@ export const Burn: React.FC<BurnProps> = (props) => {
                 <BurnContainerHeader id={'Burn-header'}>
                     <BurnHeader>Burn and Turn!</BurnHeader>
                 </BurnContainerHeader>
-
-                <BurnItems id={'burn-items'}>
-                    {/* {!copied && <BurnBlocker><p>Copy ETH Address Above To Burn</p></BurnBlocker>} */}
-                    {burns[0] && (
-                        // Height needs to be 90% and width 100% to make the carousel work
-                        <Carousel
-                            className="flex-col lg:flex-row lg:items-center lg:relative lg:w-full sm:mx-auto lg:align-middle 2xl:justify-center"
-                            swipeable={true}
-                            draggable={false}
-                            showDots={false}
-                            responsive={responsive}
-                            ssr={true} // means to render carousel on server-side.
-                            infinite={false}
-                            autoPlaySpeed={1000}
-                            keyBoardControl={true}
-                            customTransition="all .5"
-                            transitionDuration={500}
-                            containerClass="carousel-container flex flex-col items-center overflow-hidden"
-                            dotListClass="custom-dot-list-style"
-                            sliderClass="flex sm:flex-wrap-reverse md:flex-nowrap items-center justify-center w-full"
-                            itemClass="carousel-item-padding-40-px w-1/2 max-w-[300px] h-full mt-12 min-h-[320px]"
-                        >
-                            {burns.map((burn: Asset, i: number) => {
-                                return (
-                                    <BurnCard
-                                        key={i}
-                                        index={i}
-                                        burnAsset={burn}
-                                        copiedAddress={copied} // Pass the click event handler
-                                    />
-                                );
-                            })}
-                        </Carousel>
-                    )}
-                </BurnItems>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
+                    {burns[0] &&
+                        burns.map((burn: Asset, i: number) => (
+                            <div
+                                className="w-full sm:w-auto md:w-auto lg:w-auto xl:w-auto"
+                                key={i}
+                            >
+                                <BurnCard
+                                    index={i}
+                                    burnAsset={burn}
+                                    copiedAddress={copied} // Pass the click event handler
+                                />
+                            </div>
+                        ))}
+                </div>
             </BurnContainer>
         </BurnPage>
     );
