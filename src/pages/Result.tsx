@@ -71,7 +71,6 @@ const Result: React.FC<ResultProps> = (props) => {
     );
     const setAssets = useSetAssets(walletAddress);
 
-    // console.log(walletAssets);
     useEffect(() => {
         if (!walletAddress || walletAddress.length < 1) return;
         if (walletAddress && walletAssets.length < 1)
