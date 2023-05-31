@@ -59,7 +59,11 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
                             value={btn}
                             onClick={() => {
                                 if (modalOpen) setModalOpen(!modalOpen);
-                                handleDataModalClick(btn);
+                                if (btn === 'burn') {
+                                    navigate('/Burn');
+                                } else {
+                                    handleDataModalClick(btn);
+                                }
                             }}
                         >
                             <span>{btn}</span>

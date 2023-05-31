@@ -119,7 +119,18 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
                 </BurnName>
             </BurnDataHeader>
             <BurnImageContainer>
-                <BurnImage src={burnAsset.image} />
+                {burnAsset.animation ? (
+                    <video
+                        onMouseOver={(event) => event.target.play()}
+                        onMouseOut={(event) => event.target.pause()}
+                        loop
+                        muted
+                    >
+                        <source src={burnAsset.animation} type="video/mp4" />
+                    </video>
+                ) : (
+                    <BurnImage src={burnAsset.image} />
+                )}
             </BurnImageContainer>
             <BurnButtonContainer>
                 <BurnURL />
