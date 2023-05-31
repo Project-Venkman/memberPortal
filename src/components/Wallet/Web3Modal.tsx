@@ -21,8 +21,27 @@ export const Web3ModalComponent: React.FC<Web3ModalProps> = (props) => {
     let {} = props;
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    function clearAllCookies() {
+        let cookies = document.cookie.split(';');
 
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i];
+            let eqPos = cookie.indexOf('=');
+            let name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie =
+                name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
+        }
+    }
     const connectWallet = async () => {
+        clearAllCookies();
+        await Api.auth
+            .invalidateTokens()
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
         const domain = window.location.host;
         const origin = window.location.origin;
         const statement = 'Please sign this message to authenticate';
@@ -77,13 +96,8 @@ export const Web3ModalComponent: React.FC<Web3ModalProps> = (props) => {
             }
             const url = new URL(window.location.href);
             // if the url contains pvlogin, then navigate to ("PVResults")
-            if (url.pathname.includes('pvlogin')) {
-                navigate('/PVResult');
-            } else if (url.pathname.includes('ELF')) {
-                navigate('/ELFResult');
-            } else {
-                navigate('/BMResult');
-            }
+
+            navigate('/Results');
         } catch (error) {
             console.log(error);
         }

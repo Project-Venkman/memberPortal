@@ -42,54 +42,6 @@ export const ItemModal: React.FC<ResultModalProps> = (props) => {
         burnBM: '00000004-0000-0000-0000-000000000004',
         burnTix: '00000004-0000-0000-0000-000000000005',
     };
-    // useEffect(() => {
-    // 	if (!asset) return;
-    // 	const claimAssets: Array<ClaimType> = asset.claimAssets as Array<ClaimType>;
-    // 	const mediaAssets: Array<MediaType> = asset.mediaAssets as Array<MediaType>;
-    // 	// const burnBMAssets: Array<BurnType> = [...asset.burnBMAssets as Array<BurnType>, ...asset.burnTixAssets as Array<BurnType>];
-    // 	dispatch(setClaimAssets(claimAssets.filter((asset: ClaimType) => asset.claimTypeID === id.claimCoin)));
-    // 	dispatch(setMediaAssets(mediaAssets));
-    // 	// dispatch(setBurnAssets(burnBMAssets));
-    // }, [asset])
-    useEffect(() => {
-        if (!currentAsset) return;
-        let allClaims: Array<ClaimType> = [];
-        let allMedia: Array<MediaType> = [];
-        let assetIds: Array<string> = [];
-
-        (async () => {
-            for (let i = 0; i < walletAssets.length; i++) {
-                let assetId = walletAssets[i].id;
-                // await Api.claim.getAllByAsset(assetId).then(async (res) => {
-                //     let AssetClaim = res;
-                //     allClaims = [...allClaims, ...AssetClaim];
-                //     // const claimAssets: Array<ClaimType> = AssetClaim as Array<ClaimType>;
-                // });
-                assetIds.push(assetId);
-            }
-            let allClaims = await Api.claim
-                .getAllByAssetIds(assetIds)
-                .then(async (res) => {
-                    return res;
-                });
-
-            for (let i = 0; i < walletAssets.length; i++) {
-                let assetId = walletAssets[i].id;
-                await Api.media.getAllByAsset(assetId).then(async (res) => {
-                    let newMedia = res.filter(
-                        (media: MediaType) =>
-                            !allMedia.some((m) => m.id === media.id)
-                    );
-                    allMedia = [...allMedia, ...newMedia];
-                });
-            }
-            dispatch(setClaimAssets(allClaims));
-            dispatch(setMediaAssets(allMedia));
-            // const mediaAssets: Array<MediaType> = asset.mediaAssets as Array<MediaType>;
-            // // const burnBMAssets: Array<BurnType> = [...asset.burnBMAssets as Array<BurnType>, ...asset.burnTixAssets as Array<BurnType>];
-        })();
-        // dispatch(setBurnAssets(burnBMAssets));
-    }, [walletAssets]);
 
     return (
         <ResultDataModalContainer>

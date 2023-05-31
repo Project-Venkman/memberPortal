@@ -10,7 +10,7 @@ export const Transfer: React.FC = () => {
 
     const handleKeepInEmailWallet = () => {
         console.log('Keep in Email Wallet clicked!');
-        navigate('/BMResult');
+        navigate('/Results');
     };
 
     const Card: React.FC<{ title: string; onClick: () => void }> = ({

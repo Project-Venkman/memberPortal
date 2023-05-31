@@ -41,6 +41,15 @@ export const Api = {
                 return res.data;
             });
         },
+        invalidateTokens: async () => {
+            return await ApiFx.POSTKahlilAuthenticated(
+                'Auth/InvalidateTokens',
+                mario,
+                ''
+            ).then(async (res) => {
+                return res.data;
+            });
+        },
     },
     login: {
         verify: async (WalletAddress: string) => {
@@ -178,9 +187,7 @@ export const Api = {
                 'Claim/Update',
                 mario,
                 data
-            ).then(async (res) => {
-                console.log(res);
-            });
+            ).then(async (res) => {});
         },
         getByParentAssetId: async (parentAssetId: string) => {
             return await ApiFx.POSTKahlilAuthenticated(

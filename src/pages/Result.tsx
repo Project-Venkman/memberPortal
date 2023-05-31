@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Asset, WalletData, ResultProps, BurnAsset } from '@customtypes/index';
+import {
+    Asset,
+    WalletData,
+    ResultProps,
+    BurnAsset,
+    Claim as ClaimType,
+    Media as MediaType,
+} from '@customtypes/index';
 import { RootState } from '@state/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { Api } from '@pages/scripts/API';
@@ -10,6 +17,8 @@ import {
     setBurnAssets,
     setWalletAddress,
     setLoading,
+    setClaimAssets,
+    setMediaAssets,
 } from '@state/features';
 import { useNavigate } from 'react-router-dom';
 import PVResults from '@components/Result/PV/PVResults';
@@ -62,7 +71,6 @@ const Result: React.FC<ResultProps> = (props) => {
     );
     const setAssets = useSetAssets(walletAddress);
 
-    // console.log(walletAssets);
     useEffect(() => {
         if (!walletAddress || walletAddress.length < 1) return;
         if (walletAddress && walletAssets.length < 1)
@@ -72,6 +80,53 @@ const Result: React.FC<ResultProps> = (props) => {
                 )();
             })();
     }, [walletAddress]);
+    const claims: Array<ClaimType> = useSelector(
+        (state: RootState) => state.claimAssets as Array<ClaimType>
+    );
+
+    useEffect(() => {
+        if (!walletAssets) return;
+        if (walletAssets.length > 0) {
+            let allMedia: Array<MediaType> = [];
+            let assetIds: Array<string> = [];
+
+            (async () => {
+                await Promise.all(
+                    walletAssets.map(async (walletAsset) => {
+                        let assetId = walletAsset.id;
+                        assetIds.push(assetId);
+                    })
+                );
+                let allClaims = await Api.claim
+                    .getAllByAssetIds(assetIds)
+                    .then(async (res) => {
+                        return res;
+                    });
+                // console.log(walletAssets);
+                for (let i = 0; i < walletAssets.length; i++) {
+                    let assetId = walletAssets[i].id;
+                    if (
+                        assetId !== 'a8cfad6d-0a38-4f8c-b50c-31d28124dc61' &&
+                        assetId !== 'b634b38c-46c9-49e5-b3a7-9fee034cd339'
+                    ) {
+                        await Api.media
+                            .getAllByAsset(assetId)
+                            .then(async (res) => {
+                                let newMedia = res.filter(
+                                    (media: MediaType) =>
+                                        !allMedia.some((m) => m.id === media.id)
+                                );
+                                allMedia = [...allMedia, ...newMedia];
+                            });
+                    }
+                }
+                if (allClaims.length > 1) {
+                    dispatch(setClaimAssets(allClaims));
+                }
+                dispatch(setMediaAssets(allMedia));
+            })();
+        }
+    }, [walletAssets]);
 
     return (
         <>
