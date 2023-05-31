@@ -11,7 +11,7 @@ export const ResultPage = styled.div`
     ${tw`flex flex-col items-center justify-center h-full relative bg-cover bg-center bg-no-repeat`}
 `;
 export const ResultPageNav = styled.div`
-    ${tw`hidden md:flex z-80 h-[105px] w-full py-2 bg-transparent text-white flex flex-row gap-8 justify-center items-center absolute top-0`};
+    ${tw`hidden md:flex z-80 h-[105px] w-full py-2 bg-transparent text-white flex flex-row justify-center items-center absolute top-0`};
 `;
 export const ResultPageNavMobile = styled.div`
     ${tw`flex md:hidden justify-end z-80 h-16 w-full bg-transparent text-white absolute top-0 right-0`};

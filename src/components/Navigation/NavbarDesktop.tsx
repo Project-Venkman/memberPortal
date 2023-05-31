@@ -13,15 +13,10 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
     const burns: Array<Asset> = useSelector(
         (state: RootState) => state.burnAssets as Array<Asset>
     );
+    console.log(burns, claims);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const navButtons: Array<string> = [
-        'media',
-        'claim',
-        'events',
-        'Burn',
-        'Profile',
-    ];
+    const navButtons: Array<string> = ['media', 'claim', 'burn'];
 
     // const navButtons: Array<string> = ["media", "claim", "events", "Profile"];
 
@@ -53,28 +48,27 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
     return (
         <ResultPageNav id="resultpagenav">
             {navButtons.map((btn: string) => {
-                return (
-                    <ResultPageNavButton
-                        key={btn}
-                        value={btn}
-                        hidden={btn === 'events'}
-                        onClick={() => {
-                            if (modalOpen) setModalOpen(!modalOpen);
-                            handleDataModalClick(btn);
-                        }}
-                    >
-                        {btn === 'claim' && claims[0].assetId && (
+                if (
+                    (btn === 'claim' && claims[0].assetId) ||
+                    btn === 'media' ||
+                    (btn === 'burn' && burns.length > 0)
+                )
+                    return (
+                        <ResultPageNavButton
+                            className="ml-8"
+                            key={btn}
+                            value={btn}
+                            onClick={() => {
+                                if (modalOpen) setModalOpen(!modalOpen);
+                                handleDataModalClick(btn);
+                            }}
+                        >
                             <span>{btn}</span>
-                        )}
-                        {btn === 'media' && <span>{btn}</span>}
-                        {btn === 'Burn' && burns.length > 0 && (
-                            <span onClick={handleBurnClick}>{btn}</span>
-                        )}
-                        {/*{btn === 'Profile' && (*/}
-                        {/*    <span onClick={handleProfileClick}>{btn}</span>*/}
-                        {/*)}*/}
-                    </ResultPageNavButton>
-                );
+                            {/*{btn === 'Profile' && (*/}
+                            {/*    <span onClick={handleProfileClick}>{btn}</span>*/}
+                            {/*)}*/}
+                        </ResultPageNavButton>
+                    );
             })}
             {/* <button className={"font-barlow uppercase tracking-[1.5px] text-[18px] leading-[28.8px] font-black antialiased hover:animate-pulse hover:text-gold"} onClick={handleBurnClick} >Burn</button> */}
             <button

@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { NavBarProps } from '@customtypes/index';
+import { Asset, Claim as ClaimType, NavBarProps } from '@customtypes/index';
 import { ResultPageNavListItem, ResultPageNavMobile } from '@styles/index';
 import { IoMenuSharp } from 'react-icons/io5';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@state/store';
 
 export const NavbarMobile: React.FC<NavBarProps> = (props) => {
     const { modalOpen, setModalOpen, setModalType } = props;
@@ -11,7 +12,12 @@ export const NavbarMobile: React.FC<NavBarProps> = (props) => {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState<boolean>(false);
     const navMobileButtons: Array<string> = ['media', 'claim', 'burn'];
-
+    const claims: Array<ClaimType> = useSelector(
+        (state: RootState) => state.claimAssets as Array<ClaimType>
+    );
+    const burns: Array<Asset> = useSelector(
+        (state: RootState) => state.burnAssets as Array<Asset>
+    );
     const handleMobileDataModalClick = (e: string) => {
         setModalType(e);
         setModalOpen(true);
@@ -49,29 +55,40 @@ export const NavbarMobile: React.FC<NavBarProps> = (props) => {
                 }
             >
                 {navMobileButtons.map((btn: string) => {
-                    return (
-                        <ResultPageNavListItem
-                            key={btn}
-                            // hidden={btn === 'burn'}
-                            value={btn}
-                            onClick={() => {
-                                if (btn === 'media' || btn === 'claim') {
-                                    if (modalOpen) setModalOpen(!modalOpen);
-                                    handleMobileDataModalClick(btn);
-                                    setShowMenu(!showMenu);
-                                } else if (btn === 'burn') {
-                                    handleBurnClick();
-                                }
-                            }}
-                        >
-                            {/*{btn === 'burn' && (*/}
-                            {/*    <span onClick={handleBurnClick}></span>*/}
-                            {/*)}*/}
-                            {btn === 'claim' && <span>{btn}</span>}
-                            {btn === 'media' && <span>{btn}</span>}
-                            {btn === 'burn' && <span>{btn}</span>}
-                        </ResultPageNavListItem>
-                    );
+                    if (
+                        (btn === 'claim' && claims[0].assetId) ||
+                        btn === 'media' ||
+                        (btn === 'burn' && burns.length > 0)
+                    )
+                        return (
+                            <ResultPageNavListItem
+                                key={btn}
+                                // hidden={btn === 'burn'}
+                                value={btn}
+                                onClick={() => {
+                                    if (btn === 'media' || btn === 'claim') {
+                                        if (modalOpen) setModalOpen(!modalOpen);
+                                        handleMobileDataModalClick(btn);
+                                        setShowMenu(!showMenu);
+                                    } else if (btn === 'burn') {
+                                        handleBurnClick();
+                                    }
+                                }}
+                            >
+                                {/*{btn === 'burn' && (*/}
+                                {/*    <span onClick={handleBurnClick}></span>*/}
+                                {/*)}*/}
+                                {/*{btn === 'claim' && claims[0].assetId && (*/}
+                                {/*    <span>{btn}</span>*/}
+                                {/*)}*/}
+                                {/*{btn === 'media' && <span>{btn}</span>}*/}
+                                {/*{btn === 'burn' && burns.length > 0 && (*/}
+                                {/*    <span>{btn}</span>*/}
+                                {/*)}
+                                 */}
+                                <span>{btn}</span>
+                            </ResultPageNavListItem>
+                        );
                 })}
                 <ResultPageNavListItem>
                     <button
