@@ -27,6 +27,7 @@ export const useSetAssets = async (walletAddress: string) => {
             dispatch(setLoading(true));
 
             const burnContracts = await Api.contract.GetAllBurnableContracts();
+            // console.log(burnContracts);
             const res = await Api.asset.getByWalletAddress(walletAddress);
 
             dispatch(setWallet(res));
