@@ -46,6 +46,7 @@ export const useSetAssets = async (walletAddress: string) => {
                         ...r,
                         contractAddress: tmp.address,
                         name: tmp.description,
+                        burnNow: tmp.burnNow,
                     };
                     ba.push(tmpR);
                 } else {

@@ -44,6 +44,7 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
     const walletAssets: Array<Asset> = useSelector(
         (state: RootState) => state.walletAssets
     );
+    // console.log(burnAsset);
     const [refreshBurn, setRefreshBurn] = useState<boolean>(false);
     const setAssets = useSetAssets(walletAddress);
     useEffect(() => {
@@ -73,20 +74,13 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
             signer
         );
         // let name = await BurnContract.name()
-        if (
-            BurnContract.Address ===
-                '0xC4219CE63Cec2236A955655951AEA9b6f8B2431b' ||
-            BurnContract.address ===
-                '0xC843A8fcaa6540e895798C743a51C8b3c3b3Df40'
-        ) {
-            await BurnContract.transferFrom(
-                walletAddress,
-                address,
-                burnAsset.tokenId
-            );
-            setRefreshBurn(true);
-            await navigate('/burn');
-        }
+        await BurnContract.transferFrom(
+            walletAddress,
+            address,
+            burnAsset.tokenId
+        );
+        setRefreshBurn(true);
+        await navigate('/burn');
     };
     const burns: Array<Asset> = useSelector(
         (state: RootState) => state.burnAssets as Array<Asset>
