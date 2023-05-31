@@ -13,7 +13,6 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
     const burns: Array<Asset> = useSelector(
         (state: RootState) => state.burnAssets as Array<Asset>
     );
-    console.log(burns, claims);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const navButtons: Array<string> = ['media', 'claim', 'burn'];

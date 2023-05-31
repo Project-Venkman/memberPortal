@@ -120,8 +120,9 @@ const Result: React.FC<ResultProps> = (props) => {
                             });
                     }
                 }
-
-                dispatch(setClaimAssets(allClaims));
+                if (allClaims.length > 1) {
+                    dispatch(setClaimAssets(allClaims));
+                }
                 dispatch(setMediaAssets(allMedia));
             })();
         }
