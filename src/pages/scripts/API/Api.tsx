@@ -41,9 +41,9 @@ export const Api = {
                 return res.data;
             });
         },
-        invalidateToken: async () => {
+        invalidateTokens: async () => {
             return await ApiFx.POSTKahlilAuthenticated(
-                'Auth/InvalidateToken',
+                'Auth/InvalidateTokens',
                 mario,
                 ''
             ).then(async (res) => {

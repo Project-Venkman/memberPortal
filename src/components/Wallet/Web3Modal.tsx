@@ -34,7 +34,7 @@ export const Web3ModalComponent: React.FC<Web3ModalProps> = (props) => {
     }
     const connectWallet = async () => {
         clearAllCookies();
-        await Api.auth.invalidateToken();
+        await Api.auth.invalidateTokens();
         const domain = window.location.host;
         const origin = window.location.origin;
         const statement = 'Please sign this message to authenticate';
