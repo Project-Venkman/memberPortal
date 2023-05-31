@@ -41,6 +41,15 @@ export const Api = {
                 return res.data;
             });
         },
+        invalidateToken: async () => {
+            return await ApiFx.POSTKahlilAuthenticated(
+                'Auth/InvalidateToken',
+                mario,
+                ''
+            ).then(async (res) => {
+                return res.data;
+            });
+        },
     },
     login: {
         verify: async (WalletAddress: string) => {
