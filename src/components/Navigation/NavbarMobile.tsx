@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Asset, Claim as ClaimType, NavBarProps } from '@customtypes/index';
+import {
+    Asset,
+    Claim as ClaimType,
+    Media as MediaType,
+    NavBarProps,
+} from '@customtypes/index';
 import { ResultPageNavListItem, ResultPageNavMobile } from '@styles/index';
 import { IoMenuSharp } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
@@ -18,6 +23,10 @@ export const NavbarMobile: React.FC<NavBarProps> = (props) => {
     const burns: Array<Asset> = useSelector(
         (state: RootState) => state.burnAssets as Array<Asset>
     );
+    const currentMediaAssets: Array<MediaType> = useSelector(
+        (state: RootState) => state.mediaAssets
+    );
+
     const handleMobileDataModalClick = (e: string) => {
         setModalType(e);
         setModalOpen(true);
@@ -28,6 +37,7 @@ export const NavbarMobile: React.FC<NavBarProps> = (props) => {
         dispatch({ type: 'RESET' });
         navigate('/Login');
     };
+
     const handleBurnClick = () => {
         navigate('/Burn');
     };
@@ -55,17 +65,20 @@ export const NavbarMobile: React.FC<NavBarProps> = (props) => {
                 }
             >
                 {navMobileButtons.map((btn: string) => {
-                    if (
-                        (btn === 'claim' && claims[0].assetId) ||
-                        btn === 'media' ||
-                        (btn === 'burn' && burns.length > 0)
-                    )
-                        return (
-                            <ResultPageNavListItem
-                                key={btn}
-                                // hidden={btn === 'burn'}
-                                value={btn}
-                                onClick={() => {
+                    const isMediaAvailable = currentMediaAssets.length > 0;
+                    const isClaimAvailable = claims[0]?.assetId?.length > 0;
+                    const isBurnAvailable = burns.length > 0;
+                    const isDisabled =
+                        (btn === 'media' && !isMediaAvailable) ||
+                        (btn === 'claim' && !isClaimAvailable) ||
+                        (btn === 'burn' && !isBurnAvailable);
+
+                    return (
+                        <ResultPageNavListItem
+                            key={btn}
+                            className={isDisabled ? 'cursor-not-allowed' : ''}
+                            onClick={() => {
+                                if (!isDisabled) {
                                     if (btn === 'media' || btn === 'claim') {
                                         if (modalOpen) setModalOpen(!modalOpen);
                                         handleMobileDataModalClick(btn);
@@ -73,22 +86,12 @@ export const NavbarMobile: React.FC<NavBarProps> = (props) => {
                                     } else if (btn === 'burn') {
                                         handleBurnClick();
                                     }
-                                }}
-                            >
-                                {/*{btn === 'burn' && (*/}
-                                {/*    <span onClick={handleBurnClick}></span>*/}
-                                {/*)}*/}
-                                {/*{btn === 'claim' && claims[0].assetId && (*/}
-                                {/*    <span>{btn}</span>*/}
-                                {/*)}*/}
-                                {/*{btn === 'media' && <span>{btn}</span>}*/}
-                                {/*{btn === 'burn' && burns.length > 0 && (*/}
-                                {/*    <span>{btn}</span>*/}
-                                {/*)}
-                                 */}
-                                <span>{btn}</span>
-                            </ResultPageNavListItem>
-                        );
+                                }
+                            }}
+                        >
+                            <span>{btn}</span>
+                        </ResultPageNavListItem>
+                    );
                 })}
                 <ResultPageNavListItem>
                     <button
