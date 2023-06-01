@@ -10,15 +10,17 @@ import {
     BurnPage,
 } from '@styles/index';
 import { RootState } from '@state/store';
-import { useSelector } from 'react-redux';
 import { FaRegCopy, FaCheckCircle } from 'react-icons/fa';
 import Carousel from 'react-multi-carousel';
 import { useNavigate } from 'react-router-dom';
 import { ethers } from 'ethers';
 import { abi_721 } from '@components/Burn/abi_721';
 import { Web3ModalProvider } from '@components/Wallet';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const Burn: React.FC<BurnProps> = (props) => {
+    const dispatch = useDispatch();
+
     const responsive = {
         superLargeDesktop: {
             // the naming can be any, depends on you.
@@ -48,7 +50,11 @@ export const Burn: React.FC<BurnProps> = (props) => {
     const handleHomeClick = () => {
         navigate('/Results');
     };
-
+    const handleClick = () => {
+        window.localStorage.clear();
+        dispatch({ type: 'RESET' });
+        navigate('/Login');
+    };
     useEffect(() => {
         if (burns.length < 1) {
             navigate('/Results');
@@ -65,6 +71,14 @@ export const Burn: React.FC<BurnProps> = (props) => {
                     onClick={handleHomeClick}
                 >
                     Home
+                </button>
+                <button
+                    className={
+                        'absolute right-0 uppercase px-8 text-gray-700 hover:text-gray-500'
+                    }
+                    onClick={handleClick}
+                >
+                    Logout
                 </button>
             </div>
             <BurnContainer id={'Burn-container'}>
