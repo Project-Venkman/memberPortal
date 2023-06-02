@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 import {
     Asset,
     Claim as ClaimType,
     Media as MediaType,
     NavBarProps,
 } from '@customtypes/index';
+
 import { ResultPageNav, ResultPageNavButton } from '@styles/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@state/store';
@@ -18,9 +20,11 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
     const burns: Array<Asset> = useSelector(
         (state: RootState) => state.burnAssets as Array<Asset>
     );
+
     const currentMediaAssets: Array<MediaType> = useSelector(
         (state: RootState) => state.mediaAssets
     );
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const navButtons: Array<string> = ['media', 'claim', 'burn'];
@@ -92,6 +96,7 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
                         <span>{btn}</span>
                     </ResultPageNavButton>
                 );
+
             })}
             <button
                 className={

@@ -58,6 +58,7 @@ export const Burn: React.FC<BurnProps> = (props) => {
         window.localStorage.clear();
         dispatch({ type: 'RESET' });
         navigate('/Login');
+
     };
     useEffect(() => {
         if (burns.length < 1) {

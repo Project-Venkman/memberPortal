@@ -89,7 +89,6 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
         if (disabled) return;
         await getProvider();
     };
-
     return (
         <BurnCardContainer
             className={tailwindCss}
