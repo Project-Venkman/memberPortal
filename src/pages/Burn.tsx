@@ -48,7 +48,11 @@ export const Burn: React.FC<BurnProps> = (props) => {
     const [copied, setCopied] = useState<boolean>(false);
 
     const handleHomeClick = () => {
-        navigate('/Results');
+        // const url = new URL(window.location.href);
+        // const origin = url.origin;
+        //
+        // window.location.href(origin);
+        window.location.reload();
     };
     const handleClick = () => {
         window.localStorage.clear();
