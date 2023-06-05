@@ -23,6 +23,7 @@ export interface Asset {
 }
 export interface BurnAsset extends Asset {
     contractAddress: string;
+    burnNow: string;
 }
 
 export interface IpfsItem {

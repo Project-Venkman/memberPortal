@@ -8,7 +8,7 @@ export type ResultProps<
 > = div<P, D>;
 
 export type ProfileProps<P = {}> = P;
-
+export type ChiveProps<P = {}> = P;
 export type NavBarProps<
     P = {
         modalOpen: boolean;

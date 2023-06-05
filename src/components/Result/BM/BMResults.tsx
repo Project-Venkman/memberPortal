@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { BurnAsset, Asset, WalletData, ResultProps } from '@customtypes/index';
+import {
+    BurnAsset,
+    Asset,
+    WalletData,
+    ResultProps,
+    Claim as ClaimType,
+} from '@customtypes/index';
 import {
     Invalid,
     ItemAssetImage,
@@ -36,6 +42,9 @@ import heroBG from '@assets/bill/COUCH-FOR-SPLASH-PAGE.png';
 import space from '@assets/images/Space.jpg';
 
 const BMResult: React.FC<ResultProps> = (props) => {
+    const claims: Array<ClaimType> = useSelector(
+        (state: RootState) => state.claimAssets as Array<ClaimType>
+    );
     const {} = props;
     const wallet: WalletData = useSelector((state: RootState) => state.wallet);
     const walletAddress: string = useSelector(

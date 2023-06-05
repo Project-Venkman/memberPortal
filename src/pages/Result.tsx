@@ -50,10 +50,6 @@ const Result: React.FC<ResultProps> = (props) => {
         (state: RootState) => state.walletAssets
     );
 
-    const burns: Array<Asset> = useSelector(
-        (state: RootState) => state.burnAssets as Array<Asset>
-    );
-
     useEffect(() => {
         if (!walletAddress || walletAddress.length < 1) {
             (async () => {

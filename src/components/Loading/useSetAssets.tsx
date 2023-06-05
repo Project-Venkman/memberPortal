@@ -14,8 +14,12 @@ import { useEffect, useState } from 'react';
 import { Claim as ClaimType } from '@customtypes/Claim';
 import { Media as MediaType } from '@customtypes/Media';
 import { RootState } from '@state/store';
-
+import { useNavigate } from 'react-router-dom';
 export const useSetAssets = async (walletAddress: string) => {
+    const navigate = useNavigate();
+    const burns: Array<Asset> = useSelector(
+        (state: RootState) => state.burnAssets as Array<Asset>
+    );
     const dispatch = useDispatch();
 
     const setAssets = async () => {
@@ -23,6 +27,7 @@ export const useSetAssets = async (walletAddress: string) => {
             dispatch(setLoading(true));
 
             const burnContracts = await Api.contract.GetAllBurnableContracts();
+            // console.log(burnContracts);
             const res = await Api.asset.getByWalletAddress(walletAddress);
 
             dispatch(setWallet(res));
@@ -41,6 +46,7 @@ export const useSetAssets = async (walletAddress: string) => {
                         ...r,
                         contractAddress: tmp.address,
                         name: tmp.description,
+                        burnNow: tmp.burnNow,
                     };
                     ba.push(tmpR);
                 } else {
@@ -50,6 +56,7 @@ export const useSetAssets = async (walletAddress: string) => {
             // console.log(ba);
             dispatch(setWalletAssets(oa));
             dispatch(setBurnAssets(ba));
+            if (!oa.length && ba.length) navigate('/Burn');
         } catch (error) {
             dispatch(setEmptyWallet(walletAddress));
             console.error(error);
