@@ -21,9 +21,9 @@ import {
     setMediaAssets,
 } from '@state/features';
 import { useNavigate } from 'react-router-dom';
-import PVResults from '@components/Result/PV/PVResults';
-import BMResult from '@components/Result/BM/BMResults';
-import ELFResult from '@components/Result/ELF/ELFResults';
+import ProjectVenkman from '@components/Result/PV/ProjectVenkman';
+import BillMurray1000 from '@components/Result/BM/BillMurray1000';
+import EarthLight from '@components/Result/ELF/EarthLight';
 import { LoadingState } from '@state/features/LoadingSlice';
 import { useSetAssets } from '@components/Loading';
 
@@ -124,17 +124,13 @@ const Result: React.FC<ResultProps> = (props) => {
         }
     }, [walletAssets]);
 
-    return (
-        <>
-            {currentUrl.pathname.includes('pvlogin') ? (
-                <PVResults isloading={loading} />
-            ) : currentUrl.pathname.includes('ELF') ? (
-                <ELFResult isloading={loading} />
-            ) : (
-                <BMResult isloading={loading} />
-            )}
-        </>
-    );
+    switch (true) {
+        case currentUrl.pathname.includes('BillMurray'):
+            return <BillMurray1000 isLoading={loading} />;
+        case currentUrl.pathname.includes('EarthLight'):
+            return <EarthLight isLoading={loading} />;
+        default:
+            return <ProjectVenkman isLoading={loading} />;
+    }
 };
-
 export default Result;

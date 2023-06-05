@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import {
+    BurnAsset,
     Asset,
     WalletData,
     ResultProps,
-    Burn as BurnType,
+    Claim as ClaimType,
 } from '@customtypes/index';
 import {
     Invalid,
@@ -19,33 +20,17 @@ import {
     ImageContainerELF,
     ResultCard,
     ResultCardContent,
-    ResultCardContentELF,
-    ResultCardELF,
     ResultPage,
-    ResultPageELF,
     TelescopeImg,
 } from '@styles/index';
 import frame from '@assets/bill/FRAME-NO-BILL2.png';
 import { RootState } from '@state/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { Api } from '@pages/scripts/API';
-import {
-    setWallet,
-    setEmptyWallet,
-    setWalletAssets,
-    setBurnAssets,
-} from '@state/features';
 import { truncateAddress } from '@pages/scripts/utils';
 import { LoadIndicator } from 'devextreme-react';
-import { useNavigate } from 'react-router-dom';
-import telescope from '@assets/images/telescope.png';
-import { NFTImg } from '@styles/index';
-import PVResults from '@components/Result/PV/PVResults';
-import BMResult from '@components/Result/BM/BMResults';
 
-const ELFResult: React.FC<ResultProps> = (props) => {
+const BMResult: React.FC<ResultProps> = (props) => {
     const {} = props;
-    const navigate = useNavigate();
     const wallet: WalletData = useSelector((state: RootState) => state.wallet);
     const walletAddress: string = useSelector(
         (state: RootState) => state.walletAddress
@@ -56,11 +41,11 @@ const ELFResult: React.FC<ResultProps> = (props) => {
     const dispatch = useDispatch();
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [modalType, setModalType] = useState<string>('');
-    const [loading, setLoading] = useState<boolean>(false);
-    const currentUrl = new URL(window.location.href);
-
+    const loading: boolean = useSelector(
+        (state: RootState) => state.isLoading
+    ).isLoading;
     return (
-        <ResultPageELF>
+        <ResultPage>
             {walletAssets.length > 0 && !loading && <ItemSelect />}
             {!loading &&
                 walletAssets.length && [
@@ -78,13 +63,13 @@ const ELFResult: React.FC<ResultProps> = (props) => {
                     />,
                 ]}
             {loading && !walletAssets.length && (
-                <ResultCardELF id={'result-card'}>
-                    <ResultCardContentELF id={'result-card-content'}>
-                        <TelescopeImg id={'frame'} src={telescope} />
-                        <ImageContainerELF id={'image-container'}>
+                <ResultCard id={'result-card'}>
+                    <ResultCardContent id={'result-card-content'}>
+                        <FrameImg id={'frame'} src={frame} />
+                        <ImageContainer id={'image-container'}>
                             <div
                                 className={
-                                    ' text-white p-2 absolute top-1/2 left-1/2 w-[67%] h-[62%] z-100'
+                                    'bg-black text-white p-2 absolute top-1/2 left-1/2 w-[67%] h-[71%] z-100'
                                 }
                                 style={{ transform: 'translate(-50%, -50%)' }}
                             >
@@ -92,46 +77,32 @@ const ELFResult: React.FC<ResultProps> = (props) => {
                                     walletAddress
                                 )}`}</p>
                                 <LoadIndicator
-                                    visible={loading}
+                                    visible={!loading}
                                 ></LoadIndicator>
                             </div>
-                        </ImageContainerELF>
-                    </ResultCardContentELF>
-                </ResultCardELF>
+                        </ImageContainer>
+                    </ResultCardContent>
+                </ResultCard>
             )}
             {walletAssets.length > 0 && (
-                <ResultCardELF id={'result-card'}>
-                    <ResultCardContentELF id={'result-card-content'}>
-                        <TelescopeImg
-                            className="z-30"
-                            id={'frame'}
-                            src={telescope}
-                        />
-                        {/* <ImageContainer className="z-50" id={"image-container"}>
-							{!loading && <ItemAssetImage key={1} />}
-						</ImageContainer> */}
-                        {walletAddress ==
-                            '0x42017df7ce71AD2Fe80cCa4C3D9bFc0512fff5Cf' && (
-                            <ImageContainerELF
-                                className="z-50"
-                                id={'image-container'}
-                            >
-                                {/*// @ts-ignore*/}
-                                {!loading && <ItemAssetImageELF key={1} />}
-                            </ImageContainerELF>
-                        )}
-                    </ResultCardContentELF>
-                </ResultCardELF>
+                <ResultCard id={'result-card'}>
+                    <ResultCardContent id={'result-card-content'}>
+                        <FrameImg id={'frame'} src={frame} />
+                        <ImageContainer id={'image-container'}>
+                            {!loading && <ItemAssetImage key={1} />}
+                        </ImageContainer>
+                    </ResultCardContent>
+                </ResultCard>
             )}
             {!walletAssets.length && !loading && (
-                <ResultCardELF id={'result-card'}>
-                    <ResultCardContentELF id={'result-card-content'}>
-                        <TelescopeImg id={'frame'} src={telescope} />
-                        <ImageContainerELF id={'image-container'}>
+                <ResultCard id={'result-card'}>
+                    <ResultCardContent id={'result-card-content'}>
+                        <FrameImg id={'frame'} src={frame} />
+                        <ImageContainer id={'image-container'}>
                             <Invalid walletData={wallet} />
-                        </ImageContainerELF>
-                    </ResultCardContentELF>
-                </ResultCardELF>
+                        </ImageContainer>
+                    </ResultCardContent>
+                </ResultCard>
             )}
             {modalOpen && (
                 <ItemModal
@@ -140,8 +111,8 @@ const ELFResult: React.FC<ResultProps> = (props) => {
                     modalType={modalType}
                 />
             )}
-        </ResultPageELF>
+        </ResultPage>
     );
 };
 
-export default ELFResult;
+export default BMResult;

@@ -2,6 +2,7 @@ import tw from 'twin.macro';
 import styled from 'styled-components';
 import heroBG from '@assets/bill/COUCH-FOR-SPLASH-PAGE.png';
 import space from '@assets/images/Space.jpg';
+import PVHome from '@assets/images/PVHome.png';
 export const Maintenance = styled.div`
     ${tw`w-full h-8 bg-yellow-300 font-bold text-xl italic flex text-center justify-center items-center absolute top-0`}
 `;
@@ -9,6 +10,10 @@ export const Maintenance = styled.div`
 export const ResultPage = styled.div`
     background-image: url(${heroBG});
     ${tw`flex flex-col items-center justify-center h-full relative bg-cover bg-center bg-no-repeat`}
+`;
+export const PVPage = styled.div`
+    background-image: url(${PVHome});
+    ${tw`flex flex-col justify-center items-center bg-no-repeat bg-center h-full relative`}
 `;
 export const ResultPageNav = styled.div`
     ${tw`hidden md:flex z-80 h-[105px] w-full py-2 bg-transparent text-white flex flex-row justify-center items-center absolute top-0`};
@@ -143,5 +148,6 @@ export const ImageContainerELF = styled.div`
     ${tw`absolute w-8/12 xxxs:w-7/12 xxs:w-7/12 xs:w-7/12 md:w-7/12 lg:w-7/12 xl:w-7/12 h-full flex flex-col items-center justify-center`};
 `;
 export const ResultPageELF = styled.div`
+    background-image: url(${space});
     ${tw`flex flex-col items-center justify-center h-full relative bg-cover bg-center bg-no-repeat`}
 `;
