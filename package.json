@@ -5,6 +5,7 @@
     "homepage": "/",
     "dependencies": {
         "@coinbase/wallet-sdk": "^3.6.5",
+        "@headlessui/react": "^1.7.15",
         "@heroicons/react": "^2.0.18",
         "@reduxjs/toolkit": "^1.9.0",
         "@walletconnect/web3-provider": "^1.8.0",

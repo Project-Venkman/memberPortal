@@ -264,4 +264,15 @@ export const Api = {
             });
         },
     },
+    googleSheets: {
+        SyncDB: async () => {
+            return await ApiFx.POSTKahlilAuthenticated(
+                'Sheets/SyncDB',
+                mario,
+                ''
+            ).then(async (res) => {
+                return await res.data;
+            });
+        },
+    },
 };

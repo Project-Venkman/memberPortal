@@ -6,7 +6,6 @@ import {
     Media as MediaType,
     NavBarProps,
 } from '@customtypes/index';
-
 import { ResultPageNavListItem, ResultPageNavMobile } from '@styles/index';
 import { IoMenuSharp } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
@@ -79,7 +78,7 @@ export const NavbarMobile: React.FC<NavBarProps> = (props) => {
                             key={btn}
                             className={isDisabled ? 'cursor-not-allowed' : ''}
                             onClick={() => {
-
+                                if (!isDisabled) {
                                     if (btn === 'media' || btn === 'claim') {
                                         if (modalOpen) setModalOpen(!modalOpen);
                                         handleMobileDataModalClick(btn);
@@ -93,7 +92,6 @@ export const NavbarMobile: React.FC<NavBarProps> = (props) => {
                             <span>{btn}</span>
                         </ResultPageNavListItem>
                     );
-
                 })}
                 <ResultPageNavListItem>
                     <button
