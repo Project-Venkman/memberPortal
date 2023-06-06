@@ -1,3 +1,3 @@
 export * from './crown';
 export * from './vBar';
-export * from './GoldBar';
+export * from '@components/Chive/GBPage';
