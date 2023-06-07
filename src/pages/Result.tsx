@@ -116,7 +116,7 @@ const Result: React.FC<ResultProps> = (props) => {
                             });
                     }
                 }
-                if (allClaims.length > 1) {
+                if (allClaims.length > 0) {
                     dispatch(setClaimAssets(allClaims));
                 }
                 dispatch(setMediaAssets(allMedia));
