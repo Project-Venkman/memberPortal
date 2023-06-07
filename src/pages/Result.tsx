@@ -125,9 +125,9 @@ const Result: React.FC<ResultProps> = (props) => {
     }, [walletAssets]);
 
     switch (true) {
-        case currentUrl.pathname.includes('billmurray'):
+        case currentUrl.href.includes('billmurray'):
             return <BillMurray1000 isLoading={loading} />;
-        case currentUrl.pathname.includes('earthlight'):
+        case currentUrl.href.includes('earthlight'):
             return <EarthLight isLoading={loading} />;
         default:
             return <ProjectVenkman isLoading={loading} />;
