@@ -125,7 +125,7 @@ export const MediaPlayerComponent: React.FC<MediaPlayerProps> = (props) => {
                                         src={
                                             mediaType === 'video' ||
                                             mediaType === 'audio'
-                                                ? 'https://storage.googleapis.com/bm1000media/Misc/audioPlaceholder.png'
+                                                ? 'https://storage.googleapis.com/bm1000media/Misc/videoPlaceholder.png'
                                                 : m.url
                                         }
                                         alt={m.name}

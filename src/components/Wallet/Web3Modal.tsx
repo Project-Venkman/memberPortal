@@ -40,7 +40,7 @@ export const Web3ModalComponent: React.FC<Web3ModalProps> = (props) => {
                 console.log(res);
             })
             .catch((err) => {
-                console.log(err);
+                // console.log(err);
             });
         const domain = window.location.host;
         const origin = window.location.origin;
@@ -54,12 +54,7 @@ export const Web3ModalComponent: React.FC<Web3ModalProps> = (props) => {
             const signer = ethProvider.getSigner();
             let message = '';
             if (accounts) {
-                // if local storage has a varible called IssuedToken and the value is true then dont run
-                // await Api.auth.renewTokens();
                 let nonce = await Api.auth.generateChallenge();
-                // let nonce = (await axios.get("http://10.200.8.85:3000/Auth/GenerateChallenge")).data
-                // let nonce = (await axios.get("https://apiv2.projectvenkman.com/Auth/GenerateChallenge")).data
-
                 let siweMessage = new SiweMessage({
                     domain: domain,
                     address: accounts[0],
@@ -71,11 +66,6 @@ export const Web3ModalComponent: React.FC<Web3ModalProps> = (props) => {
                 });
                 message = siweMessage.prepareMessage();
                 let signedMessage = await signer.signMessage(message);
-                // await axios.post("http://10.200.8.85:3000/Auth/IssueTokens", {
-                // 	message: message,
-                // 	signature: signedMessage
-                // })
-
                 try {
                     await Api.auth.issueTokens(message, signedMessage);
                 } catch (error: any) {
@@ -84,19 +74,9 @@ export const Web3ModalComponent: React.FC<Web3ModalProps> = (props) => {
                     }
                 }
 
-                // set local storage with key IssuedToken and value true
                 localStorage.setItem('IssuedToken', 'true');
-                // await axios.post("http://10.200.8.85:3000/Auth/IssueTokens", {
-                // 	message: message,
-                // 	signature: signedMessage
-                // }, {
-                // 	withCredentials: true
-                // });
                 dispatch(setWalletAddress(accounts[0]));
             }
-            const url = new URL(window.location.href);
-            // if the url contains pvlogin, then navigate to ("PVResults")
-
             navigate('/Results');
         } catch (error) {
             console.log(error);

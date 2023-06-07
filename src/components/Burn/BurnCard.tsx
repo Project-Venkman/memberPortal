@@ -124,6 +124,7 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
             <BurnImageContainer>
                 {burnAsset.animation ? (
                     <video
+                        className={'max-h-[174px] w-full'}
                         //@ts-ignore
                         onMouseOver={(event) => event.target.play()}
                         //@ts-ignore

@@ -85,7 +85,7 @@ export const ResultDataModalOverlay = styled.div`
 export const ResultDataModal = styled.div`
     transform: translate(-50%, -50%);
     ${tw`
-		w-3/4 h-3/4 portrait:h-[calc(100% - 64px)] portrait:w-full
+		w-[65%] h-[65%] portrait:h-[calc(100% - 64px)] portrait:w-full
 		flex z-[60] bg-black/50
 		fixed top-1/2 left-1/2 portrait:top-40 portrait:left-0
 		portrait:transform-none
