@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GoldBar } from '@components/Chive';
-
+import { Api } from '@pages/scripts/API';
 import { HomeIcon } from '@heroicons/react/24/outline';
-
+import { setvBar, setCrown, setWalletAddress } from '@state/features';
+import { RootState } from '@state/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { Coin } from '@customtypes/index';
 const navigation = [
     { name: 'ChiveGoldBars', href: '#', icon: HomeIcon, current: true },
-    // { name: 'ChiveCrown', href: '#', icon: UsersIcon, current: false },
+    // { name: 'ChiveCrown', href: '#', icon: HomeIcon, current: false },
 ];
 
 function classNames(...classes: any) {
@@ -13,6 +16,7 @@ function classNames(...classes: any) {
 }
 
 const ChiveHome = () => {
+    const dispatch = useDispatch();
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [selectedNavigation, setSelectedNavigation] = useState(
         navigation[0].name
@@ -30,6 +34,19 @@ const ChiveHome = () => {
         }
     };
 
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await Api.chive.coins();
+                if (res) {
+                    dispatch(setvBar(res.vBar));
+                    dispatch(setCrown(res.crown));
+                }
+            } catch (error) {
+                console.error('Error fetching coins:', error);
+            }
+        })();
+    }, [dispatch]);
     return (
         <>
             <div className="flex h-screen overflow-hidden">

@@ -37,7 +37,6 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
         // console.log('burns', burns);
         // console.log('currentMediaAssets', currentMediaAssets);
     }, [claims, burns, currentMediaAssets]);
-
     const handleDataModalClick = (e: string) => {
         setModalType(e);
         setModalOpen(true);

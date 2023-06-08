@@ -26,8 +26,7 @@ export const GoldBar: React.FC<ChiveProps> = (props) => {
     const {} = props;
 
     return (
-        <div className="container max-w-none h-screen  mx-auto">
-            {/*<Web3ModalComponent />*/}
+        <div className="container max-w-none h-screen mx-auto overflow-y-auto">
             <div className="flex justify-center h-[10%] items-center text-4xl">
                 <h1 className="text-white">Chive</h1>
             </div>
@@ -72,7 +71,6 @@ export const GoldBar: React.FC<ChiveProps> = (props) => {
                                 height="600"
                             ></iframe>
                             <button
-                                // onClick={() => setIsModalOpen(false)}
                                 onClick={handleSaveClick}
                                 className="mt-4 min-w-[100px] p-2 text-white text-xl bg-indigo-500 rounded hover:bg-indigo-600 transition-colors duration-300"
                             >
@@ -116,4 +114,5 @@ export const GoldBar: React.FC<ChiveProps> = (props) => {
         </div>
     );
 };
+
 export default GoldBar;
