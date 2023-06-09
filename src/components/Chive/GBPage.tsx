@@ -22,6 +22,7 @@ export const GoldBar: React.FC<ChiveProps> = (props) => {
     const handleSaveClick = () => {
         Api.googleSheets.SyncDB().then(async (res) => {
             await refresh();
+            await setIsModalOpen(false);
         });
     };
 
