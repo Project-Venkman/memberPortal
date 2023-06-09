@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ChiveProps } from '@customtypes/Result';
 import { vBar, Crown } from '@components/Chive/index';
 import { Api } from '@pages/scripts/API';
+import { setCrown, setvBar } from '@state/features';
+import { useDispatch, useSelector } from 'react-redux';
 
 export const GoldBar: React.FC<ChiveProps> = (props) => {
+    const dispatch = useDispatch();
+
     const [selectedTab, setSelectedTab] = useState(0); // Track the selected tab
     const [isModalOpen, setIsModalOpen] = useState(false); // Track the modal open/close state
 
@@ -16,8 +20,8 @@ export const GoldBar: React.FC<ChiveProps> = (props) => {
     };
 
     const handleSaveClick = () => {
-        Api.googleSheets.SyncDB().then((res) => {
-            console.log(res);
+        Api.googleSheets.SyncDB().then(async (res) => {
+            await refresh();
         });
     };
 
@@ -26,8 +30,20 @@ export const GoldBar: React.FC<ChiveProps> = (props) => {
     // Destructure props if needed
     const {} = props;
 
+    const refresh = async () => {
+        try {
+            const res = await Api.chive.coins();
+            if (res) {
+                dispatch(setvBar(res.vBar));
+                dispatch(setCrown(res.crown));
+            }
+        } catch (error) {
+            console.error('Error fetching coins:', error);
+        }
+    };
+
     return (
-        <div className="container max-w-screen-lg mx-auto h-screen overflow-hidden">
+        <div className="container mx-auto h-screen overflow-hidden">
             <div className="flex flex-col h-full">
                 <div className="flex justify-center my-4 h-[10%] items-center text-4xl">
                     <h1 className="text-white">Chive</h1>
