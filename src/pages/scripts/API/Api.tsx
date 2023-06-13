@@ -275,4 +275,15 @@ export const Api = {
             });
         },
     },
+    chive: {
+        coins: async () => {
+            return await ApiFx.POSTKahlilAuthenticated(
+                'Chive/GoldBars',
+                mario,
+                ''
+            ).then(async (res) => {
+                return await res.data;
+            });
+        },
+    },
 };
