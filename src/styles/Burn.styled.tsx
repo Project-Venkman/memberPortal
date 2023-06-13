@@ -45,10 +45,10 @@ export const BurnDataContainer = styled.div`
     ${tw`flex flex-col items-center text-gold h-[100%]`}
 `;
 export const BurnDataHeader = styled.div`
-    ${tw`bg-gold/50 p-2 text-white w-full`}
+    ${tw`bg-gold/50 pl-2 pr-2 pt-2 text-white w-full h-[64px]`}
 `;
 export const BurnImageContainer = styled.div`
-    ${tw`flex flex-col justify-center items-center h-[100%] 2xl:max-h-[183px] bg-black`}
+    ${tw`flex flex-col justify-center items-center h-[197px] bg-black`}
 `;
 export const BurnImage = styled.img`
     ${tw`h-full`}

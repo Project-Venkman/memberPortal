@@ -93,7 +93,7 @@ export const Burn: React.FC<BurnProps> = (props) => {
                     {burns[0] &&
                         burns.map((burn: Asset, i: number) => (
                             <div
-                                className="w-full sm:w-auto md:w-auto lg:w-auto xl:w-auto"
+                                className="w-full sm:w-auto md:w-auto lg:w-auto xl:w-auto max-w-[222px]"
                                 key={i}
                             >
                                 <BurnCard

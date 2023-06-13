@@ -19,6 +19,8 @@ import userCredentialsReducer from '@state/features/UserCredentialsSlice';
 import companyUserReducer from '@state/features/CompanyUserSlice';
 import ownedAssetsSlice from '@state/features/OwnedAssetsSlice';
 import loadingSliceReducer from '@state/features/LoadingSlice';
+import vBarSliceReducer from '@state/features/vBarSlice';
+import crownSliceReducer from '@state/features/crownSlice';
 
 export * from './WalletSlice';
 export * from './WalletAddressSlice';
@@ -35,6 +37,8 @@ export * from './WinnerSlice';
 export * from './UserCredentialsSlice';
 export * from './CompanyUserSlice';
 export * from './LoadingSlice';
+export * from './vBarSlice';
+export * from './crownSlice';
 
 const appReducers = combineReducers({
     wallet: walletReducer,
@@ -56,6 +60,8 @@ const appReducers = combineReducers({
     userCredentials: userCredentialsReducer,
     companyUserReducer: companyUserReducer,
     isLoading: loadingSliceReducer,
+    vBar: vBarSliceReducer,
+    crown: crownSliceReducer,
 });
 
 export const reducers = (state: any, action: any) => {

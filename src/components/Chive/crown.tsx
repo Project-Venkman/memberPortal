@@ -1,49 +1,10 @@
 import React from 'react';
+import { Coin } from '@customtypes/Coin';
+import { useSelector } from 'react-redux';
+import { RootState } from '@state/store';
 
 export const Crown = () => {
-    // this will be the live data that we are getting through api
-    // const people1 = [
-    //     {
-    //         name: 'Kalvin Nguyen',
-    //         title: 'Front-end Developer',
-    //         email: 'test@gmail.com',
-    //         role: 'Member',
-    //     },
-    //     {
-    //         name: 'Kalvin Nguyen',
-    //         title: 'Front-end Developer',
-    //         email: 'test@gmail.com',
-    //         role: 'Member',
-    //     },
-    //     {
-    //         name: 'Kalvin Nguyen',
-    //         title: 'Front-end Developer',
-    //         email: 'test@gmail.com',
-    //         role: 'Member',
-    //     },
-    //     {
-    //         name: 'Kalvin Nguyen',
-    //         title: 'Front-end Developer',
-    //         email: 'test@gmail.com',
-    //         role: 'Member',
-    //     },
-    //     {
-    //         name: 'Kalvin Nguyen',
-    //         title: 'Front-end Developer',
-    //         email: 'test@gmail.com',
-    //         role: 'Member',
-    //     },
-    //     {
-    //         name: 'Kalvin Nguyen',
-    //         title: 'Front-end Developer',
-    //         email: 'test@gmail.com',
-    //         role: 'Member',
-    //     },
-    //
-    //     // More people1...
-    // ];
-    // console.log(people1);
-
+    const crown: Array<Coin> = useSelector((state: RootState) => state.crown);
     return (
         <>
             <div className=" min-h-full justify-center bg-gray-900">
@@ -66,12 +27,6 @@ export const Crown = () => {
                                                     <tr>
                                                         <th
                                                             scope="col"
-                                                            className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0"
-                                                        >
-                                                            Name
-                                                        </th>
-                                                        <th
-                                                            scope="col"
                                                             className="px-3 py-3.5 text-left text-sm font-semibold text-white"
                                                         >
                                                             Email
@@ -80,25 +35,27 @@ export const Crown = () => {
                                                             scope="col"
                                                             className="px-3 py-3.5 text-left text-sm font-semibold text-white"
                                                         >
-                                                            Quantity
+                                                            Quantity Remaining
                                                         </th>
                                                     </tr>
                                                 </thead>
-                                                {/*<tbody className="divide-y divide-gray-800">*/}
-                                                {/*    {people1.map((person2) => (*/}
-                                                {/*        <tr key={person2.email}>*/}
-                                                {/*            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">*/}
-                                                {/*                {person2.name}*/}
-                                                {/*            </td>*/}
-                                                {/*            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">*/}
-                                                {/*                {person2.title}*/}
-                                                {/*            </td>*/}
-                                                {/*            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">*/}
-                                                {/*                {person2.email}*/}
-                                                {/*            </td>*/}
-                                                {/*        </tr>*/}
-                                                {/*    ))}*/}
-                                                {/*</tbody>*/}
+                                                <tbody className="divide-y divide-gray-800">
+                                                    {crown.map((crown) => (
+                                                        <tr key={crown.id}>
+                                                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-white sm:pl-0">
+                                                                {crown.email}
+                                                            </td>
+                                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">
+                                                                {
+                                                                    crown.qtyRemaining
+                                                                }
+                                                            </td>
+                                                            {/*<td className="whitespace-nowrap px-3 py-4 text-sm text-gray-300">*/}
+                                                            {/*    {person2.email}*/}
+                                                            {/*</td>*/}
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -111,4 +68,5 @@ export const Crown = () => {
         </>
     );
 };
-export default Crown();
+
+export default Crown;

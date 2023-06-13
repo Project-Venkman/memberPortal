@@ -95,6 +95,7 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
             className={tailwindCss}
             onClick={handleCardClick}
             id={'burn-' + index}
+            style={{ height: '300px' }}
         >
             <div className="flex items-center justify-center w-full h-full absolute top-0 left-0 right-0 bottom-0">
                 <svg
