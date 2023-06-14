@@ -17,10 +17,24 @@ import { MediaButtonComponent, MediaPlayerComponent } from '@components/index';
 import { RootState } from '@state/index';
 
 export const Media: React.FC<MediaContainerProps> = (props) => {
+    const [currentCategory, setCurrentCategory] = useState<string>('');
     const {} = props;
     const currentMediaAssets: Array<MediaType> = useSelector(
         (state: RootState) => state.mediaAssets
     );
+
+    const assetsByCategory: { [category: string]: MediaType[] } =
+        currentMediaAssets.reduce((acc, asset) => {
+            if (acc.hasOwnProperty(asset.category)) {
+                acc[asset.category].push(asset);
+            } else {
+                acc[asset.category] = [asset];
+            }
+            return acc;
+        }, {} as { [category: string]: MediaType[] });
+
+    console.log(assetsByCategory);
+    console.log(currentMediaAssets);
     const currentAsset: Asset = useSelector(
         (state: RootState) => state.currentAsset
     );
