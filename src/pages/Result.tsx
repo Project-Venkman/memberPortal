@@ -131,7 +131,7 @@ const Result: React.FC<ResultProps> = (props) => {
         case currentUrl.hostname.includes('earthlight'):
             return <EarthLight isLoading={loading} />;
         default:
-            return <BillMurray1000 isLoading={loading} />;
+            return <ProjectVenkman isLoading={loading} />;
     }
 };
 export default Result;
