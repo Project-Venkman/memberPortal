@@ -62,7 +62,6 @@ export const Media: React.FC<MediaContainerProps> = (props) => {
     ) => {
         setActiveMedia(e);
     };
-    console.log(activeMedia);
 
     useEffect(() => {
         const mediaContainer = document.getElementById('media-container');
