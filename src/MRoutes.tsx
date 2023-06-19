@@ -22,7 +22,7 @@ const MRoutes = () => {
                 path={'/ChooseContract'}
                 element={<Accordion data={accordionData} />}
             />
-            <Route path={'/ProfilePage'} element={<ProfilePage />} />
+            {/*<Route path={'/ProfilePage'} element={<ProfilePage />} />*/}
             <Route path={'/Chive/GoldBar'} element={<GoldBar />} />
         </Routes>
     );
