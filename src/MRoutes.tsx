@@ -6,7 +6,7 @@ import { CoinInventory } from '@pages/CoinInventory';
 import Burn from '@pages/Burn';
 import Accordion from '@pages/ChooseContract';
 import { accordionData } from '@pages/ChooseContract';
-// import ProfilePage from '@pages/Profile';
+import ProfilePage from '@pages/Profile';
 import TransferPage from '@pages/Transfer';
 import GoldBar from '@pages/Chive';
 const MRoutes = () => {
@@ -22,7 +22,7 @@ const MRoutes = () => {
                 path={'/ChooseContract'}
                 element={<Accordion data={accordionData} />}
             />
-            {/*<Route path={'/ProfilePage'} element={<ProfilePage />} />*/}
+            <Route path={'/ProfilePage'} element={<ProfilePage />} />
             <Route path={'/Chive/GoldBar'} element={<GoldBar />} />
         </Routes>
     );

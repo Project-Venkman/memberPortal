@@ -108,6 +108,7 @@ const Result: React.FC<ResultProps> = (props) => {
                         await Api.media
                             .getAllByAsset(assetId)
                             .then(async (res) => {
+                                // console.log(res);
                                 let newMedia = res.filter(
                                     (media: MediaType) =>
                                         !allMedia.some((m) => m.id === media.id)
@@ -130,7 +131,7 @@ const Result: React.FC<ResultProps> = (props) => {
         case currentUrl.hostname.includes('earthlight'):
             return <EarthLight isLoading={loading} />;
         default:
-            return <ProjectVenkman isLoading={loading} />;
+            return <BillMurray1000 isLoading={loading} />;
     }
 };
 export default Result;

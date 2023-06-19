@@ -60,7 +60,7 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
     };
 
     const handleProfileClick = () => {
-        navigate('/Transfer');
+        navigate('/ProfilePage');
     };
 
     return (
@@ -89,6 +89,9 @@ export const NavbarDesktop: React.FC<NavBarProps> = (props) => {
                         disabled={isDisabled}
                     >
                         <span>{btn}</span>
+                        {/*{btn === 'profile' && (*/}
+                        {/*    <span onClick={handleProfileClick}>Profile</span>*/}
+                        {/*)}*/}
                     </ResultPageNavButton>
                 );
             })}
