@@ -94,11 +94,15 @@ export const MediaPlayerComponent: React.FC<MediaPlayerProps> = (props) => {
                     <button
                         key={category}
                         onClick={() => handleCategoryClick(category)}
-                        className={`bg-gray-100 px-4 py-2 mb-2 text-base text-black cursor-pointer ${
-                            currentCategory === category ? 'bg-gray-300' : ''
+                        className={`px-4 py-2 mb-2 text-base text-white cursor-pointer ${
+                            currentCategory === category ? 'bg-transparent' : ''
                         }`}
+                        style={{
+                            color:
+                                currentCategory === category ? 'gold' : 'white',
+                        }}
                     >
-                        {category}
+                        <span className="">{category}</span>
                     </button>
                 ))}
             </div>
