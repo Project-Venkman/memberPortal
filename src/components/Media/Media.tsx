@@ -17,10 +17,12 @@ import { MediaButtonComponent, MediaPlayerComponent } from '@components/index';
 import { RootState } from '@state/index';
 
 export const Media: React.FC<MediaContainerProps> = (props) => {
+    const [currentCategory, setCurrentCategory] = useState<string>('');
     const {} = props;
     const currentMediaAssets: Array<MediaType> = useSelector(
         (state: RootState) => state.mediaAssets
     );
+
     const currentAsset: Asset = useSelector(
         (state: RootState) => state.currentAsset
     );
@@ -61,8 +63,24 @@ export const Media: React.FC<MediaContainerProps> = (props) => {
         setActiveMedia(e);
     };
 
+    useEffect(() => {
+        const mediaContainer = document.getElementById('media-container');
+        if (mediaContainer) {
+            if (activeMedia === 'image') {
+                mediaContainer.classList.add('overflow-auto');
+            } else {
+                mediaContainer.classList.remove('overflow-auto');
+            }
+        }
+
+        return () => {
+            if (mediaContainer) {
+                mediaContainer.classList.remove('overflow-auto');
+            }
+        };
+    }, []);
     return (
-        <MediaContainer>
+        <MediaContainer className={'overflow-auto'} id={'media-container'}>
             <MediaButtonContainer id={'media-buttons'}>
                 {mediaTypes.map(
                     (

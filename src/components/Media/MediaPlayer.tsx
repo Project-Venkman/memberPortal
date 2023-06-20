@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Asset, Media, MediaPlayerProps } from '@customtypes/index';
+import {
+    Asset,
+    Media as MediaType,
+    Media,
+    MediaPlayerProps,
+} from '@customtypes/index';
 import {
     MediaPlayer,
     MediaPlayerContainer,
@@ -21,12 +26,11 @@ export const MediaPlayerComponent: React.FC<MediaPlayerProps> = (props) => {
     const [activeAssets, setActiveAssets] = useState<Array<Media>>([]);
     const [currentMedia, setCurrentMedia] = useState<string>('');
     const [currentName, setCurrentName] = useState<string>('');
+    const [assetsByCategory, setAssetsByCategory] = useState<{
+        [category: string]: MediaType[];
+    }>({});
+    const [currentCategory, setCurrentCategory] = useState<string>('');
 
-    const id = {
-        image: '40000001-0000-0000-0000-000000000002',
-        video: '40000001-0000-0000-0000-000000000003',
-        audio: '40000001-0000-0000-0000-000000000004',
-    };
     const handleMediaClick = (e: Media) => {
         if (e) {
             setCurrentMedia(e.url!);
@@ -35,7 +39,6 @@ export const MediaPlayerComponent: React.FC<MediaPlayerProps> = (props) => {
     };
 
     useEffect(() => {
-        // console.log(media)
         let mediaAssets: Array<Media> = media.filter((m: Media) => {
             if (mediaType === 'video') return m.type === 'video';
             if (mediaType === 'image') return m.type === 'image';
@@ -48,95 +51,158 @@ export const MediaPlayerComponent: React.FC<MediaPlayerProps> = (props) => {
         setActiveAssets(mediaAssets);
     }, [mediaType]);
 
-    const handleClick = (e: Media) => {};
-    // console.log()
     useEffect(() => {
-        if (
-            activeAssets.length &&
-            activeAssets[0].url &&
-            !currentMedia.length
-        ) {
-            setCurrentMedia(activeAssets[0].url);
-            setCurrentName(activeAssets[0]!.name!);
+        const assetsByCategory: { [category: string]: MediaType[] } =
+            activeAssets.reduce((acc, asset) => {
+                if (acc.hasOwnProperty(asset.category)) {
+                    acc[asset.category].push(asset);
+                } else {
+                    acc[asset.category] = [asset];
+                }
+                return acc;
+            }, {} as { [category: string]: MediaType[] });
+        setAssetsByCategory(assetsByCategory);
+        const categories = Object.keys(assetsByCategory);
+        if (categories.length > 0) {
+            setCurrentCategory(categories[0]);
         }
     }, [activeAssets]);
 
+    const handleCategoryClick = (category: string) => {
+        const assets = assetsByCategory[category];
+        if (assets && assets.length) {
+            setCurrentMedia(assets[0].url!);
+            setCurrentName(assets[0].name!);
+        }
+        setCurrentCategory(category);
+    };
+
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+    const openPopup = () => {
+        setIsPopupOpen(true);
+    };
+
+    const closePopup = () => {
+        setIsPopupOpen(false);
+    };
+
     return (
-        <MediaPlayerContainer id={'media-player-container'}>
-            {activeAssets.length &&
-                mediaType === 'image' && [
-                    /*<ImageSlider images={activeAssets}/>*/ <img
-                        key={1}
-                        style={{ maxHeight: '100%', width: 'fit-content' }}
-                        src={currentMedia}
-                    />,
-                    <MediaPlayerItemsContainer
-                        key={2}
-                        id={'media-items-container'}
+        <MediaPlayerContainer id="media-player-container">
+            <div className="flex flex-col mb-4">
+                {Object.keys(assetsByCategory).map((category) => (
+                    <button
+                        key={category}
+                        onClick={() => handleCategoryClick(category)}
+                        className={`px-4 py-2 mb-2 text-base text-white cursor-pointer ${
+                            currentCategory === category ? 'bg-transparent' : ''
+                        }`}
+                        style={{
+                            color:
+                                currentCategory === category ? 'gold' : 'white',
+                        }}
                     >
-                        <MediaPlayerItems id={'media-items'}>
-                            {activeAssets.map((m: Media, i: number) => {
-                                return (
-                                    <MediaPlayerItemButton
-                                        key={i}
-                                        onClick={() => handleMediaClick(m)}
-                                    >
-                                        <MediaPlayerItemThumbnail
-                                            src={m.url}
-                                            alt={m.name}
-                                        />
-                                    </MediaPlayerItemButton>
-                                );
-                            })}
-                        </MediaPlayerItems>
-                    </MediaPlayerItemsContainer>,
-                ]}
-            {(mediaType === 'video' || mediaType === 'audio') && [
-                <MediaPlayer key={0} id={'media-player'}>
-                    {currentMedia && mediaType === 'video' && (
-                        <VideoPlayer
-                            autoPlay={true}
-                            controls={true}
-                            src={currentMedia}
-                        />
-                    )}
-                    {/* TODO Add <audio> when available */}
-                    {currentMedia && mediaType === 'audio' && (
-                        <VideoPlayer
-                            autoPlay={true}
-                            controls={true}
-                            src={currentMedia}
-                        />
-                    )}
-                    <div key={1} className={'text-center text-gold font-bold'}>
-                        <span>{currentName}</span>
+                        <span className="">{category}</span>
+                    </button>
+                ))}
+            </div>
+            {currentCategory && mediaType === 'image' && (
+                <div className="flex flex-wrap justify-center overflow-auto max-h-full">
+                    {assetsByCategory[currentCategory]?.map((asset, index) => (
+                        <div
+                            key={index}
+                            className="w-1/4 p-4"
+                            onClick={() => handleMediaClick(asset)}
+                        >
+                            <img
+                                src={asset.url}
+                                alt={asset.name}
+                                className="cursor-pointer"
+                                style={{
+                                    maxHeight: '100%',
+                                    width: 'fit-content',
+                                }}
+                                onClick={openPopup}
+                            />
+                        </div>
+                    ))}
+                </div>
+            )}
+            {(mediaType === 'video' || mediaType === 'audio') &&
+                currentCategory !== undefined && (
+                    <div>
+                        <MediaPlayer key={0} id="media-player">
+                            {currentMedia && mediaType === 'video' && (
+                                <VideoPlayer
+                                    autoPlay={true}
+                                    controls={true}
+                                    src={currentMedia}
+                                />
+                            )}
+                            {/* TODO Add <audio> when available */}
+                            {currentMedia && mediaType === 'audio' && (
+                                <VideoPlayer
+                                    autoPlay={true}
+                                    controls={true}
+                                    src={currentMedia}
+                                />
+                            )}
+                            <div className="text-center text-gold font-bold">
+                                <span>{currentName}</span>
+                            </div>
+                        </MediaPlayer>
+                        <MediaPlayerItemsContainer
+                            key={currentCategory}
+                            id="media-items-container"
+                        >
+                            {currentCategory && (
+                                <MediaPlayerItems id="media-items">
+                                    {assetsByCategory[currentCategory]?.map(
+                                        (m: Media, i: number) => (
+                                            <MediaPlayerItemButton
+                                                key={i}
+                                                onClick={() =>
+                                                    handleMediaClick(m)
+                                                }
+                                            >
+                                                <MediaPlayerItemThumbnail
+                                                    title={m.name}
+                                                    src={
+                                                        mediaType === 'video' ||
+                                                        mediaType === 'audio'
+                                                            ? 'https://storage.googleapis.com/bm1000media/Misc/videoPlaceholder.png'
+                                                            : m.url
+                                                    }
+                                                    alt={m.name}
+                                                />
+                                            </MediaPlayerItemButton>
+                                        )
+                                    )}
+                                </MediaPlayerItems>
+                            )}
+                        </MediaPlayerItemsContainer>
                     </div>
-                </MediaPlayer>,
-                <MediaPlayerItemsContainer key={2} id={'media-items-container'}>
-                    <MediaPlayerItems id={'media-items'}>
-                        {activeAssets.map((m: Media, i: number) => {
-                            return (
-                                <MediaPlayerItemButton
-                                    key={i}
-                                    onClick={() => handleMediaClick(m)}
-                                >
-                                    <MediaPlayerItemThumbnail
-                                        title={m.name}
-                                        src={
-                                            mediaType === 'video' ||
-                                            mediaType === 'audio'
-                                                ? 'https://storage.googleapis.com/bm1000media/Misc/videoPlaceholder.png'
-                                                : m.url
-                                        }
-                                        alt={m.name}
-                                    />
-                                </MediaPlayerItemButton>
-                            );
-                        })}
-                    </MediaPlayerItems>
-                </MediaPlayerItemsContainer>,
-            ]}
+                )}
+            // ...
+            {isPopupOpen && (
+                <div className="fixed top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
+                    <div className="relative">
+                        <img
+                            src={currentMedia}
+                            alt={currentName}
+                            className="max-h-full max-w-full"
+                        />
+                        <button
+                            className="absolute top-2 right-2 text-white bg-gray-800 rounded-full p-2 focus:outline-none z-100"
+                            onClick={closePopup}
+                        >
+                            Close
+                        </button>
+                    </div>
+                </div>
+            )}
         </MediaPlayerContainer>
     );
 };
+
 export default MediaPlayerComponent;

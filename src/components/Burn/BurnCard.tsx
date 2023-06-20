@@ -66,7 +66,6 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
             address,
             burnAsset.tokenId
         ).then(async (res: any) => {
-            console.log(res);
             setBurnStatus('Burning!');
             setSpinnerCss(
                 'w-12 h-12 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 '

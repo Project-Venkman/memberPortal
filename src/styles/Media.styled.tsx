@@ -5,7 +5,7 @@ import { SwiperSlide } from 'swiper/react';
 export const MediaContainer = styled.div`
     ${tw`
 		h-[calc(100% - 64px)]
-		flex portrait:flex-col
+		flex flex-col
 		w-full
 	`};
 `;
@@ -18,15 +18,15 @@ export const MediaCardContent = styled.div`
 `;
 export const MediaButtonContainer = styled.div`
     ${tw`
-		w-24 h-full portrait:w-full portrait:h-auto
+		w-24 portrait:w-full portrait:h-auto
 		pt-4 portrait:p-4
-		flex flex-col portrait:flex-row justify-start items-center gap-8 portrait:gap-4
-		bg-transparent border-r border-solid border-gray-300/25
+		flex portrait:flex-row justify-start items-center gap-8 portrait:gap-4
+		bg-transparent border-b border-solid border-gray-300/25 mb-4
 	`}
 `;
 export const MediaButton = styled.button`
     ${tw`
-		text-white text-3xl cursor-pointer z-50
+		text-white text-3xl cursor-pointer z-50 ml-[2rem]
 	`}
     &.active {
         ${tw`text-gold`}
@@ -45,7 +45,7 @@ export const MediaDescriptionParagraph = styled.p`
     ${tw`text-white pb-4 text-xl`}
 `;
 export const MediaPlayerContainer = styled.div`
-    ${tw`w-full max-h-full flex flex-col items-center`}
+    ${tw`w-full max-h-full flex items-start overflow-scroll`}
 `;
 export const MediaPlayer = styled.div`
     ${tw`

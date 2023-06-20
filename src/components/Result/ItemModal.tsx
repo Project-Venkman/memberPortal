@@ -50,9 +50,9 @@ export const ItemModal: React.FC<ResultModalProps> = (props) => {
                 onClick={() => setModalOpen(false)}
             />
             <ResultDataModal id={'modal-data'}>
-                <ResultDataModalHeader>
+                <ResultDataModalHeader id={'modal-header'}>
                     <ModalCloseButton onClick={() => setModalOpen(!modalOpen)}>
-                        <FaTimes />
+                        <FaTimes id={'fa-times'} />
                     </ModalCloseButton>
                 </ResultDataModalHeader>
                 {modalType === 'media' && <Media />}

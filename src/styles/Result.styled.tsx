@@ -85,14 +85,14 @@ export const ResultDataModalOverlay = styled.div`
 export const ResultDataModal = styled.div`
     transform: translate(-50%, -50%);
     ${tw`
-		w-[65%] h-[65%] portrait:h-[calc(100% - 64px)] portrait:w-full
+		w-[75%] h-[70%] portrait:h-[calc(100% - 64px)] portrait:w-full
 		flex z-[60] bg-black/50
 		fixed top-1/2 left-1/2 portrait:top-40 portrait:left-0
 		portrait:transform-none
 	`}
 `;
 export const ResultDataModalHeader = styled.div`
-    ${tw`text-white absolute right-0 top-0 h-8 flex justify-end rounded z-100`}
+    ${tw`text-white absolute right-0 top-0 h-8 flex justify-end rounded`}
 `;
 export const ModalCloseButton = styled.button`
     ${tw`text-white p-4`};

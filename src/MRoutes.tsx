@@ -6,7 +6,7 @@ import { CoinInventory } from '@pages/CoinInventory';
 import Burn from '@pages/Burn';
 import Accordion from '@pages/ChooseContract';
 import { accordionData } from '@pages/ChooseContract';
-// import ProfilePage from '@pages/Profile';
+import ProfilePage from '@pages/Profile';
 import TransferPage from '@pages/Transfer';
 import GoldBar from '@pages/Chive';
 const MRoutes = () => {

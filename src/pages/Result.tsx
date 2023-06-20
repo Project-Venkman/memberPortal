@@ -108,6 +108,7 @@ const Result: React.FC<ResultProps> = (props) => {
                         await Api.media
                             .getAllByAsset(assetId)
                             .then(async (res) => {
+                                // console.log(res);
                                 let newMedia = res.filter(
                                     (media: MediaType) =>
                                         !allMedia.some((m) => m.id === media.id)
