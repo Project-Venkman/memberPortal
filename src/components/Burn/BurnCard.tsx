@@ -35,7 +35,7 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
     );
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [burnStatus, setBurnStatus] = useState<string>('Click here to burn');
+    const [burnStatus, setBurnStatus] = useState<string>(burnAsset.contractId === '40000001-0001-0001-0002-000000000003' ? 'Burn Not Available' : 'Click here to burn');
     const walletAddress: string = useSelector(
         (state: RootState) => state.walletAddress
     );
@@ -44,7 +44,6 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
     );
     const [refreshBurn, setRefreshBurn] = useState<boolean>(false);
     const setAssets = useSetAssets(walletAddress);
-
     const getProvider = async () => {
         let provider = await Web3ModalProvider.connectTo(
             Web3ModalProvider.cachedProvider
