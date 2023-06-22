@@ -187,7 +187,7 @@ export const Api = {
                 'Claim/Update',
                 mario,
                 data
-            ).then(async (res) => {});
+            ).then(async (res) => { });
         },
         getByParentAssetId: async (parentAssetId: string) => {
             return await ApiFx.POSTKahlilAuthenticated(
