@@ -26,7 +26,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useSetAssets } from '@components/Loading';
 import billGold from '@assets/bill/billGold.png';
-import VPass from "@assets/images/VPass.png";
+import VPass from "@assets/images/VPass.jpg";
 export const BurnCard: React.FC<BurnCardProps> = (props) => {
     const { index, burnAsset, copiedAddress, onClick } = props;
     const [disabled, setDisabled] = useState<boolean>(false);
@@ -103,22 +103,24 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
                     <div className="modal-container bg-white h-[70%] w-[80%] rounded-lg p-4">
                         <div className="flex h-full justify-between">
                             <div className="w-1/2 p-4 cursor-pointer hover:bg-gray-200 border border-gray-300 rounded-lg">
-                                <div className="mb-4">
-                                    <img src={billGold} alt="Bill Gold" className="w-full h-auto rounded-lg" />
+                                <div className="mb-4 flex justify-center">
+                                    <img src={billGold} alt="Bill Gold" className="w-1/2 h-auto rounded-lg mx-auto" />
                                 </div>
-                                <h2 className="text-xl font-bold mb-4">Left Section</h2>
-                                <p>This is the content of the left section.</p>
+                                <h2 className="text-xl font-bold mb-4">Glasses Upgraded</h2>
+                                <p>Upgrade your bill murray glasses</p>
                             </div>
                             <div className="w-1/2 p-4 cursor-pointer hover:bg-gray-200 border border-gray-300 rounded-lg">
-                                <div className="mb-4">
-                                    <img src={VPass} alt="VenkmanPass" className="w-full h-auto rounded-lg" />
+                                <div className="mb-4 flex justify-center">
+                                    <img src={VPass} alt="VenkmanPass" className="w-1/2 h-auto rounded-lg mx-auto" />
                                 </div>
-                                <h2 className="text-xl font-bold mb-4">Right Section</h2>
-                                <p>This is the content of the right section.</p>
+                                <h2 className="text-xl font-bold mb-4">Venkman Pass Upgrade</h2>
+                                <p>Upgrade to a Project Venkman Pass</p>
                             </div>
                         </div>
                     </div>
                 </div>
+
+
 
 
 
