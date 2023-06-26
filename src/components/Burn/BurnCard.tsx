@@ -25,15 +25,30 @@ import {
 } from '@state/features';
 import { useNavigate } from 'react-router-dom';
 import { useSetAssets } from '@components/Loading';
-import billGold from '@assets/bill/billGold.png';
-import VPass from "@assets/images/VPass.jpg";
+import Upgrade from '@assets/images/Upgrade.png';
+import { UpgradeModal } from '@components/Burn';
+import C3D from '@assets/images/C3D.png';
 export const BurnCard: React.FC<BurnCardProps> = (props) => {
+    const [leftImage, setLeftImage] = useState<string>('');
+    const [selected, setSelected] = useState<string>('');
     const { index, burnAsset, copiedAddress, onClick } = props;
     const [disabled, setDisabled] = useState<boolean>(false);
     const [tailwindCss, setTailwindCss] = useState<string>('');
-    const [spinnerCss, setSpinnerCss] = useState<string>(
-        'w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 hidden'
+    const [comingSoonCard, setComingSoonCard] = useState<React.ReactNode | any>(
+        <div
+            className={`w-full p-4 cursor-not-allowed hover:bg-gray-200 border border-gray-300 rounded-lg ${selected === 'right' ? 'bg-gray-200' : ''
+                }`}
+            style={{ opacity: 0.5 }}
+        >
+            <div className="mb-4 flex justify-center">
+                {/* <img src={VPass} alt="Venkman Pass" className="w-1/2 h-auto rounded-lg mx-auto" /> */}
+            </div>
+            <h2 className="text-xl font-bold mb-4">Coming Soon</h2>
+            <p>This will be coming soon</p>
+        </div>
     );
+
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [burnStatus, setBurnStatus] = useState<string>('Click here to burn');
@@ -47,84 +62,60 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
     const setAssets = useSetAssets(walletAddress);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // New state for modal visibility
 
-    const getProvider = async () => {
-        let provider = await Web3ModalProvider.connectTo(
-            Web3ModalProvider.cachedProvider
-        );
-        let ethersProvider = new ethers.providers.Web3Provider(provider);
-        let address =
-            (await ethersProvider.resolveName('bm1000burnandturn.eth')) ||
-            '0x4B77b0CcF0eB6125CeaBc4e9a43c7a87CDEDCeff';
-        let signer = ethersProvider.getSigner();
 
-        let BurnContract = new ethers.Contract(
-            burnAsset.contractAddress,
-            abi_721,
-            signer
-        );
-
-        await BurnContract.transferFrom(
-            walletAddress,
-            address,
-            burnAsset.tokenId
-        ).then(async (res: any) => {
-            setBurnStatus('Burning!');
-            setSpinnerCss(
-                'w-12 h-12 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 '
-            );
-        });
-
-        BurnContract.on('Transfer', async (from, to, tokenId, event) => {
-            console.log('Event:', event);
-            setBurnStatus('Burned!');
-            setDisabled(true);
-            setTailwindCss('bg-gray-800 text-gray-500 rounded-md opacity-50');
-            setSpinnerCss(
-                'w-12 h-12 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 hidden'
-            );
-        });
-    };
 
     const handleCardClick = async () => {
         if (burnAsset.burnNow === '3dglasses') {
+            setLeftImage(Upgrade)
             setIsModalOpen(true); // Open the modal
         } else if (burnAsset.burnNow === 'burnandturn') {
-            await getProvider();
+            // await getProvider();
+            setSelected('left');
+            setComingSoonCard(null);
+            setLeftImage(C3D);
+            setIsModalOpen(true); // Open the modal
         }
         if (disabled) return;
     };
+    const selectLeft = () => {
+        setSelected('left');
+        setComingSoonCard(null);
+    };
 
+    const handleVPUpgrade = async () => {
+        console.log('Venkman Upgrade');
+        setSelected('right');
+    };
+    const handleSubmit = async () => {
+        setIsModalOpen(false);
+        setSelected('');
+        setComingSoonCard(<div
+            className={`w-full p-4 cursor-not-allowed hover:bg-gray-200 border border-gray-300 rounded-lg ${selected === 'right' ? 'bg-gray-200' : ''
+                }`}
+            style={{ opacity: 0.5 }}
+        >
+            <div className="mb-4 flex justify-center">
+                {/* <img src={VPass} alt="Venkman Pass" className="w-1/2 h-auto rounded-lg mx-auto" /> */}
+            </div>
+            <h2 className="text-xl font-bold mb-4">Coming Soon</h2>
+            <p>This will be coming soon</p>
+        </div>);
+    }
+
+    // console.log(selected)
     return (
         <>
             {isModalOpen && (
-                // Render the modal only when isModalOpen is true
-                <div className="fixed inset-0 flex items-center justify-center z-50">
-                    <div className="modal-overlay absolute inset-0"></div>
-                    <div className="modal-container bg-white h-[70%] w-[80%] rounded-lg p-4">
-                        <div className="flex h-full justify-between">
-                            <div className="w-1/2 p-4 cursor-pointer hover:bg-gray-200 border border-gray-300 rounded-lg">
-                                <div className="mb-4 flex justify-center">
-                                    <img src={billGold} alt="Bill Gold" className="w-1/2 h-auto rounded-lg mx-auto" />
-                                </div>
-                                <h2 className="text-xl font-bold mb-4">Glasses Upgraded</h2>
-                                <p>Upgrade your bill murray glasses</p>
-                            </div>
-                            <div className="w-1/2 p-4 cursor-pointer hover:bg-gray-200 border border-gray-300 rounded-lg">
-                                <div className="mb-4 flex justify-center">
-                                    <img src={VPass} alt="VenkmanPass" className="w-1/2 h-auto rounded-lg mx-auto" />
-                                </div>
-                                <h2 className="text-xl font-bold mb-4">Venkman Pass Upgrade</h2>
-                                <p>Upgrade to a Project Venkman Pass</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
-
+                <UpgradeModal
+                    selected={selected}
+                    selectLeft={selectLeft}
+                    rightCard={comingSoonCard}
+                    closeModal={handleSubmit}
+                    // billGoldImage={Upgrade}
+                    burnAsset={burnAsset}
+                    burnNow={burnAsset.burnNow}
+                    leftImage={leftImage}
+                />
             )}
             <BurnCardContainer
                 className={tailwindCss}
@@ -132,25 +123,7 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
                 id={'burn-' + index}
                 style={{ height: '300px' }}
             >
-                <div className="flex items-center justify-center w-full h-full absolute top-0 left-0 right-0 bottom-0">
-                    <svg
-                        aria-hidden="true"
-                        className={spinnerCss}
-                        viewBox="0 0 100 101"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                            fill="currentColor"
-                        />
-                        <path
-                            d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                            fill="currentFill"
-                        />
-                    </svg>
-                    <span className="sr-only">Loading...</span>
-                </div>
+
 
                 <BurnDataHeader id={'Burn-header-info'}>
                     <BurnName id={'Burn-name'}>
