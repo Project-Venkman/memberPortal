@@ -7,6 +7,6 @@ ENV GENERATE_SOURCEMAP=false
 ENV REACT_APP_DEV=production
 ENV NODE_OPTIONS --openssl-legacy-provider
 RUN npx tailwindcss -i ./src/styles/App.css -o ./src/styles/output.css
-RUN craco build
+RUN npm craco build
 EXPOSE 3000
 CMD [ "npx", "serve", "-s", "build" ]
