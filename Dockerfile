@@ -7,5 +7,5 @@ ENV GENERATE_SOURCEMAP=false
 ENV REACT_APP_DEV=production
 EXPOSE 3000
 CMD [ "npx", "tailwindcss", "-i", "./src/styles/App.css", "-o", "./src/styles/output.css" ]
-CMD [ "npm", "craco", "build" ]
+CMD [ "craco", "build" ]
 CMD [ "npx", "serve", "-s", "build" ]
