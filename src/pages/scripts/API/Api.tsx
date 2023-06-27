@@ -4,7 +4,7 @@ import { Claim, KahlilApi } from '@customtypes/index';
 const mario: KahlilApi = {
     //host: environments[process.env.REACT_APP_DEV as keyof typeof environments].ProtonPack,
     host: 'https://apiv2.projectvenkman.com/',
-    // host: 'http://localhost:3001/',
+    //host: 'http://localhost:3001/',
     //version: "", // add a / to end of string if version is included
     //key: "",
     //secret: "",
@@ -172,10 +172,10 @@ export const Api = {
         },
     },
     claim: {
-        getByTypeId: async (claimTypeId: string) => {
-            let data = { ClaimTypeId: claimTypeId };
+        getAllCoinsByName: async (name: string) => {
+            let data = { name: name };
             return await ApiFx.POSTKahlilAuthenticated(
-                'Claim/GetAllByTypeId',
+                'Claim/GetAllCoinsByName',
                 mario,
                 data
             ).then(async (res) => {

@@ -17,7 +17,7 @@ export const CoinInventory: React.FC<CoinInventoryProps> = (props) => {
 	useEffect(() => {
 		if (coins.length) return;
 		(async () => {
-			await Api.claim.getByTypeId("40000001-0000-0000-0000-000000000001")
+			await Api.claim.getAllCoinsByName("Bill Murray NFT Coin")
 				.then((res) => {
 					console.log(res);
 					setCoins(res/*.sort((a: Claim, b: Claim) => a.tokenID.localeCompare(b.tokenID))*/);
@@ -49,12 +49,12 @@ export const CoinInventory: React.FC<CoinInventoryProps> = (props) => {
 			showRowLines={true}
 			onSaving={handleSave}
 		>
-			<Column dataField={"TokenID"} allowFiltering={true} allowEditing={false} sortOrder={"asc"}></Column>
-			<Column dataField={"Claimed"} allowFiltering={false}><input type={"checkbox"} checked={!this} /></Column>
-			<Column dataField={"Code"} allowFiltering={true} allowEditing={false}></Column>
-			<Column dataField={"Url"} allowFiltering={false} allowEditing={false}></Column>
-			<Column dataField={"Description"} allowFiltering={false}></Column>
-			<Column dataField={"OrderID"} allowFiltering={true}></Column>
+			<Column dataField={"tokenId"} allowFiltering={true} allowEditing={false} sortOrder={"asc"}></Column>
+			<Column dataField={"claimed"} allowFiltering={false}><input type={"checkbox"} checked={!this} /></Column>
+			<Column dataField={"name"} allowFiltering={false}></Column>
+			<Column dataField={"code"} allowFiltering={true} allowEditing={false}></Column>
+			<Column dataField={"url"} allowFiltering={false} allowEditing={false}></Column>
+			<Column dataField={"orderId"} allowFiltering={true}></Column>
 			<Pager allowedPageSizes={pageSizes} showPageSizeSelector={true} />
 			<Editing mode={"cell"} allowUpdating={true} allowDeleting={false} allowAdding={false} />
 			<FilterRow visible={true} />

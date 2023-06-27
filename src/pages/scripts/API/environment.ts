@@ -5,23 +5,18 @@
 export const environments = {
     local: {
         production: false,
-        ProtonPack: 'http://localhost:7071/',
         Hypermint: 'http://localhost:3000/',
         Prefix: 'http://',
     },
     development: {
         production: false,
-        // ProtonPack: 'https://protonpackapi-dev.azurewebsites.net/',
-        ProtonPack: 'http://localhost:3001/',
-        // ProtonPack: 'https://apiv2.projectvenkman.com/',
-        Hypermint: 'http://localhost:3000/',
+        ProtonPack: 'https://apiv2-test.projectvenkman.com/',
         Prefix: 'https://',
     },
     production: {
         production: false,
-        // ProtonPack: "https://protonpackapi.azurewebsites.net/",
         ProtonPack: 'https://apiv2.projectvenkman.com/',
-        Hypermint: 'https://protonpackapiserver-dooxr4hhta-uc.a.run.app/',
+        Hypermint: '',
         Prefix: 'https://',
     },
 };
