@@ -19,14 +19,15 @@ const Login: React.FC<LoginProps> = () => {
     const currentUrl = new URL(window.location.href);
     const [heroBG, setHeroBG] = useState<string>('');
     useEffect(() => {
-        if (currentUrl.pathname.includes('EarthLight')) {
+        const lowercaseHostname = currentUrl.hostname.toLowerCase(); // Convert to lowercase
+        if (lowercaseHostname.includes('earthlight')) {
             setHeroBG(SpaceELF);
-        } else if (currentUrl.pathname.includes('BillMurray1000')) {
+        } else if (lowercaseHostname.includes('billmurray1000')) {
             setHeroBG(BillBG);
         } else {
             setHeroBG(PVHome);
         }
-    }, [currentUrl.pathname]);
+    }, [currentUrl.hostname]);
     // window.localStorage.clear();
 
     return (
