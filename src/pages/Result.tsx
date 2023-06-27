@@ -1,141 +1,137 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
-	Asset,
-	WalletData,
-	ResultProps,
-	Burn as BurnType
-} from "@customtypes/index";
-import { Invalid, ItemAssetImage, ItemModal, ItemSelect, NavbarDesktop, NavbarMobile } from "@components/index";
+    Asset,
+    WalletData,
+    ResultProps,
+    BurnAsset,
+    Claim as ClaimType,
+    Media as MediaType,
+} from '@customtypes/index';
+import { RootState } from '@state/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { Api } from '@pages/scripts/API';
 import {
-	FrameImg,
-	ImageContainer,
-	ResultCard,
-	ResultCardContent,
-	ResultPage
-} from "@styles/index";
-import frame from "@assets/bill/FRAME-NO-BILL2.png";
-import { RootState } from "@state/store";
-import { useDispatch, useSelector } from "react-redux";
-import { Api } from "@scripts/API";
-import {
-	setWallet,
-	setEmptyWallet,
-	setWalletAssets,
-	setBurnAssets
-} from "@state/features";
-import { truncateAddress } from "@scripts/utils";
-import { LoadIndicator } from "devextreme-react";
-import { useNavigate } from "react-router-dom";
+    setWallet,
+    setEmptyWallet,
+    setWalletAssets,
+    setBurnAssets,
+    setWalletAddress,
+    setLoading,
+    setClaimAssets,
+    setMediaAssets,
+} from '@state/features';
+import { useNavigate } from 'react-router-dom';
+import ProjectVenkman from '@components/Result/PV/ProjectVenkman';
+import BillMurray1000 from '@components/Result/BM/BillMurray1000';
+import EarthLight from '@components/Result/ELF/EarthLight';
+import { LoadingState } from '@state/features/LoadingSlice';
+import { useSetAssets } from '@components/Loading';
 
 const Result: React.FC<ResultProps> = (props) => {
-	const { } = props;
-	const navigate = useNavigate();
-	const wallet: WalletData = useSelector((state: RootState) => state.wallet);
-	const walletAddress: string = useSelector((state: RootState) => state.walletAddress);
-	const walletAssets: Array<Asset> = useSelector((state: RootState) => state.walletAssets);
-	const burns: Array<BurnType> = useSelector((state: RootState) => state.burnAssets as Array<BurnType>);
-	const dispatch = useDispatch();
-	const [modalOpen, setModalOpen] = useState<boolean>(false);
-	const [modalType, setModalType] = useState<string>("");
-	const [loading, setLoading] = useState<boolean>(false);
+    const {} = props;
+    const currentUrl = new URL(window.location.href);
+    const navigate = useNavigate();
+    const wallet: WalletData = useSelector((state: RootState) => state.wallet);
+    const walletAddress: string = useSelector(
+        (state: RootState) => state.walletAddress
+    );
 
-	useEffect(() => {
-		if (!walletAddress.length) return;
-		(async () => {
-			console.log("...Verifying Ownership");
-			setLoading(true);
-			await Api.ownership.verify(walletAddress)
-				.then(async (res) => {
-					console.log("...Setting Data", res);
-					await dispatch(setWallet(res));
-					let oa: Array<Asset> = [];
-					let ba: Array<BurnType> = [];
-					await res.forEach((r: WalletData) => {
-						const burnContractIds = ["00000004-0000-0000-0000-000000000004", "00000004-0000-0000-0000-000000000005"];
-						// HERE IS WHERE WE NEED TO FILTER OUT THE BURNABLES
-						if (!burnContractIds.includes(r.ownedAssets![0].typeID))
-							oa.push(...r.ownedAssets!);
-						console.log(ba.findIndex((r2) => r.ownedAssets![0].burnBMAssets![0].assetNumber === r2.assetNumber))
-						// 
-						if (r.ownedAssets![0].burnBMAssets!.length) {
-							let tmp = [...r.ownedAssets![0].burnBMAssets!];
-							tmp.forEach(t => {
-								if (!ba.find(b => b.assetNumber === t.assetNumber)) {
-									ba.push(...r.ownedAssets![0].burnBMAssets!)
-								}
-							})
-						}
-					})
-					console.log("oa", oa);
-					console.log("ba", ba);
-					await dispatch(setWalletAssets(oa));
-					await dispatch(setBurnAssets(ba));
-					await Api.asset.getBurnables(walletAddress)
-						.then((res) => {
-							console.log("getBurnables", res);
-						});
-					//getBurns();
-					if (!oa.length && burns.length) navigate('/Burn');
-					//setVerified(true);
-					setLoading(false);
-				})
-				.catch(async (error) => {
-					dispatch(setEmptyWallet(walletAddress));
-					setLoading(false);
-					console.error(await error);
-				});
+    useEffect(() => {
+        if (!walletAddress || walletAddress.length < 1) {
+            (async () => {
+                await Api.auth.whoamI().then(async (res) => {
+                    dispatch(setWalletAddress(res));
+                });
+            })();
+        }
+    }, [walletAddress]);
 
-		})();
-	}, [walletAddress])
+    const walletAssets: Array<Asset> = useSelector(
+        (state: RootState) => state.walletAssets
+    );
 
-	return (
-		<ResultPage>
-			{walletAssets.length > 0 && !loading &&
-				<ItemSelect />
+    useEffect(() => {
+        if (!walletAddress || walletAddress.length < 1) {
+            (async () => {
+                await Api.auth.whoamI().then(async (res) => {
+                    dispatch(setWalletAddress(res));
+                });
+            })();
+        }
+    }, [walletAddress]);
+    const dispatch = useDispatch();
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const [modalType, setModalType] = useState<string>('');
+    const loading: LoadingState = useSelector(
+        (state: RootState) => state.isLoading
+    );
+    const setAssets = useSetAssets(walletAddress);
 
-			}
-			{!loading && walletAssets.length && [
-				<NavbarDesktop key={0} modalOpen={modalOpen} setModalOpen={setModalOpen} setModalType={setModalType} />,
-				<NavbarMobile key={1} modalOpen={modalOpen} setModalOpen={setModalOpen} setModalType={setModalType} />
-			]
-			}
-			{loading && !walletAssets.length &&
-				<ResultCard id={"result-card"}>
-					<ResultCardContent id={"result-card-content"}>
-						<FrameImg id={"frame"} src={frame} />
-						<ImageContainer id={"image-container"}>
-							<div className={"bg-black text-white p-2 absolute top-1/2 left-1/2 w-[67%] h-[71%] z-100"} style={{ transform: "translate(-50%, -50%)" }}>
-								<p>{`Retrieving NFTs for ${truncateAddress(walletAddress)}`}</p>
-								<LoadIndicator visible={loading}></LoadIndicator>
-							</div>
-						</ImageContainer>
-					</ResultCardContent>
-				</ResultCard>}
-			{walletAssets.length > 0 &&
-				<ResultCard id={"result-card"}>
-					<ResultCardContent id={"result-card-content"}>
-						<FrameImg id={"frame"} src={frame} />
-						<ImageContainer id={"image-container"}>
-							{!loading && <ItemAssetImage key={1} />}
-						</ImageContainer>
-					</ResultCardContent>
-				</ResultCard>
-			}
-			{!walletAssets.length && !loading &&
-				<ResultCard id={"result-card"}>
-					<ResultCardContent id={"result-card-content"}>
-						<FrameImg id={"frame"} src={frame} />
-						<ImageContainer id={"image-container"}>
-							<Invalid walletData={wallet} />
-						</ImageContainer>
-					</ResultCardContent>
-				</ResultCard>
-			}
-			{modalOpen && (
-				<ItemModal modalOpen={modalOpen} setModalOpen={setModalOpen} modalType={modalType} />
-			)}
-		</ResultPage>
-	)
-}
+    useEffect(() => {
+        if (!walletAddress || walletAddress.length < 1) return;
+        if (walletAddress && walletAssets.length < 1)
+            (async () => {
+                await (
+                    await setAssets
+                )();
+            })();
+    }, [walletAddress]);
+    const claims: Array<ClaimType> = useSelector(
+        (state: RootState) => state.claimAssets as Array<ClaimType>
+    );
 
+    useEffect(() => {
+        if (!walletAssets) return;
+        if (walletAssets.length > 0) {
+            let allMedia: Array<MediaType> = [];
+            let assetIds: Array<string> = [];
+
+            (async () => {
+                await Promise.all(
+                    walletAssets.map(async (walletAsset) => {
+                        let assetId = walletAsset.id;
+                        assetIds.push(assetId);
+                    })
+                );
+                let allClaims = await Api.claim
+                    .getAllByAssetIds(assetIds)
+                    .then(async (res) => {
+                        return res;
+                    });
+                // console.log(walletAssets);
+                for (let i = 0; i < walletAssets.length; i++) {
+                    let assetId = walletAssets[i].id;
+                    if (
+                        assetId !== 'a8cfad6d-0a38-4f8c-b50c-31d28124dc61' &&
+                        assetId !== 'b634b38c-46c9-49e5-b3a7-9fee034cd339'
+                    ) {
+                        await Api.media
+                            .getAllByAsset(assetId)
+                            .then(async (res) => {
+                                // console.log(res);
+                                let newMedia = res.filter(
+                                    (media: MediaType) =>
+                                        !allMedia.some((m) => m.id === media.id)
+                                );
+                                allMedia = [...allMedia, ...newMedia];
+                            });
+                    }
+                }
+                if (allClaims.length > 0) {
+                    dispatch(setClaimAssets(allClaims));
+                }
+                dispatch(setMediaAssets(allMedia));
+            })();
+        }
+    }, [walletAssets]);
+
+    switch (true) {
+        case currentUrl.hostname.includes('billmurray'):
+            return <BillMurray1000 isLoading={loading} />;
+        case currentUrl.hostname.includes('earthlight'):
+            return <EarthLight isLoading={loading} />;
+        default:
+            return <ProjectVenkman isLoading={loading} />;
+    }
+};
 export default Result;

@@ -7,7 +7,7 @@ import {
 const Result: React.FC<ResultProps> = (props) => {
 
 	useEffect(() => {
-		window.localStorage.clear()
+		// window.localStorage.clear()
 	}, [])
 
 	return (

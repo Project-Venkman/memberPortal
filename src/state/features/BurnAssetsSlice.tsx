@@ -1,23 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Burn } from "@customtypes/index";
+import { BurnAsset } from "@customtypes/index";
 
-const initialBurnAssetsState: Array<Burn> = [{
-    name: "",
-    description: "",
-    url: "",
-    burnTypeID: "",
-    typeID: "",
-    assetID: "",
-    assetNumber: "",
-    contractAddress: "",
-    contractType: 0
-}];
+const initialBurnAssetsState: Array<BurnAsset> = [
+
+];
 
 export const burnAssetsSlice = createSlice({
     initialState: initialBurnAssetsState,
     name: "BurnAssets",
     reducers: {
-        setBurnAssets: (state, action: PayloadAction<Array<Burn>>) => {
+        setBurnAssets: (state, action: PayloadAction<Array<BurnAsset>>) => {
             return [...action.payload];
         }
     }
