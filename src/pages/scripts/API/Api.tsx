@@ -170,6 +170,16 @@ export const Api = {
                 data
             );
         },
+        UpgradeBill3DFrame: async (assetId: string) => {
+            return await ApiFx.POSTKahlilAuthenticated(
+                'Asset/UpgradeBill3DFrame',
+                mario,
+                assetId
+            ).then(async (res) => {
+                return await res.data;
+            }
+            );
+        },
     },
     claim: {
         getByTypeId: async (claimTypeId: string) => {

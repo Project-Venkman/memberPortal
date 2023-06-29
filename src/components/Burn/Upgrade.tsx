@@ -9,7 +9,7 @@ import { ethers } from 'ethers';
 import { BurnAsset } from '@customtypes/index';
 import { abi_721 } from '@components/Burn/abi_721';
 import { useNavigate } from 'react-router';
-
+import { Api } from '@pages/scripts';
 interface UpgradeModalProps {
     selected: string | null;
     selectLeft: () => void;
@@ -78,9 +78,19 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
 
             BurnContract.on('Transfer', async (from, to, tokenId, event) => {
                 console.log('Event:', event);
-                setBurnStatus('Item Has Been Burned Click Here to Refresh Site!');
                 // setDisabled(true);
                 // setTailwindCss('bg-gray-800 text-gray-500 rounded-md opacity-50');
+                if (burnAsset.contractId === '40000001-0001-0001-0002-000000000003') {
+                    setBurnStatus('Upgrading your 3D Glasses!');
+                    // Here we will be calling the UpgradeBill3DFrame Api Call
+                    await Api.asset.UpgradeBill3DFrame(billBurn!.id)
+                        .then(async (res) => {
+                            console.log(res);
+                            setBurnStatus('3D Glasses Upgraded! Click Here to Refresh Site!');
+                        })
+                } else {
+                    setBurnStatus('Item Has Been Burned Click Here to Refresh Site!');
+                }
                 setSpinnerCss(
                     'w-40 h-40 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 hidden'
                 );
@@ -150,7 +160,7 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
                                                             <span className="click-text">Click here to add or update image</span>
                                                         </div>
                                                     ) : (
-                                                        <img className="h-full w-full max-h-[340px] max-w-[440px] object-contain" src={billBurn.imageSmall} alt="Image 1" />
+                                                        <img className="h-full w-full max-h-[340px] max-w-[440px] object-contain" src={billBurn.image} alt="Image 1" />
                                                     )}
                                                 </div>
                                             </div>
@@ -221,11 +231,11 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
                     <h2 className="text-center mb-4">Please Select Your Bill Murray to Upgrade</h2>
                     <div className="grid grid-cols-4 gap-4">
                         {walletAssets
-                            .filter(walletAsset => walletAsset.contractId === '40000001-0001-0001-0002-000000000002')
+                            .filter(walletAsset => ['40000001-0001-0001-0002-000000000001', '40000001-0001-0001-0002-000000000002', 'efe0d138-eb40-4ec8-8714-0d02ca5b59ab'].includes(walletAsset.contractId))
                             .map((walletAsset: Asset, i: number) => (
                                 <img
                                     key={walletAsset.id}
-                                    src={walletAsset.imageSmall}
+                                    src={walletAsset.image}
                                     alt={walletAsset.name}
                                     className="max-w-full h-auto"
                                     onClick={() => handleImageClick(walletAsset)}
