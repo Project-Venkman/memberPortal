@@ -36,21 +36,29 @@ import { LoadIndicator } from 'devextreme-react';
 import { useNavigate } from 'react-router-dom';
 import telescope from '@assets/images/telescope.png';
 import { NFTImg } from '@styles/index';
-
 import { CheckCircleIcon } from '@heroicons/react/20/solid';
 
 const ProfilePage: React.FC<ProfileProps> = (props) => {
-    const {} = props;
+    const { } = props;
     const navigate = useNavigate();
     let currentAsset: Asset = useSelector(
         (state: RootState) => state.currentAsset
     );
-    console.log(currentAsset);
+    const walletAssets: Array<Asset> = useSelector(
+        (state: RootState) => state.walletAssets
+    );
     const walletAddress: string = useSelector(
         (state: RootState) => state.walletAddress
     );
+    const currentTokenId = currentAsset.tokenId;
+
+    const filteredAssets = walletAssets.filter(
+        (asset) => asset.tokenId !== currentTokenId
+    );
+
+    console.log(filteredAssets);
     // use wallet address to get id
-    useEffect(() => {}, []);
+    useEffect(() => { }, []);
 
     const benefits = [
         'Competitive salaries',
@@ -65,7 +73,11 @@ const ProfilePage: React.FC<ProfileProps> = (props) => {
         <div className="flex justify-center bg-gray-900 py-24 sm:py-32 h-full w-full ">
             <div className="relative flex items-center isolate">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="mx-auto flex max-w-2xl flex-col gap-16 bg-white/5 px-6 py-16 ring-1 ring-white/10 sm:rounded-3xl sm:p-8 lg:mx-0 lg:max-w-none lg:flex-row lg:items-center lg:py-20 xl:gap-x-20 xl:px-20">
+                    <div className="lg:grid lg:grid-cols-12 lg:gap-8"></div>
+                    <div
+                        id="topProfileContainer"
+                        className="mx-auto flex max-w-2xl flex-col gap-16 bg-white/5 px-6 py-16 ring-1 ring-white/10 sm:rounded-3xl sm:p-8 lg:mx-0 lg:max-w-none lg:flex-row lg:items-center lg:py-20 xl:gap-x-20 xl:px-20"
+                    >
                         <img
                             className="h-96 w-full flex-none rounded-2xl object-cover shadow-xl lg:aspect-square lg:h-auto lg:max-w-sm"
                             src={
@@ -109,7 +121,29 @@ const ProfilePage: React.FC<ProfileProps> = (props) => {
                             </div>
                         </div>
                     </div>
+                    <div className="mt-8 text-white px-4">
+                        <h3 className="text-2xl font-bold">
+                            Update Current NFT
+                        </h3>
+                        <div className="mt-4 flex overflow-x-auto whitespace-nowrap" style={{ overflowY: 'hidden', overflowX: 'auto', height: '200px' }}>
+                            {filteredAssets.map((asset) => (
+                                <div key={asset.id} className="flex-none mr-4">
+                                    <img
+                                        src={asset.image}
+                                        style={{
+                                            maxHeight: '200px',
+                                            maxWidth: '100%',
+                                            objectFit: 'contain',
+                                        }}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+
+
+                    </div>
                 </div>
+
                 <div
                     className="absolute inset-x-0 -top-16 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl"
                     aria-hidden="true"
