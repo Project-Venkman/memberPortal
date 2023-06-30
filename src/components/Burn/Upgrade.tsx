@@ -76,11 +76,11 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
                 );
             });
 
-            BurnContract.on('Transfer', async (from, to, tokenId, event) => {
+            const transferEventHandler = async (from: any, to: any, tokenId: any, event: any) => {
                 console.log('Event:', event);
                 // setDisabled(true);
                 // setTailwindCss('bg-gray-800 text-gray-500 rounded-md opacity-50');
-                if (burnAsset.contractId === '40000001-0001-0001-0002-000000000003') {
+                if (burnAsset.contractId === '45a65ea1-e349-4003-8647-2025b905980d') {
                     setBurnStatus('Upgrading your 3D Glasses!');
                     // Here we will be calling the UpgradeBill3DFrame Api Call
                     await Api.asset.UpgradeBill3DFrame(billBurn!.id)
@@ -94,7 +94,11 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
                 setSpinnerCss(
                     'w-40 h-40 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 hidden'
                 );
-            });
+
+                // End the watcher by removing the event listener
+                BurnContract.off('Transfer', transferEventHandler);
+            };
+            BurnContract.on('Transfer', transferEventHandler);
         }
     };
     const addImageClick = () => {
@@ -181,9 +185,14 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
                                     alt="Bill Gold"
                                     className={`w-full h-[420px] object-contain rounded-lg mx-auto ${selected === 'left' ? 'w-full' : ''}`}
                                 />
+
+
+
                             )}
                         </div>
-
+                        <p className='text-black'>
+                            {billBurn?.tokenId}
+                        </p>
                         {burnNow === '3dglasses' ? (
                             <div>
                                 <h2 className="text-xl font-bold mb-4">
@@ -207,14 +216,14 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
                     {rightCard}
                 </div>
                 <div className="h-[10%] flex items-center justify-end">
-                    {burnStatus === 'Burn' && (
-                        <button
-                            className="flex flex-col items-center mr-4 text-black text-sm z-50 bg-goldish hover:bg-goldish-dark rounded-lg py-2 px-4 border border-black"
-                            onClick={closeModal}
-                        >
-                            Cancel
-                        </button>
-                    )}
+                    {/* {burnStatus === 'Burn' && ( */}
+                    <button
+                        className="flex flex-col items-center mr-4 text-black text-sm z-50 bg-goldish hover:bg-goldish-dark rounded-lg py-2 px-4 border border-black"
+                        onClick={closeModal}
+                    >
+                        Cancel
+                    </button>
+                    {/* )} */}
                     {selected && (
                         <button
                             className="flex flex-col items-center mr-4 text-black text-sm z-50 bg-goldish hover:bg-goldish-dark rounded-lg py-2 px-4 border border-black"
