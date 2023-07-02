@@ -10,6 +10,31 @@ import { BurnAsset } from '@customtypes/index';
 import { abi_721 } from '@components/Burn/abi_721';
 import { useNavigate } from 'react-router';
 import { Api } from '@pages/scripts';
+import {
+    UpgradeModal3DCard,
+    UpgradeModal3DComponent,
+    UpgradeModal3DInitial,
+    UpgradeModal3DSelected,
+    UpgradeModal3DSelectedCardAddImage,
+    UpgradeModal3DSelectedCardContent,
+    UpgradeModal3DSelectedContainer,
+    UpgradeModal3DSelectedPlus,
+    UpgradeModalBody,
+    UpgradeModalBodyLeft,
+    UpgradeModalBodyLeftImageContainer,
+    UpgradeModalBodyLeftTextContainer,
+    UpgradeModalContainer,
+    UpgradeModalCurtainComponent,
+    UpgradeModalFooter,
+    UpgradeModalHeader,
+    UpgradeModalOverlay,
+    UpgradeSelectionBodyContainer,
+    UpgradeSelectionContainer,
+    UpgradeSelectionHeader,
+    UpgradeSpinnerContainer,
+} from '@styles/Upgrade.styled';
+import { FaPlus } from 'react-icons/fa';
+
 interface UpgradeModalProps {
     selected: string | null;
     selectLeft: () => void;
@@ -45,10 +70,10 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
     const [spinnerCss, setSpinnerCss] = useState<string>(
         'w-40 h-40 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 hidden'
     );
-    console.log(burnAsset)
+    console.log(burnAsset);
     const getProvider = async () => {
         if (burnStatus === 'Item Has Been Burned Click Here to Refresh Site!') {
-            navigate('/Results')
+            navigate('/Results');
         } else {
             let provider = await Web3ModalProvider.connectTo(
                 Web3ModalProvider.cachedProvider
@@ -76,20 +101,33 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
                 );
             });
 
-            const transferEventHandler = async (from: any, to: any, tokenId: any, event: any) => {
+            const transferEventHandler = async (
+                from: any,
+                to: any,
+                tokenId: any,
+                event: any
+            ) => {
                 console.log('Event:', event);
                 // setDisabled(true);
                 // setTailwindCss('bg-gray-800 text-gray-500 rounded-md opacity-50');
-                if (burnAsset.contractId === '45a65ea1-e349-4003-8647-2025b905980d') {
+                if (
+                    burnAsset.contractId ===
+                    '45a65ea1-e349-4003-8647-2025b905980d'
+                ) {
                     setBurnStatus('Upgrading your 3D Glasses!');
                     // Here we will be calling the UpgradeBill3DFrame Api Call
-                    await Api.asset.UpgradeBill3DFrame(billBurn!.id)
+                    await Api.asset
+                        .UpgradeBill3DFrame(billBurn!.id)
                         .then(async (res) => {
                             console.log(res);
-                            setBurnStatus('3D Glasses Upgraded! Click Here to Refresh Site!');
-                        })
+                            setBurnStatus(
+                                '3D Glasses Upgraded! Click Here to Refresh Site!'
+                            );
+                        });
                 } else {
-                    setBurnStatus('Item Has Been Burned Click Here to Refresh Site!');
+                    setBurnStatus(
+                        'Item Has Been Burned Click Here to Refresh Site!'
+                    );
                 }
                 setSpinnerCss(
                     'w-40 h-40 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 hidden'
@@ -107,16 +145,16 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
     const handleImageClick = (asset: Asset) => {
         setBillBurn(asset);
         setIsSelectModalOpen(false); // Optionally close the select modal after selecting an asset
-        console.log(billBurn)
+        console.log(billBurn);
     };
     const handleSubmitBurnClick = () => {
         closeModal();
     };
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50">
-            <div className="modal-overlay absolute inset-0 z-60 bg-black/75"></div>
-            <div className="modal-container relative bg-gold/75 border-2 border-gold border-solid h-[70%] w-[80%] rounded-lg z-70 flex flex-col">
-                <div id={'spinner'} className="flex items-center justify-center w-full h-full absolute top-0 left-0 right-0 bottom-0">
+            <UpgradeModalOverlay className="modal-overlay" />
+            <UpgradeModalContainer className="modal-container">
+                <UpgradeSpinnerContainer className={'spinner'} id={'spinner'}>
                     <svg
                         aria-hidden="true"
                         className={spinnerCss}
@@ -134,101 +172,154 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
                         />
                     </svg>
                     <span className="sr-only">Loading...</span>
-                </div>
-                <div className={"p-4 font-bold text-white text-xl h-[10%] flex items-center justify-center"}>
+                </UpgradeSpinnerContainer>
+                <UpgradeModalHeader className={'modal-header'}>
                     <p>Choose what you would like to do with your burn item.</p>
-                </div>
-                <div className="flex h-[80%] z-90 border-y border-gold border-solid bg-white">
-                    <div
+                </UpgradeModalHeader>
+                <UpgradeModalBody className={'modal-body'}>
+                    <UpgradeModalBodyLeft
+                        className={'modal-body-left'}
                         onClick={selectLeft}
-                        className={`relative flex flex-col w-full z-90 p-4 cursor-pointer hover:bg-gray-200 border-r border-gold
-                            }`}
                     >
-                        <div className="flex flex-1 justify-center h-4/5">
+                        <UpgradeModalBodyLeftImageContainer>
                             {burnNow === '3dglasses' ? (
-                                <div className="w-full">
+                                <UpgradeModal3DComponent className="image-3d-container">
                                     {selected !== 'left' ? (
-                                        <img
-                                            src={leftImage}
-                                            alt="Bill Gold"
-                                            className="w-full h-[420px] object-contain rounded-lg mx-auto"
-                                        />
+                                        <UpgradeModal3DInitial
+                                            className={
+                                                'image-3d-initial-container'
+                                            }
+                                        >
+                                            <img
+                                                src={leftImage}
+                                                alt="Bill Gold"
+                                                className="image-3d-initial"
+                                            />
+                                        </UpgradeModal3DInitial>
                                     ) : (
-                                        <div className="card-container flex w-full h-full">
-                                            <div className="card w-1/2 flex items-center justify-center">
-                                                <div onClick={addImageClick} className="card-content flex flex-col items-center justify-center p-4">
+                                        <UpgradeModal3DSelectedContainer className="card-container">
+                                            <UpgradeModal3DCard className="card-bill">
+                                                <UpgradeModal3DSelectedCardContent
+                                                    onClick={addImageClick}
+                                                    className="card-content"
+                                                >
                                                     {!billBurn ? (
-                                                        <div className={"h-full p-4 rounded-lg"}>
+                                                        <UpgradeModal3DSelectedCardAddImage
+                                                            className={
+                                                                'add-bill-image'
+                                                            }
+                                                        >
                                                             <img
                                                                 src={addImage}
                                                                 alt="Sample Image"
-                                                                className="mb-2 max-h-[52px] max-w-[52px] mx-auto"
                                                             />
-                                                            <span className="click-text">Click here to add or update image</span>
-                                                        </div>
+                                                            <span className="click-text">
+                                                                Click here to
+                                                                add or update
+                                                                image
+                                                            </span>
+                                                        </UpgradeModal3DSelectedCardAddImage>
                                                     ) : (
-                                                        <div className={"relative"}>
-                                                            <img className="h-full w-full max-h-[340px] max-w-[440px] object-contain rounded-lg border-2 border-solid border-gray-500" src={billBurn.image} alt="Image 1" />
-                                                            <div className={"text-white bg-black/50 absolute bottom-0 w-full p-2 rounded-b-lg"}>
-                                                                <p>{billBurn?.name} - {billBurn?.tokenId}</p>
+                                                        <UpgradeModal3DSelected
+                                                            className={
+                                                                'selected-bill'
+                                                            }
+                                                        >
+                                                            <img
+                                                                className="select-bill-image"
+                                                                src={
+                                                                    billBurn.image
+                                                                }
+                                                                alt="Image 1"
+                                                            />
+                                                            <div
+                                                                className={
+                                                                    'selected-bill-details'
+                                                                }
+                                                            >
+                                                                <p>
+                                                                    {
+                                                                        billBurn?.name
+                                                                    }{' '}
+                                                                    -{' '}
+                                                                    {
+                                                                        billBurn?.tokenId
+                                                                    }
+                                                                </p>
                                                             </div>
-                                                        </div>
+                                                        </UpgradeModal3DSelected>
                                                     )}
-                                                </div>
-                                            </div>
-                                            <div className="plus-sign items-center flex text-[64px]">+</div>
-                                            <div className="card w-1/2 flex items-center justify-center">
-                                                <div className={"relative"}>
+                                                </UpgradeModal3DSelectedCardContent>
+                                            </UpgradeModal3DCard>
+                                            <UpgradeModal3DSelectedPlus className="plus-sign">
+                                                <FaPlus />
+                                            </UpgradeModal3DSelectedPlus>
+                                            <UpgradeModal3DCard className="card-3dglasses">
+                                                <UpgradeModal3DSelected
+                                                    className={'relative'}
+                                                >
                                                     <img
-                                                        className="h-full w-full object-contain max-h-[340px] max-w-[440px] rounded-lg border-2 border-solid border-gray-500"
-                                                        //src={Glasses}
+                                                        className="select-3dglasses-image"
                                                         src={burnAsset?.image}
                                                         alt="3D Glasses"
                                                     />
-                                                    <div className={"text-white bg-black/50 absolute bottom-0 w-full p-2 rounded-b-lg"}>
-                                                        <p>{burnAsset?.name} - {burnAsset?.tokenId}</p>
+                                                    <div
+                                                        className={
+                                                            'selected-3dglasses-details'
+                                                        }
+                                                    >
+                                                        <p>
+                                                            {burnAsset?.name} -{' '}
+                                                            {burnAsset?.tokenId}
+                                                        </p>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                </UpgradeModal3DSelected>
+                                            </UpgradeModal3DCard>
+                                        </UpgradeModal3DSelectedContainer>
                                     )}
-                                </div>
+                                </UpgradeModal3DComponent>
                             ) : (
-                                <div className={"flex flex-col"}>
+                                <UpgradeModalCurtainComponent
+                                    className={'image-curtain-container'}
+                                >
                                     <div>
                                         <img
                                             src={leftImage}
                                             alt="Bill Gold"
-                                            className={`w-full h-[420px] object-contain rounded-lg mx-auto ${selected === 'left' ? 'w-full' : ''}`}
+                                            className={`object-contain rounded-lg mx-auto ${
+                                                selected === 'left'
+                                                    ? 'w-full'
+                                                    : ''
+                                            }`}
                                         />
                                     </div>
-                                </div>
+                                </UpgradeModalCurtainComponent>
                             )}
-                        </div>
-                        <div className={"flex-0 h-1/5 mt-2"}>
+                        </UpgradeModalBodyLeftImageContainer>
+                        <UpgradeModalBodyLeftTextContainer>
                             {burnNow === '3dglasses' ? (
                                 <div>
-                                    <h2 className="text-xl font-bold mb-2">
-                                        3D Glass Frame Upgrade
-                                    </h2>
-                                    <p className={""}>Upgrade your Bill Murray 3D glass frames</p>
+                                    <h2>3D Glass Frame Upgrade</h2>
+                                    <p>
+                                        Upgrade your Bill Murray 3D glass frames
+                                    </p>
                                     <p>Description 3dglasses</p>
                                 </div>
                             ) : (
                                 <div>
-                                    <h2 className="text-xl font-bold mb-2">
-                                        Burning Curtain Upgrade
-                                    </h2>
-                                    <p>Upgrade your burning curtain into a pair of 3D glasses</p>
-                                    <br />
+                                    <h2>Burning Curtain Upgrade</h2>
+                                    <p>
+                                        Upgrade your burning curtain into a pair
+                                        of 3D glasses
+                                    </p>
                                     <p>Description burnandturn</p>
                                 </div>
                             )}
-                        </div>
-                    </div>
+                        </UpgradeModalBodyLeftTextContainer>
+                    </UpgradeModalBodyLeft>
                     {rightCard}
-                </div>
-                <div className="h-[10%] flex items-center justify-end">
+                </UpgradeModalBody>
+                <UpgradeModalFooter className="h-[10%] flex items-center justify-end">
                     {/* {burnStatus === 'Burn' && ( */}
                     <button
                         className="flex flex-col w-1/2 h-full items-center justify-center text-white font-bold text-lg z-50 hover:bg-gold/25 border-r-2 border-gold border-solid"
@@ -245,39 +336,47 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
                             {burnStatus}
                         </button>
                     )}
-                </div>
-            </div>
+                </UpgradeModalFooter>
+            </UpgradeModalContainer>
             {isSelectModalOpen && (
-                <div className="absolute flex flex-col rounded-lg h-[70%] w-[80%] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black shadow-md z-100 border-gold border-2 border-solid">
-                    <div className={"px-8 py-4 bg-gold/50 text-white text-2xl font-bold"}>
-                        <h2 className="text-center">Please Select Your Bill Murray to Upgrade</h2>
-                    </div>
-                    <div className={"overflow-auto relative bg-gold/50"}>
-                        <div className="grid grid-cols-4 gap-4 p-4">
+                <UpgradeSelectionContainer>
+                    <UpgradeSelectionHeader>
+                        <h2>Please Select Your Bill Murray to Upgrade</h2>
+                    </UpgradeSelectionHeader>
+                    <UpgradeSelectionBodyContainer>
+                        <div>
                             {walletAssets
-                                .filter(walletAsset => ['40000001-0001-0001-0002-000000000001', '40000001-0001-0001-0002-000000000002', 'efe0d138-eb40-4ec8-8714-0d02ca5b59ab'].includes(walletAsset.contractId))
-                                .sort((a, b) => parseInt(a.tokenId) - parseInt(b.tokenId))
+                                .filter((walletAsset) =>
+                                    [
+                                        '40000001-0001-0001-0002-000000000001',
+                                        '40000001-0001-0001-0002-000000000002',
+                                        'efe0d138-eb40-4ec8-8714-0d02ca5b59ab',
+                                    ].includes(walletAsset.contractId)
+                                )
+                                .sort(
+                                    (a, b) =>
+                                        parseInt(a.tokenId) -
+                                        parseInt(b.tokenId)
+                                )
                                 .map((walletAsset: Asset, i: number) => (
-                                    <div key={i} className={"relative hover:border-green-500"}>
+                                    <div key={i}>
                                         <img
                                             key={walletAsset.id}
                                             src={walletAsset.image}
                                             alt={walletAsset.name}
-                                            className="max-w-full h-auto hover:opacity-50 cursor-pointer rounded-lg hover:border-4 border-solid"
-                                            onClick={() => handleImageClick(walletAsset)}
+                                            onClick={() =>
+                                                handleImageClick(walletAsset)
+                                            }
                                         />
-                                        <div className={"text-white bg-black/50 absolute bottom-0 w-full p-2 rounded-b-lg"}>
+                                        <div>
                                             <p>{`${walletAsset.name} - ${walletAsset.tokenId}`}</p>
                                         </div>
                                     </div>
                                 ))}
                         </div>
-                    </div>
-
-                </div>
+                    </UpgradeSelectionBodyContainer>
+                </UpgradeSelectionContainer>
             )}
-
-
         </div>
     );
 };
