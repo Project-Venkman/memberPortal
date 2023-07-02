@@ -28,6 +28,8 @@ import { useSetAssets } from '@components/Loading';
 import Upgrade from '@assets/images/Upgrade.png';
 import { UpgradeModal } from '@components/Burn';
 import C3D from '@assets/images/C3D.png';
+import { ComingSoon } from '@components/Burn/Upgrade/ComingSoon';
+
 export const BurnCard: React.FC<BurnCardProps> = (props) => {
     const [leftImage, setLeftImage] = useState<string>('');
     const [selected, setSelected] = useState<string>('');
@@ -47,7 +49,6 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
         </div>
     );
 
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [burnStatus, setBurnStatus] = useState<string>('Click here to burn');
@@ -61,11 +62,9 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
     const setAssets = useSetAssets(walletAddress);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // New state for modal visibility
 
-
-
     const handleCardClick = async () => {
         if (burnAsset.burnNow === '3dglasses') {
-            setLeftImage(Upgrade)
+            setLeftImage(Upgrade);
             setIsModalOpen(true); // Open the modal
         } else if (burnAsset.burnNow === 'burnandturn') {
             // await getProvider();
@@ -88,18 +87,8 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
     const handleSubmit = async () => {
         setIsModalOpen(false);
         setSelected('');
-        setComingSoonCard(<div
-            className={`w-full cursor-not-allowed hover:bg-gray-200 border border-gray-300 rounded-lg ${selected === 'right' ? 'bg-gray-200' : ''
-                }`}
-            style={{ opacity: 0.5 }}
-        >
-            <div className="mb-4 flex justify-center">
-                {/* <img src={VPass} alt="Venkman Pass" className="w-1/2 h-auto rounded-lg mx-auto" /> */}
-            </div>
-            <h2 className="text-xl font-bold mb-4">Coming Soon</h2>
-            <p>This will be coming soon</p>
-        </div>);
-    }
+        setComingSoonCard(<ComingSoon selected={selected} />);
+    };
 
     // console.log(selected)
     return (
@@ -122,8 +111,6 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
                 id={'burn-' + index}
                 style={{ height: '300px' }}
             >
-
-
                 <BurnDataHeader id={'Burn-header-info'}>
                     <BurnName id={'Burn-name'}>
                         {burnAsset.name! + ': ' + burnAsset.tokenId ?? ''}
@@ -140,7 +127,10 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
                             loop
                             muted
                         >
-                            <source src={burnAsset.animation} type="video/mp4" />
+                            <source
+                                src={burnAsset.animation}
+                                type="video/mp4"
+                            />
                         </video>
                     ) : (
                         <BurnImage src={burnAsset.image} />

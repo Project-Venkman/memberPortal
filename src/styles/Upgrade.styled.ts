@@ -1,6 +1,9 @@
 import tw from 'twin.macro';
 import styled from 'styled-components';
 
+export const UpgradeModalWrapper = styled.div`
+    ${tw`fixed inset-0 flex items-center justify-center z-50`}
+`;
 export const UpgradeModalOverlay = styled.div`
     ${tw`absolute inset-0 z-60 bg-black/75`}
 `;
@@ -11,6 +14,15 @@ export const UpgradeModalContainer = styled.div`
 
 export const UpgradeSpinnerContainer = styled.div`
     ${tw`flex items-center justify-center w-full h-full absolute top-0 left-0 right-0 bottom-0`}
+    > svg {
+        &.initial {
+            ${tw`w-40 h-40 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 hidden`}
+        }
+
+        &.burning {
+            ${tw`w-40 h-40 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600`}
+        }
+    }
 `;
 
 export const UpgradeModalHeader = styled.div`
@@ -81,8 +93,21 @@ export const UpgradeModal3DSelected = styled.div`
     }
 `;
 
-export const UpgradeModalCurtainWrapper = styled.img`
-    ${tw`flex flex-col`}
+export const UpgradeModalCurtainWrapper = styled.div`
+    ${tw`flex flex-col relative`}
+    > div {
+        ${tw`h-full`}
+        > img {
+            ${tw`h-full object-contain rounded-lg mx-auto`}
+            &.left {
+                ${tw`w-full`}
+            }
+        }
+
+        > div {
+            ${tw`absolute bottom-0 font-bold text-xl text-black w-full text-center`}
+        }
+    }
 `;
 
 export const UpgradeModalBodyLeftTextContainer = styled.div`
@@ -101,6 +126,12 @@ export const UpgradeModalBodyLeftTextContainer = styled.div`
 
 export const UpgradeModalFooter = styled.div`
     ${tw`h-[10%] flex items-center justify-end`}
+    > button {
+        ${tw`flex flex-col w-1/2 h-full items-center justify-center text-white font-bold text-lg z-50 hover:bg-gold/25`}
+        &.cancel {
+            ${tw`border-r-2 border-gold border-solid`}
+        }
+    }
 `;
 
 export const UpgradeSelectionContainer = styled.div`
@@ -128,5 +159,24 @@ export const UpgradeSelectionBodyContainer = styled.div`
                 ${tw`text-white bg-black/50 absolute bottom-0 w-full p-2 rounded-b-lg`}
             }
         }
+    }
+`;
+
+export const ComingSoonWrapper = styled.div`
+    ${tw`w-full cursor-not-allowed hover:bg-gray-200 border border-gray-300 rounded-lg opacity-50`}
+    &.right {
+        ${tw`bg-gray-200`}
+    }
+
+    > div {
+        ${tw`mb-4 flex justify-center`}
+    }
+
+    > h2 {
+        ${tw`text-xl font-bold mb-4`}
+    }
+
+    > p {
+        ${tw``}
     }
 `;

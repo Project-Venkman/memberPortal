@@ -1,3 +1,3 @@
 export * from './BurnCard';
 export * from './BurnURL';
-export * from './Upgrade';
+export * from './Upgrade/Upgrade';

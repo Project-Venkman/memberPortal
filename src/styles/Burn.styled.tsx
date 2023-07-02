@@ -4,10 +4,10 @@ import heroBG from '@assets/bill/COUCH-FOR-SPLASH-PAGE.png';
 
 export const BurnPage = styled.div`
     background-image: url(${heroBG});
-    ${tw`flex flex-col items-center justify-center h-full relative bg-cover bg-center bg-no-repeat`}
+    ${tw`flex flex-col items-center relative bg-cover bg-center bg-no-repeat h-full`}
 `;
 export const BurnContainer = styled.div`
-    ${tw`w-full h-full`}
+    ${tw`w-full h-[90%] top-16 relative`}
 `;
 // items-center xxs:h-[80%] xxs:-mt-12 2xl:h-[103%] xxxs:h-[60%] xs:h-[100%] xl:h-[95%]
 export const BurnBlocker = styled.div`
@@ -30,10 +30,16 @@ export const BurnCardContainer = styled.div`
 		border-2 border-solid border-[#CD9F29] rounded`}
 `;
 export const BurnContainerHeader = styled.div`
-    ${tw` flex `}
+    ${tw`flex flex-col items-center justify-center w-full h-[10%]`};
 `;
 export const BurnHeader = styled.h1`
-    ${tw`w-full relative p-2 font-sans font-bold text-gold text-[24px] tracking-[.2px] h-[50px] 	`}
+    ${tw`w-full relative font-sans font-bold text-gold text-[24px] tracking-[.2px]`}
+`;
+export const BurnGridContainer = styled.div`
+    ${tw`overflow-auto h-[90%]`};
+`;
+export const BurnCardGrid = styled.div`
+    ${tw`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 px-8`}
 `;
 export const BurnName = styled.div`
     ${tw`font-sans font-bold text-white text-[16px] tracking-[.2px] h-[100%] 2xl:max-h-[632px]`}

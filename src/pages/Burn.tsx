@@ -3,8 +3,10 @@ import { Asset, BurnProps } from '@customtypes/index';
 import { BurnCard } from '@components/Burn';
 import {
     BurnBlocker,
+    BurnCardGrid,
     BurnContainer,
     BurnContainerHeader,
+    BurnGridContainer,
     BurnHeader,
     BurnItems,
     BurnPage,
@@ -66,8 +68,15 @@ export const Burn: React.FC<BurnProps> = (props) => {
     }, [burns]);
 
     return (
-        <BurnPage className={'max-w-[1920px] md:px-32 mt-16'} id={'burn-page'}>
-            <div>
+        <BurnPage
+            className={'relative max-w-[1920px] md:px-32'}
+            id={'burn-page'}
+        >
+            <div
+                className={
+                    'absolute top-0 w-full h-16 flex justify-center items-center'
+                }
+            >
                 <button
                     className={
                         'font-barlow uppercase tracking-[1.5px] text-[18px] leading-[28.8px] text-white antialiased hover:animate-pulse hover:text-gold'
@@ -89,21 +98,23 @@ export const Burn: React.FC<BurnProps> = (props) => {
                 <BurnContainerHeader id={'Burn-header'}>
                     <BurnHeader>Burn and Turn!</BurnHeader>
                 </BurnContainerHeader>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4">
-                    {burns[0] &&
-                        burns.map((burn: Asset, i: number) => (
-                            <div
-                                className="w-full sm:w-auto md:w-auto lg:w-auto xl:w-auto max-w-[222px]"
-                                key={i}
-                            >
-                                <BurnCard
-                                    index={i}
-                                    burnAsset={burn}
-                                    copiedAddress={copied} // Pass the click event handler
-                                />
-                            </div>
-                        ))}
-                </div>
+                <BurnGridContainer className={'burn-grid-container'}>
+                    <BurnCardGrid className="burncard-grid">
+                        {burns[0] &&
+                            burns.map((burn: Asset, i: number) => (
+                                <div
+                                    className="w-full sm:w-auto md:w-auto lg:w-auto xl:w-auto max-w-[222px]"
+                                    key={i}
+                                >
+                                    <BurnCard
+                                        index={i}
+                                        burnAsset={burn}
+                                        copiedAddress={copied} // Pass the click event handler
+                                    />
+                                </div>
+                            ))}
+                    </BurnCardGrid>
+                </BurnGridContainer>
             </BurnContainer>
         </BurnPage>
     );
