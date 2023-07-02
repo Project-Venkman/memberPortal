@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router';
 import { Api } from '@pages/scripts';
 import {
     UpgradeModal3DCard,
-    UpgradeModal3DComponent,
+    UpgradeModal3DWrapper,
     UpgradeModal3DInitial,
     UpgradeModal3DSelected,
     UpgradeModal3DSelectedCardAddImage,
@@ -24,7 +24,7 @@ import {
     UpgradeModalBodyLeftImageContainer,
     UpgradeModalBodyLeftTextContainer,
     UpgradeModalContainer,
-    UpgradeModalCurtainComponent,
+    UpgradeModalCurtainWrapper,
     UpgradeModalFooter,
     UpgradeModalHeader,
     UpgradeModalOverlay,
@@ -183,7 +183,7 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
                     >
                         <UpgradeModalBodyLeftImageContainer>
                             {burnNow === '3dglasses' ? (
-                                <UpgradeModal3DComponent className="image-3d-container">
+                                <UpgradeModal3DWrapper className="image-3d-container">
                                     {selected !== 'left' ? (
                                         <UpgradeModal3DInitial
                                             className={
@@ -277,9 +277,9 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
                                             </UpgradeModal3DCard>
                                         </UpgradeModal3DSelectedContainer>
                                     )}
-                                </UpgradeModal3DComponent>
+                                </UpgradeModal3DWrapper>
                             ) : (
-                                <UpgradeModalCurtainComponent
+                                <UpgradeModalCurtainWrapper
                                     className={'image-curtain-container'}
                                 >
                                     <div>
@@ -293,7 +293,7 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
                                             }`}
                                         />
                                     </div>
-                                </UpgradeModalCurtainComponent>
+                                </UpgradeModalCurtainWrapper>
                             )}
                         </UpgradeModalBodyLeftImageContainer>
                         <UpgradeModalBodyLeftTextContainer>

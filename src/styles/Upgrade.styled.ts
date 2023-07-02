@@ -29,7 +29,7 @@ export const UpgradeModalBodyLeftImageContainer = styled.div`
     ${tw`flex flex-1 justify-center h-4/5`}
 `;
 
-export const UpgradeModal3DComponent = styled.div`
+export const UpgradeModal3DWrapper = styled.div`
     ${tw`w-full`}
 `;
 
@@ -81,7 +81,7 @@ export const UpgradeModal3DSelected = styled.div`
     }
 `;
 
-export const UpgradeModalCurtainComponent = styled.img`
+export const UpgradeModalCurtainWrapper = styled.img`
     ${tw`flex flex-col`}
 `;
 
