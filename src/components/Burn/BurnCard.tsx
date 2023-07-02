@@ -36,8 +36,7 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
     const [tailwindCss, setTailwindCss] = useState<string>('');
     const [comingSoonCard, setComingSoonCard] = useState<React.ReactNode | any>(
         <div
-            className={`w-full p-4 cursor-not-allowed hover:bg-gray-200 border border-gray-300 rounded-lg ${selected === 'right' ? 'bg-gray-200' : ''
-                }`}
+            className={`w-full cursor-not-allowed hover:bg-gray-200 p-4`}
             style={{ opacity: 0.5 }}
         >
             <div className="mb-4 flex justify-center">
@@ -90,7 +89,7 @@ export const BurnCard: React.FC<BurnCardProps> = (props) => {
         setIsModalOpen(false);
         setSelected('');
         setComingSoonCard(<div
-            className={`w-full p-4 cursor-not-allowed hover:bg-gray-200 border border-gray-300 rounded-lg ${selected === 'right' ? 'bg-gray-200' : ''
+            className={`w-full cursor-not-allowed hover:bg-gray-200 border border-gray-300 rounded-lg ${selected === 'right' ? 'bg-gray-200' : ''
                 }`}
             style={{ opacity: 0.5 }}
         >

@@ -69,7 +69,7 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
                 walletAddress,
                 address,
                 burnAsset.tokenId
-            ).then(async (res: any) => {
+            ).then(async () => {
                 setBurnStatus('Burning!');
                 setSpinnerCss(
                     'w-40 h-40 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 '
@@ -114,8 +114,8 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
     };
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50">
-            <div className="modal-overlay absolute inset-0 z-60"></div>
-            <div className="modal-container bg-white h-[70%] w-[80%] rounded-lg p-4 z-70">
+            <div className="modal-overlay absolute inset-0 z-60 bg-black/75"></div>
+            <div className="modal-container relative bg-gold/75 border-2 border-gold border-solid h-[70%] w-[80%] rounded-lg z-70 flex flex-col">
                 <div id={'spinner'} className="flex items-center justify-center w-full h-full absolute top-0 left-0 right-0 bottom-0">
                     <svg
                         aria-hidden="true"
@@ -135,13 +135,16 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
                     </svg>
                     <span className="sr-only">Loading...</span>
                 </div>
-                <div className="flex h-[90%] justify-between space-x-16 z-90">
+                <div className={"p-4 font-bold text-white text-xl h-[10%] flex items-center justify-center"}>
+                    <p>Choose what you would like to do with your burn item.</p>
+                </div>
+                <div className="flex h-[80%] z-90 border-y border-gold border-solid bg-white">
                     <div
                         onClick={selectLeft}
-                        className={`w-full p-4 z-90 cursor-pointer hover:bg-gray-200 border border-gray-300 rounded-lg ${selected === 'left' ? 'bg-gray-200' : ''
+                        className={`relative flex flex-col w-full z-90 p-4 cursor-pointer hover:bg-gray-200 border-r border-gold
                             }`}
                     >
-                        <div className="mb-4 flex justify-center">
+                        <div className="flex flex-1 justify-center h-4/5">
                             {burnNow === '3dglasses' ? (
                                 <div className="w-full">
                                     {selected !== 'left' ? (
@@ -151,11 +154,11 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
                                             className="w-full h-[420px] object-contain rounded-lg mx-auto"
                                         />
                                     ) : (
-                                        <div className="card-container flex w-full">
-                                            <div className="card h-[420px] w-1/2 flex items-center justify-center border border-solid border-black">
-                                                <div onClick={addImageClick} className="card-content flex flex-col items-center justify-center">
+                                        <div className="card-container flex w-full h-full">
+                                            <div className="card w-1/2 flex items-center justify-center">
+                                                <div onClick={addImageClick} className="card-content flex flex-col items-center justify-center p-4">
                                                     {!billBurn ? (
-                                                        <div>
+                                                        <div className={"h-full p-4 rounded-lg"}>
                                                             <img
                                                                 src={addImage}
                                                                 alt="Sample Image"
@@ -164,61 +167,71 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
                                                             <span className="click-text">Click here to add or update image</span>
                                                         </div>
                                                     ) : (
-                                                        <img className="h-full w-full max-h-[340px] max-w-[440px] object-contain" src={billBurn.image} alt="Image 1" />
+                                                        <div className={"relative"}>
+                                                            <img className="h-full w-full max-h-[340px] max-w-[440px] object-contain rounded-lg border-2 border-solid border-gray-500" src={billBurn.image} alt="Image 1" />
+                                                            <div className={"text-white bg-black/50 absolute bottom-0 w-full p-2 rounded-b-lg"}>
+                                                                <p>{billBurn?.name} - {billBurn?.tokenId}</p>
+                                                            </div>
+                                                        </div>
                                                     )}
                                                 </div>
                                             </div>
-                                            <div className="plus-sign items-center flex text-3xl">+</div>
-                                            <div className="card h-[420px] w-1/2 flex items-center justify-center border border-solid border-black">
-                                                <img
-                                                    className="h-full w-full object-contain max-h-[340px] max-w-[440px]"
-                                                    src={Glasses}
-                                                    alt="3D Glasses"
-                                                />
+                                            <div className="plus-sign items-center flex text-[64px]">+</div>
+                                            <div className="card w-1/2 flex items-center justify-center">
+                                                <div className={"relative"}>
+                                                    <img
+                                                        className="h-full w-full object-contain max-h-[340px] max-w-[440px] rounded-lg border-2 border-solid border-gray-500"
+                                                        //src={Glasses}
+                                                        src={burnAsset?.image}
+                                                        alt="3D Glasses"
+                                                    />
+                                                    <div className={"text-white bg-black/50 absolute bottom-0 w-full p-2 rounded-b-lg"}>
+                                                        <p>{burnAsset?.name} - {burnAsset?.tokenId}</p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     )}
                                 </div>
                             ) : (
-                                <img
-                                    src={leftImage}
-                                    alt="Bill Gold"
-                                    className={`w-full h-[420px] object-contain rounded-lg mx-auto ${selected === 'left' ? 'w-full' : ''}`}
-                                />
-
-
-
+                                <div className={"flex flex-col"}>
+                                    <div>
+                                        <img
+                                            src={leftImage}
+                                            alt="Bill Gold"
+                                            className={`w-full h-[420px] object-contain rounded-lg mx-auto ${selected === 'left' ? 'w-full' : ''}`}
+                                        />
+                                    </div>
+                                </div>
                             )}
                         </div>
-                        <p className='text-black'>
-                            {billBurn?.tokenId}
-                        </p>
-                        {burnNow === '3dglasses' ? (
-                            <div>
-                                <h2 className="text-xl font-bold mb-4">
-                                    3D Glass Frame Upgrade
-                                </h2>
-                                <p>Upgrade your Bill Murray 3D glass frames</p>
-                                <br />
-                                <p>Description 3dglasses</p>
-                            </div>
-                        ) : (
-                            <div>
-                                <h2 className="text-xl font-bold mb-4">
-                                    Burning Curtain Upgrade
-                                </h2>
-                                <p>Upgrade your burning curtain into a pair of 3D glasses</p>
-                                <br />
-                                <p>Description burnandturn</p>
-                            </div>
-                        )}
+                        <div className={"flex-0 h-1/5 mt-2"}>
+                            {burnNow === '3dglasses' ? (
+                                <div>
+                                    <h2 className="text-xl font-bold mb-2">
+                                        3D Glass Frame Upgrade
+                                    </h2>
+                                    <p className={""}>Upgrade your Bill Murray 3D glass frames</p>
+                                    <p>Description 3dglasses</p>
+                                </div>
+                            ) : (
+                                <div>
+                                    <h2 className="text-xl font-bold mb-2">
+                                        Burning Curtain Upgrade
+                                    </h2>
+                                    <p>Upgrade your burning curtain into a pair of 3D glasses</p>
+                                    <br />
+                                    <p>Description burnandturn</p>
+                                </div>
+                            )}
+                        </div>
                     </div>
                     {rightCard}
                 </div>
                 <div className="h-[10%] flex items-center justify-end">
                     {/* {burnStatus === 'Burn' && ( */}
                     <button
-                        className="flex flex-col items-center mr-4 text-black text-sm z-50 bg-goldish hover:bg-goldish-dark rounded-lg py-2 px-4 border border-black"
+                        className="flex flex-col w-1/2 h-full items-center justify-center text-white font-bold text-lg z-50 hover:bg-gold/25 border-r-2 border-gold border-solid"
                         onClick={closeModal}
                     >
                         Cancel
@@ -226,31 +239,41 @@ export const UpgradeModal: FC<UpgradeModalProps> = ({
                     {/* )} */}
                     {selected && (
                         <button
-                            className="flex flex-col items-center mr-4 text-black text-sm z-50 bg-goldish hover:bg-goldish-dark rounded-lg py-2 px-4 border border-black"
+                            className="flex flex-col w-1/2 h-full items-center justify-center text-white font-bold text-lg z-50 hover:bg-gold/25"
                             onClick={getProvider}
                         >
                             {burnStatus}
                         </button>
                     )}
                 </div>
-
             </div>
             {isSelectModalOpen && (
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 shadow-md z-100">
-                    <h2 className="text-center mb-4">Please Select Your Bill Murray to Upgrade</h2>
-                    <div className="grid grid-cols-4 gap-4">
-                        {walletAssets
-                            .filter(walletAsset => ['40000001-0001-0001-0002-000000000001', '40000001-0001-0001-0002-000000000002', 'efe0d138-eb40-4ec8-8714-0d02ca5b59ab'].includes(walletAsset.contractId))
-                            .map((walletAsset: Asset, i: number) => (
-                                <img
-                                    key={walletAsset.id}
-                                    src={walletAsset.image}
-                                    alt={walletAsset.name}
-                                    className="max-w-full h-auto"
-                                    onClick={() => handleImageClick(walletAsset)}
-                                />
-                            ))}
+                <div className="absolute flex flex-col rounded-lg h-[70%] w-[80%] top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black shadow-md z-100 border-gold border-2 border-solid">
+                    <div className={"px-8 py-4 bg-gold/50 text-white text-2xl font-bold"}>
+                        <h2 className="text-center">Please Select Your Bill Murray to Upgrade</h2>
                     </div>
+                    <div className={"overflow-auto relative bg-gold/50"}>
+                        <div className="grid grid-cols-4 gap-4 p-4">
+                            {walletAssets
+                                .filter(walletAsset => ['40000001-0001-0001-0002-000000000001', '40000001-0001-0001-0002-000000000002', 'efe0d138-eb40-4ec8-8714-0d02ca5b59ab'].includes(walletAsset.contractId))
+                                .sort((a, b) => parseInt(a.tokenId) - parseInt(b.tokenId))
+                                .map((walletAsset: Asset, i: number) => (
+                                    <div key={i} className={"relative hover:border-green-500"}>
+                                        <img
+                                            key={walletAsset.id}
+                                            src={walletAsset.image}
+                                            alt={walletAsset.name}
+                                            className="max-w-full h-auto hover:opacity-50 cursor-pointer rounded-lg hover:border-4 border-solid"
+                                            onClick={() => handleImageClick(walletAsset)}
+                                        />
+                                        <div className={"text-white bg-black/50 absolute bottom-0 w-full p-2 rounded-b-lg"}>
+                                            <p>{`${walletAsset.name} - ${walletAsset.tokenId}`}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                        </div>
+                    </div>
+
                 </div>
             )}
 
