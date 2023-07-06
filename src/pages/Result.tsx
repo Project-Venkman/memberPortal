@@ -50,11 +50,19 @@ const Result: React.FC<ResultProps> = (props) => {
     /*setAssets = useSetAssets(walletAddress);*/
 
     useEffect(() => {
-        if (walletAddress) return;
         (async () => {
-            await Api.auth.whoamI().then(async (res) => {
-                dispatch(setWalletAddress(res));
-            });
+            if (!walletAddress || walletAddress.length < 1) {
+                await Api.auth.whoamI().then(async (res) => {
+                    dispatch(setWalletAddress(res));
+                });
+            }
+            let burnAssets: Array<BurnAsset> =
+                await Api.asset.getAllBurnablesByWalletAddress(walletAddress);
+            let walletAssets: Array<Asset> =
+                await Api.asset.getAlByWalletAddressNoBurnables(walletAddress);
+            dispatch(setWalletAssets(walletAssets));
+            dispatch(setBurnAssets(burnAssets));
+            if (!walletAssets.length && burnAssets.length) navigate('/Burn');
         })();
         /*else {
 			let allMedia: Array<MediaType> = [];
@@ -107,16 +115,10 @@ const Result: React.FC<ResultProps> = (props) => {
     }, [walletAddress]);
 
     useEffect(() => {
+        if (!assetIds || assetIds.length < 1) return;
         let allMedia: Array<MediaType> = [];
 
         (async () => {
-            let burnAssets: Array<BurnAsset> =
-                await Api.asset.getAllBurnablesByWalletAddress(walletAddress);
-            let walletAssets: Array<Asset> =
-                await Api.asset.getAlByWalletAddressNoBurnables(walletAddress);
-            dispatch(setWalletAssets(walletAssets));
-            dispatch(setBurnAssets(burnAssets));
-            if (!walletAssets.length && burnAssets.length) navigate('/Burn');
             let allClaims = await Api.claim
                 .getAllByAssetIds(assetIds)
                 .then(async (res) => {
@@ -130,19 +132,19 @@ const Result: React.FC<ResultProps> = (props) => {
             for (let i = 0; i < walletAssets.length; i++) {
                 let assetId = walletAssets[i].id;
                 // NOTE: This will always be true, since assetId cannot be both of these values
-                if (
-                    assetId !== 'a8cfad6d-0a38-4f8c-b50c-31d28124dc61' &&
-                    assetId !== 'b634b38c-46c9-49e5-b3a7-9fee034cd339'
-                ) {
-                    await Api.media.getAllByAsset(assetId).then(async (res) => {
-                        // console.log(res);
-                        let newMedia = res.filter(
-                            (media: MediaType) =>
-                                !allMedia.some((m) => m.id === media.id)
-                        );
-                        allMedia = [...allMedia, ...newMedia];
-                    });
-                }
+                /*if (
+					assetId !== 'a8cfad6d-0a38-4f8c-b50c-31d28124dc61' &&
+					assetId !== 'b634b38c-46c9-49e5-b3a7-9fee034cd339'
+				) {*/
+                await Api.media.getAllByAsset(assetId).then(async (res) => {
+                    // console.log(res);
+                    let newMedia = res.filter(
+                        (media: MediaType) =>
+                            !allMedia.some((m) => m.id === media.id)
+                    );
+                    allMedia = [...allMedia, ...newMedia];
+                });
+                //}
             }
             dispatch(setMediaAssets(allMedia));
         })();
