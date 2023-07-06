@@ -16,6 +16,8 @@ import {
     setWalletAddress,
     setClaimAssets,
     setMediaAssets,
+    setLoading,
+    setEmptyWallet,
 } from '@state/features';
 import { useNavigate } from 'react-router-dom';
 import ProjectVenkman from '@components/Result/PV/ProjectVenkman';
@@ -56,13 +58,26 @@ const Result: React.FC<ResultProps> = (props) => {
                     dispatch(setWalletAddress(res));
                 });
             }
-            let burnAssets: Array<BurnAsset> =
-                await Api.asset.getAllBurnablesByWalletAddress(walletAddress);
-            let walletAssets: Array<Asset> =
-                await Api.asset.getAlByWalletAddressNoBurnables(walletAddress);
-            dispatch(setWalletAssets(walletAssets));
-            dispatch(setBurnAssets(burnAssets));
-            if (!walletAssets.length && burnAssets.length) navigate('/Burn');
+            try {
+                dispatch(setLoading(true));
+                let burnAssets: Array<BurnAsset> =
+                    await Api.asset.getAllBurnablesByWalletAddress(
+                        walletAddress
+                    );
+                let walletAssets: Array<Asset> =
+                    await Api.asset.getAlByWalletAddressNoBurnables(
+                        walletAddress
+                    );
+                dispatch(setWalletAssets(walletAssets));
+                dispatch(setBurnAssets(burnAssets));
+                if (!walletAssets.length && burnAssets.length)
+                    navigate('/Burn');
+            } catch (e) {
+                dispatch(setEmptyWallet(walletAddress));
+                console.log(e);
+            } finally {
+                dispatch(setLoading(false));
+            }
         })();
         /*else {
 			let allMedia: Array<MediaType> = [];
