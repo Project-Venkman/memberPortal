@@ -13,6 +13,11 @@ export const POSTKahlilAuthenticated = async (method: string, host: KahlilApi, d
     return await axios.post(host.url + method, payload, generateConfigAuthenticated(dts, signature))
 }
 
+export const PATCHKahlilAuthenticated = async (method: string, host: KahlilApi, data?: any) => {
+    let { dts, signature, payload } = generateSignature(method, host, data);
+    return await axios.patch(host.url + method, payload, generateConfigAuthenticated(dts, signature))
+}
+
 export const GETKahlilAuthenticated = async (method: string, host: KahlilApi, data: any) => {
     return await axios.get(host.url + method)
 }

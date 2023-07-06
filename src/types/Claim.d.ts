@@ -24,18 +24,19 @@ export type ClaimRegistrationButtonProps<
     }
 > = P;
 export interface Claim {
-    archived: boolean;
-    assetId: string;
-    claimed: boolean;
-    code: string;
-    createBy: string;
-    createDate: string;
-    description: string;
     id: string;
     name: string;
-    orderId: string;
+    description: string;
     tokenId: string;
+    orderId: string;
+    url: string;
+    code: string;
+    claimed: boolean;
+    type: string;
+    assetId: string;
+    createBy: string;
+    createDate: string;
     updateBy: string;
     updateDate: string;
-    url: string;
+    archived: boolean;
 }

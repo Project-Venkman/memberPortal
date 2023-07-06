@@ -1,5 +1,6 @@
 import * as ApiFx from './ApiFunctions';
 import { Claim, KahlilApi } from '@customtypes/index';
+import { PATCHKahlilAuthenticated } from './ApiFunctions';
 
 const mario: KahlilApi = {
     //host: environments[process.env.REACT_APP_DEV as keyof typeof environments].ProtonPack,
@@ -202,10 +203,10 @@ export const Api = {
         },
     },
     claim: {
-        getByTypeId: async (claimTypeId: string) => {
-            let data = { ClaimTypeId: claimTypeId };
+        getAllByTypeInventory: async (claimType: string) => {
+            let data = { claimType: claimType };
             return await ApiFx.POSTKahlilAuthenticated(
-                'Claim/GetAllByTypeId',
+                'Claim/GetAllByTypeInventory',
                 mario,
                 data
             ).then(async (res) => {
@@ -213,8 +214,16 @@ export const Api = {
             });
         },
         update: async (data: Claim) => {
-            return await ApiFx.POSTKahlilAuthenticated(
+            return await ApiFx.PATCHKahlilAuthenticated(
                 'Claim/Update',
+                mario,
+                data
+            ).then(async (res) => {});
+        },
+        updateInventory: async (claim: Claim) => {
+            let data = { claim: claim };
+            return await ApiFx.PATCHKahlilAuthenticated(
+                'Claim/UpdateInventory',
                 mario,
                 data
             ).then(async (res) => {});
