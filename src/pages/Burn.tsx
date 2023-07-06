@@ -54,7 +54,8 @@ export const Burn: React.FC<BurnProps> = (props) => {
         // const origin = url.origin;
         //
         // window.location.href(origin);
-        window.location.reload();
+        //window.location.reload();
+        navigate('/Results');
     };
     const handleClick = () => {
         window.localStorage.clear();

@@ -121,6 +121,26 @@ export const Api = {
                 return await res.data;
             });
         },
+        getAllBurnablesByWalletAddress: async (WalletAddress: string) => {
+            const data = { walletAddress: WalletAddress };
+            return await ApiFx.POSTKahlilAuthenticated(
+                'Asset/GetAllBurnablesByWalletAddress',
+                mario,
+                data
+            ).then(async (res) => {
+                return await res.data;
+            });
+        },
+        getAlByWalletAddressNoBurnables: async (WalletAddress: string) => {
+            const data = { walletAddress: WalletAddress };
+            return await ApiFx.POSTKahlilAuthenticated(
+                'Asset/GetAllByWalletAddressNoBurnables',
+                mario,
+                data
+            ).then(async (res) => {
+                return await res.data;
+            });
+        },
         getBurnables: async (WalletAddress: string) => {
             const googleURL: KahlilApi = {
                 url: 'https://protonpackapiserver-dooxr4hhta-uc.a.run.app/',
@@ -171,15 +191,14 @@ export const Api = {
             );
         },
         UpgradeBill3DFrame: async (assetId: string) => {
-            let data = { assetId: assetId }
+            let data = { assetId: assetId };
             return await ApiFx.POSTKahlilAuthenticated(
                 'Asset/UpgradeBill3DFrame',
                 mario,
                 data
             ).then(async (res) => {
                 return await res.data;
-            }
-            );
+            });
         },
     },
     claim: {
@@ -198,7 +217,7 @@ export const Api = {
                 'Claim/Update',
                 mario,
                 data
-            ).then(async (res) => { });
+            ).then(async (res) => {});
         },
         getByParentAssetId: async (parentAssetId: string) => {
             return await ApiFx.POSTKahlilAuthenticated(
