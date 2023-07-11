@@ -9,12 +9,11 @@ import {
     LoginTextContainer,
     Maintenance,
 } from '@styles/index';
-import { Web3ModalComponent } from '@components/Wallet';
-//import { LoginFormWallet } from "@components/index";
-import splash from '@assets/images/COUCH-FOR-SPLASH.jpg';
 import BillBG from '@assets/images/COUCH-FOR-SPLASH.jpg';
 import PVHome from '@assets/images/PVHome.png';
 import SpaceELF from '@assets/images/SpaceELF.jpeg';
+import { PVLogin } from '@components/Wallet/PVLogin';
+
 const Login: React.FC<LoginProps> = () => {
     const currentUrl = new URL(window.location.href);
     const [heroBG, setHeroBG] = useState<string>('');
@@ -28,7 +27,6 @@ const Login: React.FC<LoginProps> = () => {
             setHeroBG(PVHome);
         }
     }, [currentUrl.hostname]);
-    // window.localStorage.clear();
 
     return (
         <LoginPage id={'login-page'}>
@@ -37,7 +35,8 @@ const Login: React.FC<LoginProps> = () => {
             </LoginLogoContainer>
             <LoginContainer id={'login-container'}>
                 <LoginTextContainer></LoginTextContainer>
-                <Web3ModalComponent />
+                {/*<Web3ModalComponent />*/}
+                <PVLogin />
             </LoginContainer>
         </LoginPage>
     );

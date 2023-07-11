@@ -30,8 +30,7 @@ module.exports = {
 					http: require.resolve('stream-http'),
 					buffer: require.resolve('buffer'),
 					url: false,
-					assert: false
-				}
+					assert: false				}
 			}
 		}
 	}

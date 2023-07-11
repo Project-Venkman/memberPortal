@@ -51,14 +51,14 @@ export const ConnectedCardActions = styled.div`
 export const ConnectedButtonGrid = styled.div`
 	${tw`
 		absolute right-0 top-0
-		flex flex-col portrait:md:flex-col landscape:short:sm:flex-row md:flex-row justify-end items-end
+		flex flex-col portrait:md:flex-col landscape:short:sm:flex-row md:flex-row justify-end items-center
 		w-full md:w-64
 		m-0 p-0
 	`};
 `
 export const ConnectedButtonContainer = styled.div`
 	${tw`
-		flex items-center justify-center 
+		flex flex-col items-center justify-center 
 		px-4 landscape:short:sm:px-2 py-1 portrait:md:py-3 md:py-0
 		w-full
 	`};
