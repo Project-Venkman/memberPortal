@@ -7,31 +7,86 @@ import {
     ConnectedButton,
     ConnectedButtonContainer,
     ConnectedButtonGrid,
-    ConnectedButtonText, WalletIcon,
+    ConnectedButtonText,
+    WalletIcon,
 } from '@styles/Login.styled';
-import { useAccount, useDisconnect } from 'wagmi';
-import { truncateAddress } from '@pages/scripts';
+import {
+    useAccount,
+    useDisconnect,
+    usePublicClient,
+    useSignMessage,
+    useWalletClient,
+} from 'wagmi';
+import { Api, truncateAddress } from '@pages/scripts';
+import { Web3ModalProvider } from '@components/Wallet/provider';
+import { ethers, providers } from 'ethers';
+import { SiweMessage } from 'siwe';
+import { setWalletAddress } from '@state/features';
+import { Magic } from 'magic-sdk';
 
 export const PVLogin = () => {
     const { open, close } = useWeb3Modal();
     const { isConnected, isDisconnected, address, status } = useAccount();
     const { disconnect } = useDisconnect();
+    const publicClient = usePublicClient();
+    const { data, isError, isLoading, isSuccess, signMessage } = useSignMessage(
+        { message: 'Please sign this message to authenticate' }
+    );
     axios.defaults.withCredentials = true;
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(false);
+    const [message, setMessage] = useState<string>('');
     const label = isConnected ? 'Disconnect' : 'Connect Wallet';
     const onOpen = async () => {
+        clearAllCookies();
         setLoading(true);
         await open();
         setLoading(false);
     };
     const onClick = async () => {
-        if(isConnected) disconnect();
-        else await onOpen();
-    }
+        if (isConnected) {
+            disconnect();
+            new Magic(process.env.REACT_APP_MAGIC_KEY as string).user.logout();
+        } else await onOpen();
+    };
 
-    useEffect(() => {}, []);
+    useEffect(() => {
+        (async () => {
+            const domain = window.location.host;
+            const origin = window.location.origin;
+            let nonce = await Api.auth.generateChallenge();
+            let siweMessage = new SiweMessage({
+                domain: domain,
+                address: address,
+                statement: origin,
+                uri: origin,
+                version: '1',
+                chainId: 1,
+                nonce: nonce,
+            });
+            let message = siweMessage.toMessage();
+            setMessage(message);
+            signMessage({ message: message });
+        })();
+    }, [isConnected, address]);
+
+    useEffect(() => {
+        (async () => {
+            if (isSuccess && address) {
+                try {
+                    await Api.auth.issueTokens(message, data!.toString());
+                } catch (err: any) {
+                    if (err.response && err.response.status === 403) {
+                        navigate('/login');
+                    }
+                }
+                localStorage.setItem('IssuedTokens', 'true');
+                dispatch(setWalletAddress(address!.toString()));
+                navigate('/Results');
+            }
+        })();
+    }, [isSuccess, address]);
 
     return (
         <ConnectedButtonGrid id={'connected-button-grid'}>
@@ -46,11 +101,15 @@ export const PVLogin = () => {
                         <WalletIcon />
                         {loading ? 'Loading...' : label}
                     </ConnectedButtonText>
-                    <span className={"text-white text-xs text-gray-600 flex-nowrap"}>{isConnected ? "Connected to " + truncateAddress(address!.toString()) : ""}</span>
+                    <span className={'text-xs text-gray-600 flex-nowrap'}>
+                        {isConnected
+                            ? 'Connected to ' +
+                              truncateAddress(address!.toString())
+                            : ''}
+                    </span>
                 </ConnectedButton>
             </ConnectedButtonContainer>
         </ConnectedButtonGrid>
-
     );
 };
 
@@ -65,3 +124,5 @@ const clearAllCookies = () => {
             name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
     }
 };
+
+const returnMessage = () => {};

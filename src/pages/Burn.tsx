@@ -17,9 +17,11 @@ import { ethers } from 'ethers';
 import { abi_721 } from '@components/Burn/abi_721';
 import { Web3ModalProvider } from '@components/Wallet';
 import { useDispatch, useSelector } from 'react-redux';
+import { useDisconnect } from 'wagmi';
 
 export const Burn: React.FC<BurnProps> = (props) => {
     const dispatch = useDispatch();
+    const { disconnect } = useDisconnect();
 
     const responsive = {
         superLargeDesktop: {
@@ -55,6 +57,7 @@ export const Burn: React.FC<BurnProps> = (props) => {
         window.location.reload();
     };
     const handleClick = () => {
+        disconnect();
         window.localStorage.clear();
         dispatch({ type: 'RESET' });
         navigate('/Login');

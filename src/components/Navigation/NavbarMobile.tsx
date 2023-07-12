@@ -10,11 +10,13 @@ import { ResultPageNavListItem, ResultPageNavMobile } from '@styles/index';
 import { IoMenuSharp } from 'react-icons/io5';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@state/store';
+import { useDisconnect } from 'wagmi';
 
 export const NavbarMobile: React.FC<NavBarProps> = (props) => {
     const { modalOpen, setModalOpen, setModalType } = props;
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { disconnect } = useDisconnect();
     const [showMenu, setShowMenu] = useState<boolean>(false);
     const navMobileButtons: Array<string> = ['media', 'claim', 'burn'];
     const claims: Array<ClaimType> = useSelector(
@@ -33,6 +35,7 @@ export const NavbarMobile: React.FC<NavBarProps> = (props) => {
     };
 
     const handleMobileClick = () => {
+        disconnect();
         window.localStorage.clear();
         dispatch({ type: 'RESET' });
         navigate('/Login');
